@@ -1,15 +1,20 @@
-<div data-role="view" data-title="View" data-layout="main" data-model="app.home" data-show="app.home.onShow" data-after-show="app.home.afterShow" id="homeScreen" class="screen">
-    <header data-role="header">
-        <div data-role="navbar" class="header-text">
-
-            <span data-bind="text: strings.home.title"></span>
-
-        </div>
-    </header>
-
-
-    <!-- START_CUSTOM_CODE_home -->
-    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
-    <!-- END_CUSTOM_CODE_home -->
+<div data-role="view"  data-layout="main-nonav" data-model="app.home" data-show="app.home.onShow" data-after-show="app.home.afterShow"
+    id="homeScreen" class="screen">
+    <div id="homeModel" class="form-view screen__content screen__content--form add-item-view" style="text-align:center">
+        <form>
+            <ul class="form-content" data-role="listview" data-style="inset">
+                <li class="form-content-item">
+                    <div id="imagenKiaField" class="field field--image imageListItem km-label-above">
+                        <div class="align-center field__content"> <img src="resources/kia.png" style="width:78%"> </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="button-group">
+                <a class="primary" data-role="button" data-bind="events: { click: homeModel.ingresar }, buttonText: strings.home.homeModel.submitButton"></a>
+            </div>
+            <div class="button-group">
+                <a data-role="button" data-bind="events: { click: homeModel.registro }, buttonText: strings.home.homeModel.cancelButton"></a>
+            </div>
+        </form>
+    </div>
 </div>

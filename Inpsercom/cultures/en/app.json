@@ -5,6 +5,42 @@
     "qrCodeScan": "Scan"
   },
   "home": {
-    "title": "Home View"
+    "title": "Home",
+    "homeModel": {
+      "submitButton": "Ingresar",
+      "cancelButton": "Registrarse",
+      "editableListForm": {
+        "imagenKia": {
+          "title": "i"
+        }
+      }
+    }
+  },
+  "logIn": {
+    "title": "LogIn",
+    "logInModel": {
+      "emailLabel": "Id",
+      "passwordLabel": "Password",
+      "signinLabel": "Ingresar",
+      "remembermeLabel": "Auto LogIn"
+    }
+  },
+  "miKia": {
+    "title": "Mi Kia"
+  },
+  "miKia2": {
+    "title": "Orden de instalación"
+  },
+  "miKia3": {
+    "title": "Mapa"
+  },
+  "miKia4": {
+    "title": "Control vehículo"
+  },
+  "miKia5": {
+    "title": "Mi Kia"
+  },
+  "miKia6": {
+    "title": "Registrarse"
   }
 }

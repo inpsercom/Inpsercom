@@ -1,0 +1,49 @@
+<div data-role="view" data-title="View" data-layout="main" data-model="app.miKia6" data-show="app.miKia6.onShow" data-after-show="app.miKia6.afterShow"
+    id="miKia6Screen" class="screen">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text"> <span data-bind="text: strings.miKia6.title"></span>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left"
+                data-icon="drawer-button"></a>
+        </div>
+    </header>
+    <div class="content" style=" padding: 30px 20px;">
+        <div class="container">
+            <form class="form-horizontal" id="registro">
+                <div class="form-group">
+                    <div class="col-xs-12"> <input type="text" class="form-control" id="TipoDocumento" placeholder="Tipo Documento" required="true">                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12"> <input type="number" class="form-control" id="No. Documento" placeholder="No. Documento" required="true">                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12"> <input type="text" class="form-control" id="Nombres" placeholder="Nombres" required="true"> </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12"> <input type="text" class="form-control" id="Apellidos" placeholder="Apellidos"> </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12"> <input type="email" class="form-control" id="email" placeholder="email"> </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12"> <input type="number" class="form-control" id="telefono" placeholder="Teléfono"> </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12"> <input type="number" class="form-control" id="celular" placeholder="Celular"> </div>
+                </div>
+                <label>Mis Vehículos</label>
+                <ul class="form-content" data-role="listview" data-style="inset">
+                    <li class="form-content-item">
+                        Vehículo 1
+                    </li>
+                    <li class="form-content-item">
+                        Vehículo 2
+                    </li>
+                </ul>
+            </form>
+            <div class="form-group" style="text-align:center"> <button class="primary" data-role="button" onclick="registrar()">Registrarse</button> </div>
+        </div>
+    </div>
+    <!-- START_CUSTOM_CODE_miKia6 -->
+    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+    <!-- END_CUSTOM_CODE_miKia6 -->
+</div>

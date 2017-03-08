@@ -12,16 +12,12 @@
         },
         navigation: {
             viewModel: kendo.observable()
-        },
-        showMore: {
-            viewModel: kendo.observable()
         }
     };
 
     var bootstrap = function() {
         $(function() {
             app.mobileApp = new kendo.mobile.Application(document.body, {
-                transition: 'slide',
                 skin: 'nova',
                 initial: 'components/home/view.html'
             });
@@ -32,25 +28,9 @@
 
     $(document).ready(function() {
 
-        var navigationShowMoreView = $('#navigation-show-more-view').find('ul'),
-            allItems = $('#navigation-container-more').find('a'),
-            navigationShowMoreContent = '';
-
-            allItems.each(function(index) {
-                navigationShowMoreContent += '<li>' + allItems[index].outerHTML + '</li>';
-            });
-
-             navigationShowMoreView.html(navigationShowMoreContent);
-        kendo.bind($('#navigation-show-more-view'), app.showMore.viewModel);
-
         app.notification = $("#notify");
 
     });
-
-    app.listViewClick = function _listViewClick(item) {
-        var tabstrip = app.mobileApp.view().footer.find('.km-tabstrip').data('kendoMobileTabStrip');
-        tabstrip.clear();
-    };
 
     app.showNotification = function(message, time) {
         var autoHideAfter = time ? time : 3000;
@@ -63,6 +43,20 @@
             if (navigator && navigator.splashscreen) {
                 navigator.splashscreen.hide();
             }
+
+            var element = document.getElementById('appDrawer');
+            if (typeof(element) != 'undefined' && element !== null) {
+                if (window.navigator.msPointerEnabled) {
+                    $('#navigation-container').on('MSPointerDown', 'a', function(event) {
+                        app.keepActiveState($(this));
+                    });
+                } else {
+                    $('#navigation-container').on('touchstart', 'a', function(event) {
+                        app.keepActiveState($(this).closest('li'));
+                    });
+                }
+            }
+
             bootstrap();
         }, false);
     } else {
@@ -176,7 +170,6 @@
                 }
 
                 app.navigation.viewModel.set('strings', strings);
-                app.showMore.viewModel.set('strings', strings);
             }
         },
         loadCulture = function(code) {
@@ -208,5 +201,29 @@
 
 // START_CUSTOM_CODE_kendoUiMobileApp
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
+function inspeccionar(obj) {
+    try {
+        var msg = '';
+        for (var property in obj) {
+            if (typeof obj[property] == 'function') {
+                var inicio = obj[property].toString().indexOf('function');
+                var fin = obj[property].toString().indexOf(')') + 1;
+                var propertyValue = obj[property].toString().substring(inicio, fin);
+                msg += (typeof obj[property]) + ' ' + property + ' : ' + propertyValue + ' ;\n';
+            } else if (typeof obj[property] == 'unknown') {
+                msg += 'unknown ' + property + ' : unknown ;\n';
+            } else {
+                msg += (typeof obj[property]) + ' ' + property + ' : ' + obj[property] + ' ;\n';
+            }
+        }
+        return msg;
+    } catch (e) {
+        alert(e);
+    }
+}
+function beforeDrawerShow(e) {
+    if ((e.view.currentView.id == "components/home/view.html")||(e.view.currentView.id == "components/logIn/view.html")||(e.view.currentView.id == "components/Registro/view.html")) {
+        e.preventDefault();
+    }
+}
 // END_CUSTOM_CODE_kendoUiMobileApp

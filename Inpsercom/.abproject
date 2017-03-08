@@ -6,10 +6,9 @@
   "DisplayName": "Inpsercom",
   "Author": "",
   "Description": "Inpsercom",
-  "BundleVersion": "1.0",
+  "BundleVersion": "1.2",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
-    "1",
     "2"
   ],
   "iOSBackgroundMode": [],

@@ -1,0 +1,50 @@
+<div data-role="view" data-layout="main-nonav" data-model="app.miKia" data-show="app.miKia.onShow" data-after-show="app.miKia.afterShow"
+    id="miKiaScreen" class="screen">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text"> <span data-bind="text: strings.miKia.title"></span>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left"
+                data-icon="drawer-button"></a>
+        </div>
+    </header>
+    <div data-role="content" style="background-image: url('resources/CarMenu.jpg');">
+        <!-- START_CUSTOM_CODE_miKia -->
+        <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+        <table>
+            <tr rowspan="4">
+                <td colspan="4" rowspan="4"> <button>AGENDAR CITA</button> </td>
+                <td colspan="4" rowspan="2"> <button>
+                        AGENDAR VIN
+                    </button> </td>
+                <td colspan="4" rowspan="2"> <button>
+                    HISTORIAL VIN
+                    </button> </td>
+            </tr>
+            <tr rowspan="4">
+                <td colspan="4" rowspan="2"> <button>
+                       CONFIGURAR SHERLOCK
+                </button> </td>
+                <td rowspan="4" rowspan="4"> <button>
+                    ORDEN DE TRABAJO EN CURSO
+                </button> </td>
+                <td rowspan="2" rowspan="2"> <button>
+                    LOCALIZAR MI KIA
+                </button> </td>
+                <td rowspan="2" rowspan="2"> <button>
+                    CONTROLAR MI KIA
+                </button> </td>
+            </tr>
+        </table>
+        <!-- END_CUSTOM_CODE_miKia -->
+    </div>
+    <style>
+        tr,
+        td {
+            width: 100%
+        }
+        
+        button {
+            width: 100%;
+            height: 100%
+        }
+        
+        <style> </div>

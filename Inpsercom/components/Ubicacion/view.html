@@ -1,0 +1,21 @@
+<div data-role="view" data-title="View" data-layout="main" data-model="app.miKia3" data-show="app.miKia3.onShow" data-after-show="app.miKia3.afterShow" id="miKia3Screen" class="screen">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <span data-bind="text: strings.miKia3.title"></span>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+        </div>
+    </header>
+    <!-- START_CUSTOM_CODE_miKia3 -->
+    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+    <ul class="form-content" data-role="listview" data-style="inset">
+		<li class="form-content-item">
+			<div id="mapa" class="field field--location imageListItem km-label-above">
+				<div class="field__content">
+					<div id="map" class="mapView" ></div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<!-- END_CUSTOM_CODE_miKia3 -->
