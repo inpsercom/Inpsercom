@@ -1,8 +1,8 @@
 'use strict';
 
 app.logIn = kendo.observable({
-    onShow: function() {},
-    afterShow: function() {}
+    onShow: function () { },
+    afterShow: function () { }
 });
 app.localization.registerView('logIn');
 
@@ -10,14 +10,14 @@ app.localization.registerView('logIn');
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
 // END_CUSTOM_CODE_logIn
-(function(parent) {
+(function (parent) {
     var
         logInModel = kendo.observable({
             displayName: '',
             email: '',
             password: '',
             errorMessage: '',
-            validateData: function(data) {
+            validateData: function (data) {
                 var model = logInModel;
 
                 if (!data.email && !data.password) {
@@ -37,17 +37,27 @@ app.localization.registerView('logIn');
 
                 return true;
             },
-            signin: function() {
-                try{
-                kendo.mobile.application.navigate("components/miKia/view.html");
-                }catch(s){
+            signin: function () {
+                try {
+                    var Usuario = {
+                        chasis:"8LGJE5520CE010039",
+                        identificacion:"0992327685001",
+                        tipodocumento:"R",
+                        udid:"1234567890",
+                        telefono_celular:"0995545554",
+                        orden:"72363"
+                    };
+                    localStorage.setItem("Inp_DatosUsuario", Usuario);
+                    
+                    kendo.mobile.application.navigate("components/miKia/view.html");
+                } catch (s) {
                     alert(s);
                 }
             }
         });
 
     parent.set('logInModel', logInModel);
-    parent.set('afterShow', function(e) {
+    parent.set('afterShow', function (e) {
         if (e && e.view && e.view.params && e.view.params.logout) {
             if (localStorage) {
                 localStorage.setItem(rememberKey, null);

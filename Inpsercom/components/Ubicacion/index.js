@@ -18,6 +18,10 @@ app.miKia3 = kendo.observable({
                 success: function (data) {
                     try {
                         data = data.EnviaMensajeResult;
+                        if(data=="No se encontró Usuario"){
+                            alert(data);
+                        }
+                        
                         if ((data.indexOf("http://maps.google.com/?q=")) != -1) {
                             data = (data.substr(26));
                             data = data.split(",");

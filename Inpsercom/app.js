@@ -1,4 +1,5 @@
 'use strict';
+var datos_Cliente;
 
 (function() {
     var app = {

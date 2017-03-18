@@ -1,7 +1,9 @@
 'use strict';
-var persona_numero;
+var persona_numero = 0;
 app.miKia6 = kendo.observable({
-    onShow: function () { },
+    onShow: function () {
+        document.getElementById("btnRegistrar").disabled = true;
+    },
     afterShow: function () { }
 });
 app.localization.registerView('miKia6');
@@ -64,21 +66,25 @@ function registrar() {
             "persona_nombre": Nombres,
             "persona_apellido": Apellidos,
             "mail": email,
-            //"chasis": chasis,    
+            "chasis": chasis,
             "fecha_nacimiento": FechaNacimiento,
             "telefono_celular": celular,
             "password": password,
             "persona_numero": persona_numero
             //output: "json"
         };
+        localStorage.setItem("Inp_DatosUsuario", params);
+        kendo.mobile.application.navigate("components/miKia/view.html");
         var indicador = 0;
         $.each(params, function (k, v) {
             //display the key and value pair
             if ((v == "") || !(v)) { indicador = 1; }
             //alert(k + ' is ' + v);
         });
-        if (indicador == 1) { alert("Verificar datos en blanco"); return; }
-        alert("valida campos");
+        if (indicador == 1) {
+            alert("Verificar datos en blanco"); return;
+        }
+
         $.ajax({
             url: Url,
             type: "POST",
@@ -91,7 +97,16 @@ function registrar() {
             success: function (data) {
                 try {
                     //debugger;
-                    alert(JSON.stringify(data));
+                    if (data == "Success") {
+                        try {
+                            alert("Registro Exitoso");
+                            sessionStorage.setItem("Registro", params);
+                            kendo.mobile.application.navigate("components/miKia/view.html");
+                            return;
+                        } catch (s) {
+                            alert(s);
+                        }
+                    }
                 } catch (e) {
                     //debugger;
                     alert(e);
@@ -106,6 +121,47 @@ function registrar() {
     }
     catch (e) {
         alert(e);
+    }
+}
+
+function ValidaMail() {
+    try {
+        if (document.getElementById("email").value != "") {
+            var result = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(document.getElementById("email").value);
+
+            if (result == false) {
+                document.getElementById("email").focus();
+                document.getElementById("email").style.borderColor = "red";
+            } else {
+                document.getElementById("email").style.borderColor = "";
+            }
+        }
+    } catch (f) { alert(f); }
+}
+function ValidaCelular() {
+    try {
+        if (document.getElementById("celular").value != "") {
+            var result = /[09][0-9]{9}$/.test(document.getElementById("celular").value);
+            if (result == false) {
+                document.getElementById("celular").focus();
+                document.getElementById("celular").style.borderColor = "red";
+            } else {
+                document.getElementById("celular").style.borderColor = "";
+            }
+        }
+    }
+    catch (f) { alert(f); }
+}
+function ValidaPassword() {
+    var pass = document.getElementById("password").value;
+    var repass = document.getElementById("repassword").value;
+    if (pass == repass) {
+        document.getElementById("btnRegistrar").disabled = false;
+        document.getElementById("repassword").style.borderColor = "";
+    }
+    else {
+        document.getElementById("btnRegistrar").disabled = true;
+        document.getElementById("repassword").style.borderColor = "red";
     }
 }
 

@@ -1,7 +1,12 @@
 'use strict';
 
 app.home = kendo.observable({
-    onShow: function () { },
+    onShow: function () { 
+        if(localStorage.getItem("Inp_DatosUsuario")){
+            datos_Cliente=localStorage.getItem("Inp_DatosUsuario");
+            kendo.mobile.application.navigate("components/miKia/view.html");
+        }
+    },
     afterShow: function () { } 
 });
 app.localization.registerView('home');

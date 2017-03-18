@@ -10,28 +10,18 @@
         <!-- START_CUSTOM_CODE_miKia -->
         <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
         <table>
-            <tr rowspan="4">
-                <td colspan="4" rowspan="4"> <button>AGENDAR CITA</button> </td>
-                <td colspan="4" rowspan="2"> <button>
-                        AGENDAR VIN
-                    </button> </td>
-                <td colspan="4" rowspan="2"> <button>
-                    HISTORIAL VIN
-                    </button> </td>
+            <tr>
+                <td><button id="btnAgendaCita" onclick="AgendarCita();">AGENDAR CITA</button></td>
+                 <td><button id="btnAgendarVin" onclick="AgendarVin();">AGENDAR VIN</button> </td>
+                 <td><button id="btnHistoriaVin" onclick="HistorialVin();">HISTORIAL VIN</button></td>
+                 <td><button id="btnLocalizar" onclick="LocalizarKia();">LOCALIZAR MI KIA</button> </td>
             </tr>
-            <tr rowspan="4">
-                <td colspan="4" rowspan="2"> <button>
-                       CONFIGURAR SHERLOCK
-                </button> </td>
-                <td rowspan="4" rowspan="4"> <button>
-                    ORDEN DE TRABAJO EN CURSO
-                </button> </td>
-                <td rowspan="2" rowspan="2"> <button>
-                    LOCALIZAR MI KIA
-                </button> </td>
-                <td rowspan="2" rowspan="2"> <button>
-                    CONTROLAR MI KIA
-                </button> </td>
+        </table>
+        <table>
+            <tr>
+                <td> <button id="btnCinfigurarSherlock" onclick="ConfigurarSherlock();" style='width:150px; height:75px'>CONFIGURAR SHERLOCK</button> </td>
+                <td> <button id="btnOrdenTrabajo" onclick="OrdenTrabajo();" style='width:120px; height:75px'>ORDEN DE TRABAJO EN CURSO</button> </td>
+                <td> <button id="btnControlar" onclick="ControlarKia();" style='width:90px; height:75px'>CONTROLAR MI KIA</button> </td>
             </tr>
         </table>
         <!-- END_CUSTOM_CODE_miKia -->

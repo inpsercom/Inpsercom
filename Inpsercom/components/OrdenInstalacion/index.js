@@ -32,7 +32,7 @@ function habilitarOpciones() {
         NoOrden = document.getElementById("NoOrden").value;
         if (NoOrden != "") {
             kendo.ui.progress($("#miKia2Screen"), true);
-            var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554";
+            var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion + "/1234567890/" + datos_Cliente.telefono_celular;
 
             var params = {
                 orden: NoOrden,
