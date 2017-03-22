@@ -9,7 +9,7 @@ app.miKia3 = kendo.observable({
             var params = {
                 orden: ordenUsuario,
                 output: "json"
-            };
+            }; 
             $.ajax({
                 url: Url,
                 type: "GET",

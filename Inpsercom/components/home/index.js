@@ -1,13 +1,15 @@
 'use strict';
 
 app.home = kendo.observable({
-    onShow: function () { 
-        if(localStorage.getItem("Inp_DatosUsuario")){
-            datos_Cliente=localStorage.getItem("Inp_DatosUsuario");
-            kendo.mobile.application.navigate("components/miKia/view.html");
+    onShow1: function () {
+        Device_identifier = device.uuid;
+        //alert(inspeccionar(device));
+        if (localStorage.getItem("Inp_DatosUsuario")) {
+            datos_Cliente = localStorage.getItem("Inp_DatosUsuario");
+            //kendo.mobile.application.navigate("components/miKia/view.html");
         }
     },
-    afterShow: function () { } 
+    afterShow: function () { }
 });
 app.localization.registerView('home');
 
@@ -34,8 +36,10 @@ app.localization.registerView('home');
             /// start add model functions
             ingresar: function () {
                 try {
+
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 } catch (s) {
+
                     alert(s);
                 }
             },

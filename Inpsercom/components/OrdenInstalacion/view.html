@@ -1,5 +1,5 @@
 <div data-role="view" data-title="View" data-layout="main" data-model="app.miKia2" data-show="app.miKia2.onShow" data-after-show="app.miKia2.afterShow"
-    id="miKia2Screen" class="screen">
+    id="miKia2Screen" class="screen" data-before-show="app.miKia2.inicializa">
     <header data-role="header">
         <div data-role="navbar" class="header-text"> 
             <span data-bind="text: strings.miKia2.title"></span>
@@ -13,17 +13,17 @@
         <table>
             <tr>
                 <td colspan="2"> <input type="number" id="NoOrden" placeholder="No Orden de instalación"> </td>
-                <td> <button onclick="habilitarOpciones()">
+                <td> <button id="btn_activar">
                     ACTIVAR
                 </button> </td>
             </tr>
             <tr>
-                <td colspan="3"> <button id="ubicar" onclick="ubicarVehiculo()">
+                <td colspan="3"> <button id="ubicar" >
                     UBICACIÓN
                 </button> </td>
             </tr>
             <tr>
-                <td colspan="3"> <button id="control" onclick="controlVehiculo()">
+                <td colspan="3"> <button id="control">
                     CONTROL VEHÍCULO
                 </button> </td>
             </tr>

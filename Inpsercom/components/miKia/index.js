@@ -5,16 +5,26 @@ app.miKia = kendo.observable({
         try {
 
             var ancho = screen.width / 4;
+            var alto = 75;
+            alto = alto + "px";
             ancho = ancho + "px";
-
             document.getElementById("btnAgendaCita").style = "width:" + ancho + "margin:0px";
             document.getElementById("btnAgendarVin").style = "width:" + ancho + "margin:0px";
             document.getElementById("btnHistoriaVin").style = "width:" + ancho + "margin:0px";
             document.getElementById("btnLocalizar").style = "width:" + ancho + "margin:0px";
-
+            document.getElementById("btnAgendaCita").style = "height:" + alto + "margin:0px";
+            document.getElementById("btnAgendarVin").style = "height:" + alto + "margin:0px";
+            document.getElementById("btnHistoriaVin").style = "height:" + alto + "margin:0px";
+            document.getElementById("btnLocalizar").style = "height:" + alto + "margin:0px";
+            document.getElementById("btnCinfigurarSherlock").style = "width:" + ancho + "margin:0px";
+            document.getElementById("btnOrdenTrabajo").style = "width:" + ancho + "margin:0px";
+            document.getElementById("btnControlar").style = "width:" + ancho + "margin:0px";
+            document.getElementById("btnCinfigurarSherlock").style = "height:" + alto + "margin:0px";
+            document.getElementById("btnOrdenTrabajo").style = "height:" + alto + "margin:0px";
+            document.getElementById("btnControlar").style = "height:" + alto + "margin:0px";
             var Registro = sessionStorage.getItem("Registro");
             //var persona_Numero = Registro.persona_Numero;
-            alert("persona" + inspeccionar(Registro));
+            //alert("persona" + inspeccionar(Registro));
         } catch (f) { alert(f); }
     },
 
@@ -23,7 +33,7 @@ app.miKia = kendo.observable({
     }
 });
 app.localization.registerView('miKia');
-function ConfigurarSherlock(){
+function ConfigurarSherlock() {
     kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
 }
 

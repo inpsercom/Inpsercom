@@ -8,7 +8,24 @@ app.miKia2 = kendo.observable({
             document.getElementById("control").disabled = true;
         }
     },
-    afterShow: function () { }
+    afterShow: function () { },
+    inicializa: function () {
+        $("#btn_activar").kendoButton({
+            click: function (e) {
+                habilitarOpciones();
+            }
+        });
+        $("#ubicar").kendoButton({
+            click: function (e) {
+                ubicarVehiculo();
+            }
+        });
+        $("#control").kendoButton({
+            click: function (e) {
+                controlVehiculo();
+            }
+        });
+    }
 });
 app.localization.registerView('miKia2');
 
@@ -49,6 +66,9 @@ function habilitarOpciones() {
                         if (data.estadoServicio == "A") {
                             document.getElementById("ubicar").disabled = false;
                             document.getElementById("control").disabled = false;
+                            kendo.ui.progress($("#miKia2Screen"), false);
+                        } else {
+                            alert(inspeccionar(data));
                             kendo.ui.progress($("#miKia2Screen"), false);
                         }
                     } catch (e) {

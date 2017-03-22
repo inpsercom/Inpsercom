@@ -1,5 +1,5 @@
 'use strict';
-var datos_Cliente;
+var datos_Cliente, Device_identifier;
 
 (function() {
     var app = {
