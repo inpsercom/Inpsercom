@@ -1,12 +1,15 @@
-<div data-role="view" data-layout="main-nonav" data-model="app.logIn" data-show="app.logIn.onShow" data-after-show="app.logIn.afterShow"
+         <div data-role="view" data-layout="main-nonav" data-model="app.logIn" data-show="app.logIn.onShow" data-after-show="app.logIn.afterShow"
     id="logInScreen" class="screen" style="align:center">
     <div data-role="content" style="background-image: url('resources/CarSeat.jpg');" class="general">
-      <!--  <div style="width:70%; background: white;" class="blanco">-->
+      <!--  <div style="width:70%; background: white;" class="blanco">    value: logInModel.email-->
             <div class="blanco">
                 <form>
-                    <ul data-role="listview" >
-                        <li> <input type="email" data-bind="value: logInModel.email" required autofocus placeholder="ID"> </li>
-                        <li> <input type="password" data-bind="value: logInModel.password" required placeholder="Password"> </li>
+                   <ul data-role="listview" >
+                       <li> <label>
+                                    <input type="email" class="k-textbox" id="email" required autofocus placeholder="ID" onblur="ValidaMail();">
+                                </label> </li>
+                        <li> <input type="email"  id="email" required autofocus placeholder="ID" onblur="ValidaMail();"> </li>
+                        <li> <input type="password" data-bind="value: logInModel.password" id="password" required placeholder="Password"> </li>
                         <li> <label><span>Auto Login</span>
                                     <input type="checkbox" data-bind="checked: logInModel.rememberme">
                                 </label> </li>
@@ -23,7 +26,7 @@
     </div>
     <style>
         .general {
-            text-align: center;
+            text-align: left;
             margin: auto;
         }
         
@@ -33,10 +36,11 @@
             border: 1px solid #ccc;
             padding: 0 1rem;
             margin: 1rem;
+            text-align: left;
         }
         
         .screen {
-            text-align: center;
+            text-align: left;
             margin: auto;
         }
     </style>
