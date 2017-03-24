@@ -2,6 +2,7 @@
 var NoOrden;
 app.miKia2 = kendo.observable({
     onShow: function () {
+        document.getElementById("NoOrden").value = "72363";
         NoOrden = document.getElementById("NoOrden").value;
         if (NoOrden == "") {
             document.getElementById("ubicar").disabled = true;
@@ -49,8 +50,9 @@ function habilitarOpciones() {
         NoOrden = document.getElementById("NoOrden").value;
         if (NoOrden != "") {
             kendo.ui.progress($("#miKia2Screen"), true);
-            var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion + "/1234567890/" + datos_Cliente.telefono_celular;
-
+            //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
+            var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
+            //var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/U"; 
             var params = {
                 orden: NoOrden,
                 output: "json"
@@ -73,6 +75,7 @@ function habilitarOpciones() {
                         }
                     } catch (e) {
                         alert(e);
+                        kendo.ui.progress($("#miKia2Screen"), false);
                     }
                 },
                 error: function (err) {

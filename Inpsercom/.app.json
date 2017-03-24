@@ -103,6 +103,14 @@
       "title": "Registrarse",
       "addToNavigation": true,
       "icon": "home"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "mmtOTs",
+      "components": [],
+      "title": "Ordenes de Trabajo",
+      "addToNavigation": true,
+      "icon": "home"
     }
   ],
   "dataProviders": [

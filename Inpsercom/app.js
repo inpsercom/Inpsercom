@@ -1,6 +1,7 @@
 'use strict';
-var datos_Cliente, Device_identifier;
-
+var datos_Cliente, Device_identifier, datos_Vehiculo, urlService;
+var urlInterno = 'http://IPS10:8089';
+var urlExterno = 'http://190.108.66.10:8089';
 (function() {
     var app = {
         data: {},

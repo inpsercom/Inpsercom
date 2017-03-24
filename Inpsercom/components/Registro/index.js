@@ -1,5 +1,5 @@
 'use strict';
-var persona_numero = 0;
+var persona_numero ="0";
 app.miKia6 = kendo.observable({
     onShow: function () {
         var fecha = new Date();
@@ -12,6 +12,7 @@ app.miKia6 = kendo.observable({
             max: new Date(year, mes, dia)
         });
         document.getElementById("btnRegistrar").disabled = true;
+        //document-getElementById("identificacion").focus();
     },
     afterShow: function () { }
 });
@@ -20,7 +21,7 @@ app.localization.registerView('miKia6');
 // START_CUSTOM_CODE_miKia6
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 function personaGet() {
-    var _identificacion = document.getElementById("Identificacion").value;
+    var _identificacion = document.getElementById("identificacion").value;
     if ((_identificacion != "") && (_identificacion)) {
         var Url = "http://190.108.66.10:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/json/" + _identificacion;
 
@@ -59,7 +60,7 @@ function personaGet() {
 
 function registrar() {
     try {
-        var identificacion = document.getElementById("Identificacion").value;
+        var identificacion = document.getElementById("identificacion").value;
         var Nombres = document.getElementById("Nombres").value;
         var Apellidos = document.getElementById("Apellidos").value;
         var email = document.getElementById("email").value;
@@ -68,10 +69,11 @@ function registrar() {
         var celular = document.getElementById("celular").value;
         var password = document.getElementById("password").value;
         var repassword = document.getElementById("repassword").value;
+        var numorden = document.getElementById("numorden").value;
         var Url = "http://190.108.66.10:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
         var params = {
             "secuencia_mv01": 3,
-            "identificacion": identificacion,
+            "identificacion_cliente": identificacion,
             "persona_nombre": Nombres,
             "persona_apellido": Apellidos,
             "mail": email,
@@ -80,16 +82,22 @@ function registrar() {
             "telefono_celular": celular,
             "numeroorden": numorden,
             "password": password,
-            "persona_numero": persona_numero
+            "persona_numero": persona_numero,
+            "alta_movil_imei": Device_identifier
             //output: "json"
         };
         localStorage.setItem("Inp_DatosUsuario", params);
-        kendo.mobile.application.navigate("components/miKia/view.html");
+        
+        
+        //kendo.mobile.application.navigate("components/miKia/view.html");
         var indicador = 0;
         $.each(params, function (k, v) {
             //display the key and value pair
-            if ((v == "") || !(v)) { indicador = 1; }
-            //alert(k + ' is ' + v);
+            if (v == "") {
+                indicador = 1;
+                alert(k + ' is ' + v);
+            }
+
         });
         if (indicador == 1) {
             alert("Verificar datos en blanco"); return;
@@ -111,7 +119,7 @@ function registrar() {
                         try {
                             alert("Registro Exitoso");
                             sessionStorage.setItem("Registro", params);
-                            kendo.mobile.application.navigate("components/miKia/view.html");
+                            kendo.mobile.application.navigate("components/home/view.html");
                             return;
                         } catch (s) {
                             alert(s);
@@ -172,35 +180,6 @@ function ValidaPassword() {
     else {
         document.getElementById("btnRegistrar").disabled = true;
         document.getElementById("repassword").style.borderColor = "red";
-    }
-}
-
-function ValidaFechaNacimiento() {
-    try {
-        //Comprobamos que tenga formato correcto
-        //var Fecha_aux = document.getElementById("FechaNacimiento").value.split("/");
-        //var Fecha1 = new Date(parseInt(fecha_aux[2]),parseInt(fecha_aux[1]-1),parseInt(fecha_aux[0]));
-        //Comprobamos si existe la fecha
-        //if (isNaN(Fecha1)){
-        //alert("Fecha i ntroducida incorrecta");
-        //	return;
-        //}
-        var fecnac = new Date(document.getElementById("FechaNacimiento").value);
-        var Hoy = new Date();
-        var AnyoFecha = fecnac.getFullYear();
-        var AnyoHoy = Hoy.getFullYear();
-        var MesFecha = fecnac.getMonth() + 1;
-        var DiaFecha = fecnac.getDate();
-        var MesHoy = Hoy.getMonth() + 1;
-        var DiaHoy = Hoy.getDate();
-        //alert(AnyoFecha + " " + MesFecha + " " + DiaFecha);
-        //alert(AnyoHoy + " " + MesHoy + " " + DiaHoy);
-        //if ((DiaFecha > DiaHoy) && (MesFecha > MesHoy) && ((AnyoFecha + 18) > AnyoHoy)) {
-        //    alert("Fecha no puede ser menor que 18 años");
-         //   return;
-        //}
-    } catch (f) {
-        alert(f);
     }
 }
 

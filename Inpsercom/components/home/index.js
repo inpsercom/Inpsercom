@@ -3,10 +3,23 @@
 app.home = kendo.observable({
     onShow1: function () {
         Device_identifier = device.uuid;
+        var confIp = localStorage.getItem("urlService");
+
+        var switchInstance = $("#switch").data("kendoMobileSwitch");
+        if (confIp != "" && (confIp))
+        {
+            switchInstance.check(true);
+        }
+        else
+        {
+            switchInstance.check(false);
+        }
+        configIp();
         //alert(inspeccionar(device));
         if (localStorage.getItem("Inp_DatosUsuario")) {
             datos_Cliente = localStorage.getItem("Inp_DatosUsuario");
-            //kendo.mobile.application.navigate("components/miKia/view.html");
+            datos_Vehiculo = localStorage.getItem("Inp_DatosVehiculo");
+            kendo.mobile.application.navigate("components/miKia/view.html");
         }
     },
     afterShow: function () { }
@@ -70,6 +83,18 @@ app.localization.registerView('home');
 
 // START_CUSTOM_CODE_homeModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
+function configIp() {
+    // get a reference to the switch widget
+    var switchInstance = $("#switch").data("kendoMobileSwitch");
+    if (switchInstance.check()) {
+        urlService = urlInterno;
+    }
+    else {
+        urlService = urlExterno;
+    }
+    
+    localStorage.setItem("urlService", urlService);
 
+}
 
 // END_CUSTOM_CODE_homeModel
