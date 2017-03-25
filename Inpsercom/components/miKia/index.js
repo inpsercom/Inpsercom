@@ -42,6 +42,25 @@ function OrdenTrabajo() {
     kendo.mobile.application.navigate("components/OrdenesTrabajo/view.html");
 }
 
+function AgendarVin() {
+    kendo.mobile.application.navigate("components/AgregarVin/view.html");
+}
+
+function HistorialVin() {
+    kendo.mobile.application.navigate("components/HistorialVin/view.html");
+}
+
+function AgendarCita() {
+    kendo.mobile.application.navigate("components/AgendarCita/view.html");
+}
+
+function LocalizarKia() {
+    kendo.mobile.application.navigate("components/LocalizarAuto/view.html");
+}
+
+function ControlarKia() {
+    kendo.mobile.application.navigate("components/ControlarAuto/view.html");
+}
 // START_CUSTOM_CODE_miKia
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 

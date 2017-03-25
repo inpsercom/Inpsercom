@@ -3,7 +3,7 @@
 app.detalleOT = kendo.observable({
     onShow: function () {
         $("#detalleOT").kendoGrid({
-            selectable: "multiple cell",
+            selectable: "row",
             allowCopy: true,
             columns: [
                 {

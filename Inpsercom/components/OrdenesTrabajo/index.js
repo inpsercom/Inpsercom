@@ -47,6 +47,7 @@ function Consultar() {
      dataSource.read(); // "read()" will fire the "change" event of the dataSource and the widget will be bound*/
      if(document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value){alert("Fecha inicio no ha sido seleccionada"); return;}
      if(document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value ){alert("Fecha fin no ha sido seleccionada"); return;}
+     if(document.getElementById("FechaInicio").value > document.getElementById("FechaFin").value){alert("Fecha inicio no puede ser mayor que fecha fin"); return;}
      
     $("#listView").kendoGrid({
         allowCopy: true,

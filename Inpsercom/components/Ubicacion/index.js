@@ -5,11 +5,17 @@ app.miKia3 = kendo.observable({
         try {
             var cords = traeCordenadas();
             var PosVehi = { lat: parseFloat(cords.Latitud), lng: parseFloat(cords.Longitud) };
-            alert(inspeccionar(cords))
-            var color="red";
-            
-            if(cords.ApagadoEncendido==0){
-                color="black";
+
+//Calculo el % a restar al alto total de la pantalla para que el mapa se ajuste correctamente al 100%
+            var height = (screen.height * 25.46875) / 100;
+            var height1 = screen.height - height; //resto el valor en px que corresponde al % que sobra 
+            document.getElementById("map").style = "height:" + height1 + "px";
+
+            alert(inspeccionar(cords));
+            var color = "red";
+
+            if (cords.ApagadoEncendido == 0) {
+                color = "black";
             }
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 16,
