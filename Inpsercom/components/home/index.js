@@ -2,6 +2,7 @@
 
 app.home = kendo.observable({
     onShow1: function () {
+        
         Device_identifier = device.uuid;
         var confIp = localStorage.getItem("urlService");
 
@@ -14,13 +15,17 @@ app.home = kendo.observable({
         {
             switchInstance.check(false);
         }
+        try{
         configIp();
         //alert(inspeccionar(device));
         if (localStorage.getItem("Inp_DatosUsuario")) {
-            datos_Cliente = localStorage.getItem("Inp_DatosUsuario");
-            datos_Vehiculo = localStorage.getItem("Inp_DatosVehiculo");
+            //datos_Cliente = localStorage.getItem("Inp_DatosUsuario");
+            datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
+            //datos_Vehiculo = localStorage.getItem("Inp_DatosVehiculo");
+            datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
             kendo.mobile.application.navigate("components/miKia/view.html");
         }
+        }catch(f){alert("alerta"+f);}
     },
     afterShow: function () { }
 });

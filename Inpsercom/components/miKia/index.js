@@ -10,14 +10,23 @@ app.miKia = kendo.observable({
         $("#btnOrdenTrabajo").kendoButton();
         $("#btnControlar").kendoButton();
         $("#btnVehiculos").kendoButton();
-        
     },
     onShow: function () {
         try {
             var Registro = sessionStorage.getItem("Registro");
+            if (intervalo) {
+                clearInterval(intervalo);
+            }
             //var persona_Numero = Registro.persona_Numero;
             //alert("persona" + inspeccionar(Registro));
         } catch (f) { alert(f); }
+        if (datos_Vehiculo.estado_vh02 == false) {
+            document.getElementById("btnLocalizar").disabled = true;
+            document.getElementById("btnControlar").disabled = true;
+        } else {
+            document.getElementById("btnLocalizar").disabled = false;
+            document.getElementById("btnControlar").disabled = false;
+        }
     },
 
     afterShow: function () {
@@ -25,13 +34,17 @@ app.miKia = kendo.observable({
     }
 });
 app.localization.registerView('miKia');
-function logout(){
+function logout() {
     navigator.app.exitApp();
-   //kendo.mobile.application.navigate("components/home/view.html"); 
-   
+    //kendo.mobile.application.navigate("components/home/view.html"); 
+
 }
 function ConfigurarSherlock() {
-    kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
+    try {
+        kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
+    } catch (f) {
+        alert(f);
+    }
 }
 
 function AdmVehiculos() {
@@ -55,7 +68,8 @@ function AgendarCita() {
 }
 
 function LocalizarKia() {
-    kendo.mobile.application.navigate("components/LocalizarAuto/view.html");
+    kendo.mobile.application.navigate("components/Ubicacion/view.html");
+    //kendo.mobile.application.navigate("components/LocalizarAuto/view.html");
 }
 
 function ControlarKia() {

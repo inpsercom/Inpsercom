@@ -4,16 +4,18 @@
         <div data-role="navbar" class="header-text"> <span data-bind="text: strings.miKia.title"></span>
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left"
                 data-icon="drawer-button"></a>
-            <a data-align="right" class="fa fa-sign-out" onclick="logout();" aria-hidden="true" data-role="button"></a>
+            <a data-align="right" style="font-size:18px" class="fa fa-sign-out" onclick="logout();" aria-hidden="true"
+                data-role="button"></a>
         </div>
     </header>
-    <div data-role="content" style="background-image: url('resources/CarMenu.jpg');">
-        <!-- START_CUSTOM_CODE_miKia -->
+    <div data-role="content">
+        <!-- START_CUSTOM_CODE_miKia style="background-image: url('resources/CarMenu.jpg');"-->
         <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
         <table border="2px" style="text-align:center;width:100%;">
             <tr>
-                <td style="text-align:center;width:50%;" colspan="2" rowspan="2"> <button  id="btnAgendaCita" onclick="AgendarCita();">AGENDAR CITA</button> </td>
-                <td style="text-align:center;width:50%;"> <button id="btnAgendarVin" onclick="AgendarVin();">AGREGAR VIN</button> </td>
+                <td style="text-align:center;width:50%;" colspan="2" rowspan="2"> <button id="btnAgendaCita" onclick="AgendarCita();">AGENDAR CITA</button> </td>
+                <td style="text-align:center;width:50%;">
+                <button id="btnAgendarVin" onclick="AgendarVin();">AGREGAR VIN</button> </td>
             </tr>
             <tr>
                 <td style="text-align:center;width:50%;"><button id="btnHistoriaVin" onclick="HistorialVin();">HISTORIAL VIN</button></td>
@@ -22,10 +24,11 @@
         <table border="2px" style="text-align:center;width:100%;">
             <tr>
                 <td style="text-align:center;width:50%;"> <button id="btnCinfigurarSherlock" onclick="ConfigurarSherlock();">CONFIGURAR SHERLOCK</button> </td>
-                <td style="text-align:center;width:50%;" rowspan="3"> <button id="btnOrdenTrabajo" onclick="OrdenTrabajo();">ORDEN DE TRABAJO EN CURSO</button> </td>
+                <td
+                    style="text-align:center;width:50%;" rowspan="3"> <button id="btnOrdenTrabajo" onclick="OrdenTrabajo();">ORDEN DE TRABAJO EN CURSO</button> </td>
             </tr>
             <tr>
-                <td style="text-align:center;width:50%;"><button id="btnLocalizar" onclick="LocalizarKia();">LOCALIZAR MI KIA</button></td>
+                <td style="text-align:center;width:50%;"><button id="btnLocalizar" onclick="LocalizarKia();">LOCALIZAR     MI KIA</button></td>
             </tr>
         </table>
         <table border="2px" style="text-align:center;width:100%;">
@@ -40,5 +43,5 @@
         tr {
             width: 100%
         }
-        
-        <style> </div>
+    </style>
+</div>

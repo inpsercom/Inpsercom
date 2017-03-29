@@ -1,19 +1,22 @@
-<div data-role="view" data-title="Registro Vin" data-layout="main" data-model="app.mntRegistroVin" data-show="app.mntRegistroVin.onShow" data-after-show="app.mntRegistroVin.afterShow"
-    id="mntRegistroVinScreen" class="screen" data-before-show="app.mntRegistroVin.inicializa" data-use-native-scrolling="true" >
+<div data-role="view" data-title="Registro Vin" data-layout="main" data-model="app.mntRegistroVin" data-show="app.mntRegistroVin.onShow"
+    data-after-show="app.mntRegistroVin.afterShow" id="mntRegistroVinScreen" class="screen" data-before-show="app.mntRegistroVin.inicializa"
+    data-use-native-scrolling="true">
     <header data-role="header">
         <div data-role="navbar" class="header-text"><span data-role="view-title"></span>
-            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left"
+                data-icon="drawer-button"></a>
             <a data-align="right" class="fa fa-reply" href="components/miKia/view.html" aria-hidden="true" data-role="button"></a>
         </div>
     </header>
-    <div data-role="content" style="background-image: url('resources/CarMenu.jpg');">
-        <!-- START_CUSTOM_CODE_mntVehiculos -->
+    <div data-role="content">
+        <!-- START_CUSTOM_CODE_miKia2 style="background-image: url('resources/CarMenu.jpg');"-->
         <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-        <ul data-role="listview" data-style="inset">
-            <li>
-                <input type="text" value="Text" />
-            </li>
-        </ul>
+        <table border="2px" style="text-align:center;width:100%;">
+            <tr>
+                <td> <input type="text" id="VIN" placeholder="VIN"> </td>
+                <td> <button id="btn_activar" onclick="grabar();">GRABAR</button> </td>
+            </tr>
+        </table>
+        <div id="chasisview"></div>
     </div>
-    <!-- END_CUSTOM_CODE_mntVehiculos -->
 </div>

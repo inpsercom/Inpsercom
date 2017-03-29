@@ -2,7 +2,7 @@
 var NoOrden;
 app.miKia2 = kendo.observable({
     onShow: function () {
-        document.getElementById("NoOrden").value = "72363";
+        //document.getElementById("NoOrden").value = "72363";
         NoOrden = document.getElementById("NoOrden").value;
         if (NoOrden == "") {
             document.getElementById("ubicar").disabled = true;
@@ -32,7 +32,7 @@ app.localization.registerView('miKia2');
 
 function ubicarVehiculo() {
     try {
-        sessionStorage.setItem("Orden", NoOrden);
+        //sessionStorage.setItem("Orden", NoOrden);
         kendo.mobile.application.navigate("components/Ubicacion/view.html");
     } catch (e) {
         alert(e);
@@ -69,10 +69,21 @@ function habilitarOpciones() {
                             document.getElementById("ubicar").disabled = false;
                             document.getElementById("control").disabled = false;
                             kendo.ui.progress($("#miKia2Screen"), false);
+                            //grabar esdtado en progress
+                            datos_Vehiculo.estado_vh02 = true;
+                            datos_Cliente.numeroorden = NoOrden;
                         } else {
-                            alert(inspeccionar(data));
+                            alert("Cliente no esta activo");
+                            document.getElementById("ubicar").disabled = true;
+                            document.getElementById("control").disabled = true;
+                            datos_Vehiculo.estado_vh02 = false;
                             kendo.ui.progress($("#miKia2Screen"), false);
                         }
+                        document.getElementById("NoOrden").value = "";
+                        localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
+                        localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
+                        datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
+                        datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
                     } catch (e) {
                         alert(e);
                         kendo.ui.progress($("#miKia2Screen"), false);
@@ -88,8 +99,3 @@ function habilitarOpciones() {
         alert(e);
     }
 }
-
-// START_CUSTOM_CODE_miKia2
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_miKia2

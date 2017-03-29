@@ -23,7 +23,7 @@ app.localization.registerView('miKia6');
 function personaGet() {
     var _identificacion = document.getElementById("identificacion").value;
     if ((_identificacion != "") && (_identificacion)) {
-        var Url = "http://190.108.66.10:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/json/" + _identificacion;
+        var Url = urlService +  "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/json/" + _identificacion;
 
         try {
             $.ajax({
@@ -70,7 +70,7 @@ function registrar() {
         var password = document.getElementById("password").value;
         var repassword = document.getElementById("repassword").value;
         var numorden = document.getElementById("numorden").value;
-        var Url = "http://190.108.66.10:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
+        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
         var params = {
             "secuencia_mv01": 3,
             "identificacion_cliente": identificacion,

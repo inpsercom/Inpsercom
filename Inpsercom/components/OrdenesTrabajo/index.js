@@ -1,20 +1,25 @@
 'use strict';
-
+var registro;
 app.mntOTs = kendo.observable({
     onShow: function () {
         var fecha = new Date();
-        var year = fecha.getFullYear() - 18;
+        var year = fecha.getFullYear();
         var mes = fecha.getMonth();
         var dia = fecha.getDate();
+
         $("#FechaInicio").kendoDatePicker({
             ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
-            min: new Date(1900, 0, 1)
+            min: new Date(1900, 0, 1),
+            value: new Date(),
+            format: "dd-MM-yyyy"
             //max: new Date(year, mes, dia)
         });
         $("#FechaFin").kendoDatePicker({
             ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
-            min: new Date(1900, 0, 1)
-            //max: new Date(year, mes, dia)
+            min: new Date(1900, 0, 1),
+            max: new Date(year, mes, dia),
+            value: new Date(),
+            format: "dd-MM-yyyy"
         });
     },
     afterShow: function () { },
@@ -36,49 +41,64 @@ app.mntOTs = kendo.observable({
 app.localization.registerView('mntOTs');
 
 function Consultar() {
-    /* var dataSource = new kendo.data.DataSource({
-         data: [{ Fecha: "2017-03-23", NUmerOT: "590" }, {Fecha: "2017-03-24", NUmerOT: "670" }]
-     });
-     $("#listView").kendoListView({
-         dataSource: dataSource,
-         template: "<div>#:Fecha# #:NUmerOT#</div>" ,
-         autoBind: false
-     });
-     dataSource.read(); // "read()" will fire the "change" event of the dataSource and the widget will be bound*/
-     if(document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value){alert("Fecha inicio no ha sido seleccionada"); return;}
-     if(document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value ){alert("Fecha fin no ha sido seleccionada"); return;}
-     if(document.getElementById("FechaInicio").value > document.getElementById("FechaFin").value){alert("Fecha inicio no puede ser mayor que fecha fin"); return;}
-     
-    $("#listView").kendoGrid({
-        allowCopy: true,
-        columns: [
-            { field: "Fecha" },
-            { field: "NumeroOT" }
-        ],
-        dataSource: [
-            { Fecha: "2017-03-22", NumeroOT: "560" },
-            { Fecha: "2017-03-23", NumeroOT: "670" },
-            { Fecha: "2017-03-24", NumeroOT: "800" }
-        ],
-        selectable: "row",
-        change: function (e) {
-            var selectedRows = this.select();
-            var selectedDataItems = [];
-            for (var i = 0; i < selectedRows.length; i++) {
-                var dataItem = this.dataItem(selectedRows[i]);
-                selectedDataItems.push(dataItem);
+
+    if (document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value) { alert("Fecha inicio no ha sido seleccionada"); return; }
+    if (document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value) { alert("Fecha fin no ha sido seleccionada"); return; }
+    if (document.getElementById("FechaInicio").value > document.getElementById("FechaFin").value) { alert("Fecha inicio no puede ser mayor que fecha fin"); return; }
+    var usu = localStorage.getItem("Inp_DatosUsuario");
+    var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Ordenes/" + "2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value;
+    try {
+        var infor;
+        $.ajax({
+            url: Url,
+            type: "GET",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                try {
+                    infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
+                } catch (e) {
+                    alert(e);
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
             }
-            var fecha = selectedDataItems[0].Fecha;
-            var OT = selectedDataItems[0].NumeroOT;
+        });
 
-            alert("Fecha: " + fecha + ", NumeroOT: " + OT);
-            kendo.mobile.application.navigate("components/DetalleOT/view.html");
-        }
-    });
+        /*
+        codigo_empresa
+        numero_ot
+        nombre_taller
+        estado_interno
+        fecha_recepcion
+        anio_ga35
+        secuencia_orden
+        kilometraje
+        */
+        
+        $("#listView").kendoGrid({
+            allowCopy: true,
+            columns: [
+                { field: "fecha_recepcion", title: "Fecha" },
+                { field: "numero_ot", title: "No. OT" },
+                { field: "nombre_taller", title: "Taller" },
+                { field: "kilometraje", title: "Km." }
+            ],
+            dataSource: infor,
+            selectable: "row",
+            change: function (e) {
+                var selectedRows = this.select();
+                var selectedDataItems = [];
+                for (var i = 0; i < selectedRows.length; i++) {
+                    var dataItem = this.dataItem(selectedRows[i]);
+                    selectedDataItems.push(dataItem);
+                }
+                registro = selectedDataItems[0];
+                kendo.mobile.application.navigate("components/DetalleOT/view.html");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
 }
-
-
-// START_CUSTOM_CODE_miKia2
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_miKia2

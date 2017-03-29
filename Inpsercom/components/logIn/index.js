@@ -1,7 +1,7 @@
 'use strict';
 app.logIn = kendo.observable({
-    onShow: function () {document.getElementById("email").value = "s@s.com";
-    document.getElementById("password").value = "a"; //document.getElementById("id").focus();
+    onShow: function () {document.getElementById("email").value = "vinicio.orteg@inpsercom.com";
+    document.getElementById("password").value = "1"; //document.getElementById("id").focus();
     },
     afterShow: function () { }
 });
@@ -20,7 +20,6 @@ app.localization.registerView('logIn');
             errorMessage: '',
             validateData: function (data) {
                 var model = logInModel;
-                alert(data.email + ":   :" + data.password);
                 if (!data.email && !data.password) {
                     model.set('errorMessage', 'Missing credentials.');
                     return false;
@@ -40,7 +39,6 @@ app.localization.registerView('logIn');
             },
             signin: function () {
                 try {
-
                     var em = document.getElementById("email").value;
                     var pa = document.getElementById("password").value;
                     if (em == "" || !em ){alert("El Email no tiene datos");  document.getElementById("email").focus(); return;}
@@ -61,25 +59,29 @@ app.localization.registerView('logIn');
                         tipodocumento: tipo, //"R",
                         uid: "1234567890", // usu.Cliente[0].alta_movil_imei,
                         telefono_celular: usu.Cliente[0].telefono_celular, //"0995545554",
-                        numeroorden: "72363"
+                        numeroorden: "72363",
+                        secuencia_mv01: usu.Cliente[0].secuencia_mv01,
+                        mail: usu.Cliente[0].mail
                     };
-                    localStorage.setItem("Inp_DatosUsuario", Usuario);
+                    localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
                     datos_Cliente = Usuario;
                     var veh = validavehiculo(em);
+                    alert("emai"+ inspeccionar(veh));
                     var Vehiculo = {
-                        secuencia_mv01:  veh.Vehiculo[0].secuencia_mv01, //6,
-                        mail: veh.Vehiculo[0].mail, //"nerycarmela@hotmail.com",
-                        chasis: veh.Vehiculo[0].chasis, //"19JJDSXSMLSLXS",
-                        contrato_tipo: veh.Vehiculo[0].contrato_tipo, //"",
-                        contrato_estado: veh.Vehiculo[0].contrato_estado, //false,
-                        contrato_fecha_desde: veh.Vehiculo[0].contrato_fecha_desde, //"1900-01-01",
-                        contrato_fecha_hasta: veh.Vehiculo[0].contrato_fecha_hasta, //"1900-01-01",
-                        estado_vh02: veh.Vehiculo[0].estado_vh02, //false,
-                        alta_movil_imei: veh.Vehiculo[0].alta_movil_imei, // "",
-                        alta_movil_ip: veh.Vehiculo[0].alta_movil_ip // ""
+                        secuencia_mv01:  veh[0].secuencia_mv01, //6,
+                        mail: veh[0].mail, //"nerycarmela@hotmail.com",
+                        chasis: veh[0].chasis, //"19JJDSXSMLSLXS",
+                        contrato_tipo: veh[0].contrato_tipo, //"",
+                        contrato_estado: veh[0].contrato_estado, //false,
+                        contrato_fecha_desde: veh[0].contrato_fecha_desde, //"1900-01-01",
+                        contrato_fecha_hasta: veh[0].contrato_fecha_hasta, //"1900-01-01",
+                        estado_vh02: veh[0].estado_vh02, //false,
+                        alta_movil_imei: veh[0].alta_movil_imei, // "",
+                        alta_movil_ip: veh[0].alta_movil_ip // ""
 
                     }
-                    localStorage.setItem("Inp_DatosVehiculo", Vehiculo);
+                    alert(inspeccionar(Vehiculo));
+                    localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(Vehiculo));
                     datos_Vehiculo = Vehiculo;
                     kendo.mobile.application.navigate("components/miKia/view.html");
                 } catch (s) {
@@ -160,6 +162,7 @@ function validausuario(email) {
 }
 
 function validavehiculo(email) {
+    alert("entra"+email);
     if ((email != "") && (email)) {
         var resultado = "";
         var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
@@ -177,11 +180,11 @@ function validavehiculo(email) {
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
+                    alert("inicio"+JSON.stringify(err));
                 }
             });
         } catch (e) {
-            alert(e);
+            alert("fin"+e);
         }
         return resultado;
     }
