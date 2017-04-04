@@ -1,47 +1,52 @@
-<div data-role="view" data-layout="main-nonav" data-model="app.miKia" data-init="app.miKia.init" data-show="app.miKia.onShow"
-    data-after-show="app.miKia.afterShow" id="miKiaScreen" class="screen">
+<div data-role="view" data-title="View" data-layout="main" data-model="app.miKia" data-show="app.miKia.onShow" data-after-show="app.miKia.afterShow"
+    id="miKiaScreen" class="screen">
     <header data-role="header">
         <div data-role="navbar" class="header-text"> <span data-bind="text: strings.miKia.title"></span>
+        <span id="NumeroChasis" class="km-view-subtitle"></span>
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left"
                 data-icon="drawer-button"></a>
-            <a data-align="right" style="font-size:18px" class="fa fa-sign-out" onclick="logout();" aria-hidden="true"
-                data-role="button"></a>
+            <a data-align="right" class="fa fa-sign-out" onclick="logout()" aria-hidden="true" data-role="button"></a>
         </div>
     </header>
-    <div data-role="content">
-        <!-- START_CUSTOM_CODE_miKia style="background-image: url('resources/CarMenu.jpg');"-->
-        <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-        <table border="2px" style="text-align:center;width:100%;">
-            <tr>
-                <td style="text-align:center;width:50%;" colspan="2" rowspan="2"> <button id="btnAgendaCita" onclick="AgendarCita();">AGENDAR CITA</button> </td>
-                <td style="text-align:center;width:50%;">
-                <button id="btnAgendarVin" onclick="AgendarVin();">AGREGAR VIN</button> </td>
-            </tr>
-            <tr>
-                <td style="text-align:center;width:50%;"><button id="btnHistoriaVin" onclick="HistorialVin();">HISTORIAL VIN</button></td>
-            </tr>
-        </table>
-        <table border="2px" style="text-align:center;width:100%;">
-            <tr>
-                <td style="text-align:center;width:50%;"> <button id="btnCinfigurarSherlock" onclick="ConfigurarSherlock();">CONFIGURAR SHERLOCK</button> </td>
-                <td
-                    style="text-align:center;width:50%;" rowspan="3"> <button id="btnOrdenTrabajo" onclick="OrdenTrabajo();">ORDEN DE TRABAJO EN CURSO</button> </td>
-            </tr>
-            <tr>
-                <td style="text-align:center;width:50%;"><button id="btnLocalizar" onclick="LocalizarKia();">LOCALIZAR     MI KIA</button></td>
-            </tr>
-        </table>
-        <table border="2px" style="text-align:center;width:100%;">
-            <tr>
-                <td style="text-align:center;width:50%;"><button id="btnControlar" onclick="ControlarKia();">CONTROLAR MI KIA</button> </td>
-                <td style="text-align:center;width:50%;"><button id="btnVehiculos" onclick="AdmVehiculos();">ADMINISTRAR VEHICULOS</button> </td>
-            </tr>
-        </table>
-        <!-- END_CUSTOM_CODE_miKia -->
+    <div class="container fondoRojo">
+        <div class="row" style="padding-top:54px; padding-bottom:54px;">
+            <div class="col-xs-6 text-center">
+                <a onclick="AgendarCita()" class="icon-wrapper"> <span class="fa-stack fa-lg">
+              <i class="mi-icon fa-stack-2x"></i>
+              <i class="fa fa-calendar fa-stack-1x fa-inverse"></i>
+            </span> <span class="icon-text clearfix">Agendar Cita</span> </a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <a onclick="AgregarVin()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
+              <i class="mi-icon fa-stack-2x "></i>
+              <i class="fa fa-barcode fa-stack-1x fa-inverse"></i>
+            </span> </a> <span class="icon-text clearfix ">Agregar Vin</span> </div>
+            <div class="col-xs-6 text-center">
+                <a onclick="OrdenTrabajo()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
+              <i class="mi-icon fa-stack-2x "></i>
+              <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
+            </span> </a> <span class="icon-text clearfix ">Historial Vin</span> </div>
+            <div class="col-xs-6 text-center">
+                <a onclick="ConfigurarSherlock()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
+              <i class="mi-icon fa-stack-2x "></i>
+              <i class="fa fa-tasks fa-stack-1x fa-inverse"></i>
+            </span> </a> <span class="icon-text clearfix ">Configurar Sherlock</span> </div>
+            <div class="col-xs-6 text-center">
+                <a onclick="return;" class="icon-wrapper"> <span class="fa-stack fa-lg ">
+              <i class="mi-icon fa-stack-2x "></i>
+              <i class="fa fa-truck  fa-stack-1x fa-inverse"></i>
+            </span> </a> <span class="icon-text clearfix ">Orden de trabajo en curso</span> </div>
+            <div class="col-xs-6 text-center">
+                <a onclick="AdmVehiculos()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
+              <i class="mi-icon fa-stack-2x "></i>
+              <i class="fa fa-wifi fa-stack-1x fa-inverse"></i>
+            </span> </a> <span class="icon-text clearfix ">Administrar vehículos</span> </div>
+        </div>
     </div>
-    <style>
-        tr {
-            width: 100%
-        }
-    </style>
 </div>
+<style>
+    .fondoRojo {
+        background-color: #ff4350;
+    }
+</style>
+<!-- END_CUSTOM_CODE_miKia -->

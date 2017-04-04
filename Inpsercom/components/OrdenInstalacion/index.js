@@ -1,13 +1,17 @@
 'use strict';
 var NoOrden;
 app.miKia2 = kendo.observable({
+    
     onShow: function () {
-        //document.getElementById("NoOrden").value = "72363";
-        NoOrden = document.getElementById("NoOrden").value;
+        try{
+        $("#NoOrden").text(datos_Vehiculo.numeroorden);
+        NoOrden = datos_Vehiculo.numeroorden; 
         if (NoOrden == "") {
             document.getElementById("ubicar").disabled = true;
+            document.getElementById("recorrer").disabled = true;
             document.getElementById("control").disabled = true;
         }
+}catch(f){alert(f);}
     },
     afterShow: function () { },
     inicializa: function () {
@@ -26,6 +30,12 @@ app.miKia2 = kendo.observable({
                 controlVehiculo();
             }
         });
+        $("#recorrer").kendoButton({
+            click: function (e) {
+                recorrerAuto();
+            }
+        });
+    
     }
 });
 app.localization.registerView('miKia2');
@@ -38,6 +48,11 @@ function ubicarVehiculo() {
         alert(e);
     }
 }
+
+function recorrerAuto(){
+    return;
+}
+
 function controlVehiculo() {
     try {
         kendo.mobile.application.navigate("components/ControlVehiculo/view.html");
@@ -45,19 +60,19 @@ function controlVehiculo() {
         alert(e);
     }
 }
+
 function habilitarOpciones() {
     try {
-        NoOrden = document.getElementById("NoOrden").value;
-        if (NoOrden != "") {
+        var NoOrden1 = document.getElementById("NoOrdenn").value;
+        if (NoOrden1 != "") {
             kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
-            //var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/U"; 
+            //var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/U";
             var params = {
-                orden: NoOrden,
+                orden: NoOrden1,
                 output: "json"
             };
-
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -67,16 +82,19 @@ function habilitarOpciones() {
                     try {
                         if (data.estadoServicio == "A") {
                             document.getElementById("ubicar").disabled = false;
+                            document.getElementById("recorrer").disabled = false;
                             document.getElementById("control").disabled = false;
                             kendo.ui.progress($("#miKia2Screen"), false);
                             //grabar esdtado en progress
                             datos_Vehiculo.estado_vh02 = true;
-                            datos_Cliente.numeroorden = NoOrden;
+                            datos_Vehiculo.numeroorden = NoOrden1;
+                            document.getElementById("NoOrdenn").value = "";
                         } else {
                             alert("Cliente no esta activo");
                             document.getElementById("ubicar").disabled = true;
                             document.getElementById("control").disabled = true;
                             datos_Vehiculo.estado_vh02 = false;
+                            datos_Vehiculo.numeroorden = "";
                             kendo.ui.progress($("#miKia2Screen"), false);
                         }
                         document.getElementById("NoOrden").value = "";

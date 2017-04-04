@@ -7,7 +7,6 @@ app.mntVehiculos = kendo.observable({
             if ((email != "") && (email)) {
                 var resultado = "";
                 var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
-                alert(Url);
                 try {
                     $.ajax({
                         url: Url,
@@ -15,7 +14,6 @@ app.mntVehiculos = kendo.observable({
                         dataType: "json",
                         async: false,
                         success: function (data) {
-                            alert(inspeccionar(data));
                             try {
                                 resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
                                 $("#nuevochasisview").kendoGrid({
@@ -27,7 +25,6 @@ app.mntVehiculos = kendo.observable({
                                     selectable: "row",
                                     change: function (e) {
                                         try {
-                                            alert("funcion chan");
                                             var selectedRows = this.select();
                                             var selectedDataItems = [];
                                             for (var i = 0; i < selectedRows.length; i++) {
@@ -40,6 +37,7 @@ app.mntVehiculos = kendo.observable({
                                             localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
                                             datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
                                             datos_Vehiculo.chasis = registro.chasis;
+                                            datos_Vehiculo.numeroorden = registro.numeroorden;
                                             localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
                                             datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
                                             kendo.mobile.application.navigate("components/miKia/view.html");

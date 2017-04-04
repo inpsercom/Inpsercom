@@ -24,7 +24,6 @@ function personaGet() {
     var _identificacion = document.getElementById("identificacion").value;
     if ((_identificacion != "") && (_identificacion)) {
         var Url = urlService +  "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/json/" + _identificacion;
-
         try {
             $.ajax({
                 url: Url,
@@ -80,14 +79,14 @@ function registrar() {
             "chasis": chasis,
             "fecha_nacimiento": FechaNacimiento,
             "telefono_celular": celular,
-            "numeroorden": numorden,
+            //"numeroorden": numorden,
             "password": password,
-            "persona_numero": persona_numero,
-            "alta_movil_imei": Device_identifier
+            "persona_numero": persona_numero
+            //"alta_movil_imei": Device_identifier
             //output: "json"
         };
-        localStorage.setItem("Inp_DatosUsuario", params);
-        
+        //localStorage.setItem("Inp_DatosUsuario", params);
+       //alert(inspeccionar(params));
         
         //kendo.mobile.application.navigate("components/miKia/view.html");
         var indicador = 0;
@@ -119,12 +118,13 @@ function registrar() {
                         try {
                             alert("Registro Exitoso");
                             sessionStorage.setItem("Registro", params);
-                            kendo.mobile.application.navigate("components/home/view.html");
+                            kendo.mobile.application.navigate("components/mikia/view.html");
                             return;
                         } catch (s) {
                             alert(s);
                         }
                     }
+                    return;
                 } catch (e) {
                     //debugger;
                     alert(e);
@@ -190,6 +190,3 @@ function borraCampos() {
     document.getElementById("FechaNacimiento").value = "";
     document.getElementById("celular").value = "";
 }
-
-
-// END_CUSTOM_CODE_miKia6

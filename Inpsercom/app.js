@@ -2,7 +2,8 @@
 var datos_Cliente, Device_identifier, datos_Vehiculo, urlService;
 var urlInterno = 'http://IPS10:8089';
 var urlExterno = 'http://190.108.66.10:8089';
-(function() {
+var notificationWidget;
+(function () {
     var app = {
         data: {},
         localization: {
@@ -17,8 +18,8 @@ var urlExterno = 'http://190.108.66.10:8089';
         }
     };
 
-    var bootstrap = function() {
-        $(function() {
+    var bootstrap = function () {
+        $(function () {
             app.mobileApp = new kendo.mobile.Application(document.body, {
                 skin: 'nova',
                 initial: 'components/home/view.html'
@@ -28,32 +29,32 @@ var urlExterno = 'http://190.108.66.10:8089';
         });
     };
 
-    $(document).ready(function() {
-
+    $(document).ready(function () {
+        notificationWidget = $("#notification").kendoNotification().data("kendoNotification");
         app.notification = $("#notify");
 
     });
 
-    app.showNotification = function(message, time) {
+    app.showNotification = function (message, time) {
         var autoHideAfter = time ? time : 3000;
         app.notification.find('.notify-pop-up__content').html(message);
         app.notification.fadeIn("slow").delay(autoHideAfter).fadeOut("slow");
     };
 
     if (window.cordova) {
-        document.addEventListener('deviceready', function() {
+        document.addEventListener('deviceready', function () {
             if (navigator && navigator.splashscreen) {
                 navigator.splashscreen.hide();
             }
 
             var element = document.getElementById('appDrawer');
-            if (typeof(element) != 'undefined' && element !== null) {
+            if (typeof (element) != 'undefined' && element !== null) {
                 if (window.navigator.msPointerEnabled) {
-                    $('#navigation-container').on('MSPointerDown', 'a', function(event) {
+                    $('#navigation-container').on('MSPointerDown', 'a', function (event) {
                         app.keepActiveState($(this));
                     });
                 } else {
-                    $('#navigation-container').on('touchstart', 'a', function(event) {
+                    $('#navigation-container').on('touchstart', 'a', function (event) {
                         app.keepActiveState($(this).closest('li'));
                     });
                 }
@@ -73,7 +74,7 @@ var urlExterno = 'http://190.108.66.10:8089';
 
     window.app = app;
 
-    app.isOnline = function() {
+    app.isOnline = function () {
         if (!navigator || !navigator.connection) {
             return true;
         } else {
@@ -81,7 +82,7 @@ var urlExterno = 'http://190.108.66.10:8089';
         }
     };
 
-    app.openLink = function(url) {
+    app.openLink = function (url) {
         if (url.substring(0, 4) === 'geo:' && device.platform === 'iOS') {
             url = 'http://maps.apple.com/?ll=' + url.substring(4, url.length);
         }
@@ -95,8 +96,8 @@ var urlExterno = 'http://190.108.66.10:8089';
 
     /// start appjs functions
     /// end appjs functions
-    app.showFileUploadName = function(itemViewName) {
-        $('.' + itemViewName).off('change', 'input[type=\'file\']').on('change', 'input[type=\'file\']', function(event) {
+    app.showFileUploadName = function (itemViewName) {
+        $('.' + itemViewName).off('change', 'input[type=\'file\']').on('change', 'input[type=\'file\']', function (event) {
             var target = $(event.target),
                 inputValue = target.val(),
                 fileName = inputValue.substring(inputValue.lastIndexOf('\\') + 1, inputValue.length);
@@ -106,8 +107,8 @@ var urlExterno = 'http://190.108.66.10:8089';
 
     };
 
-    app.clearFormDomData = function(formType) {
-        $.each($('.' + formType).find('input:not([data-bind]), textarea:not([data-bind])'), function(key, value) {
+    app.clearFormDomData = function (formType) {
+        $.each($('.' + formType).find('input:not([data-bind]), textarea:not([data-bind])'), function (key, value) {
             var domEl = $(value),
                 inputType = domEl.attr('type');
 
@@ -124,10 +125,10 @@ var urlExterno = 'http://190.108.66.10:8089';
 
     /// start kendo binders
     kendo.data.binders.widget.buttonText = kendo.data.Binder.extend({
-        init: function(widget, bindings, options) {
+        init: function (widget, bindings, options) {
             kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
         },
-        refresh: function() {
+        refresh: function () {
             var that = this,
                 value = that.bindings["buttonText"].get();
 
@@ -135,30 +136,30 @@ var urlExterno = 'http://190.108.66.10:8089';
         }
     });
     /// end kendo binders
-}());
+} ());
 
 /// start app modules
 (function localization(app) {
     var localization = app.localization = kendo.observable({
-            cultures: app.localization.cultures,
-            defaultCulture: app.localization.defaultCulture,
-            currentCulture: '',
-            strings: {},
-            viewsNames: [],
-            registerView: function(viewName) {
-                app[viewName].set('strings', getStrings() || {});
+        cultures: app.localization.cultures,
+        defaultCulture: app.localization.defaultCulture,
+        currentCulture: '',
+        strings: {},
+        viewsNames: [],
+        registerView: function (viewName) {
+            app[viewName].set('strings', getStrings() || {});
 
-                this.viewsNames.push(viewName);
-            }
-        }),
+            this.viewsNames.push(viewName);
+        }
+    }),
         i, culture, cultures = localization.cultures,
-        getStrings = function() {
+        getStrings = function () {
             var code = localization.get('currentCulture'),
                 strings = localization.get('strings')[code];
 
             return strings;
         },
-        updateStrings = function() {
+        updateStrings = function () {
             var i, viewName, viewsNames,
                 strings = getStrings();
 
@@ -174,7 +175,7 @@ var urlExterno = 'http://190.108.66.10:8089';
                 app.navigation.viewModel.set('strings', strings);
             }
         },
-        loadCulture = function(code) {
+        loadCulture = function (code) {
             $.getJSON('cultures/' + code + '/app.json',
                 function onLoadCultureStrings(data) {
                     localization.strings.set(code, data);
@@ -224,8 +225,21 @@ function inspeccionar(obj) {
     }
 }
 function beforeDrawerShow(e) {
-    if ((e.view.currentView.id == "components/home/view.html")||(e.view.currentView.id == "components/logIn/view.html")||(e.view.currentView.id == "components/Registro/view.html")) {
+    if ((e.view.currentView.id == "components/home/view.html") || (e.view.currentView.id == "components/logIn/view.html") || (e.view.currentView.id == "components/Registro/view.html")) {
         e.preventDefault();
     }
 }
-// END_CUSTOM_CODE_kendoUiMobileApp
+
+function mens(Mensaje, Tipo) {
+    var valorIzq = (Mensaje.length) * 4;
+    notificationWidget.setOptions({
+        position: {
+            top: Math.floor($(window).width() / 2),
+            left: Math.floor($(window).width() / 2 - valorIzq),
+            bottom: 0,
+            right: 0
+        }
+    });
+    notificationWidget.showText(Mensaje, Tipo);
+}
+

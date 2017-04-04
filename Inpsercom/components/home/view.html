@@ -10,7 +10,8 @@
                 </li>
             </ul>-->
             <div class="button-group">
-                <label> Ip publica/interna <input id="switch" onclick="configIp();" type="checkbox" data-role="switch" /> </label>
+                <label> Ip publica/interna <input id="switch" onclick="configIps();" type="checkbox" data-role="switch" /> </label>
+                <!-- <input id="switch" data-change="configIps();" type="checkbox" data-role="switch" />-->
             </div>            
             <div class="button-group">
                 <a class="primary" data-role="button" data-bind="events: { click: homeModel.ingresar }, buttonText: strings.home.homeModel.submitButton"></a>

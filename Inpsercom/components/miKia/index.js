@@ -2,31 +2,43 @@
 
 app.miKia = kendo.observable({
     init: function () {
+       /* try{
         $("#btnAgendaCita").kendoButton();
         $("#btnAgendarVin").kendoButton();
         $("#btnHistoriaVin").kendoButton();
-        $("#btnLocalizar").kendoButton();
+        //$("#btnLocalizar").kendoButton();
         $("#btnCinfigurarSherlock").kendoButton();
         $("#btnOrdenTrabajo").kendoButton();
-        $("#btnControlar").kendoButton();
+        //$("#btnControlar").kendoButton();
         $("#btnVehiculos").kendoButton();
+        }catch(f){alert(f);}*/
     },
     onShow: function () {
-        try {
+        $("#NumeroChasis").text(datos_Cliente.chasis);
+        var Registro = sessionStorage.getItem("Registro");
+        /*try {
+            $("#Chasis").text(datos_Cliente.chasis);
+            var nombre = "Luis";
+            mens("Bienvenido", "warning");
+            mens(nombre,"error");
+            mens("aprob","success");
             var Registro = sessionStorage.getItem("Registro");
             if (intervalo) {
                 clearInterval(intervalo);
             }
+            
             //var persona_Numero = Registro.persona_Numero;
             //alert("persona" + inspeccionar(Registro));
         } catch (f) { alert(f); }
+        try{
         if (datos_Vehiculo.estado_vh02 == false) {
-            document.getElementById("btnLocalizar").disabled = true;
-            document.getElementById("btnControlar").disabled = true;
+            //document.getElementById("btnLocalizar").disabled = true;
+            //document.getElementById("btnControlar").disabled = true;
         } else {
-            document.getElementById("btnLocalizar").disabled = false;
-            document.getElementById("btnControlar").disabled = false;
+            //document.getElementById("btnLocalizar").disabled = false;
+            //document.getElementById("btnControlar").disabled = false;
         }
+        }catch(f){alert(f);}*/
     },
 
     afterShow: function () {
@@ -40,11 +52,7 @@ function logout() {
 
 }
 function ConfigurarSherlock() {
-    try {
-        kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
-    } catch (f) {
-        alert(f);
-    }
+     kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
 }
 
 function AdmVehiculos() {
@@ -55,12 +63,13 @@ function OrdenTrabajo() {
     kendo.mobile.application.navigate("components/OrdenesTrabajo/view.html");
 }
 
-function AgendarVin() {
+function AgregarVin() {
     kendo.mobile.application.navigate("components/AgregarVin/view.html");
 }
 
 function HistorialVin() {
-    kendo.mobile.application.navigate("components/HistorialVin/view.html");
+    kendo.mobile.application.navigate("components/OrdenesTrabajo/view.html");
+    //kendo.mobile.application.navigate("components/HistorialVin/view.html");
 }
 
 function AgendarCita() {

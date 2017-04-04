@@ -37,52 +37,25 @@ app.detalleOT = kendo.observable({
                 columns: [
                     { field: "Descripcion", title: "Descripción", footerTemplate: "Total:" },
                     { field: "Cantidad", title: "Cantidad", footerTemplate: "#: sum # " },
-                    { field: "Total", title: "Total", footerTemplate: "$ #: sum # " }
+                    {
+                        field: "Total", format: "{0:c}", title: "Total",
+                        footerTemplate: "#= kendo.toString(sum, '0.00') #"
+                    }
+
                 ],
                 dataSource: {
-                data: infordet,
-                aggregate: [
-                    { field: "Descripcion", aggregate: "count" },
-                    { field: "Cantidad", aggregate: "sum" },
-                    { field: "Total", aggregate: "sum" }
-                ]
-            },
-                selectable: "row"                
+                    data: infordet,
+                    aggregate: [
+                        { field: "Descripcion", aggregate: "count" },
+                        { field: "Cantidad", aggregate: "sum" },
+                        { field: "Total", aggregate: "sum" }
+                    ]
+                },
+                selectable: "row"
             });
         } catch (e) {
             alert(e);
         }
-        /*$("#detalleOT").kendoGrid({
-            selectable: "row",
-            allowCopy: true,
-            columns: [
-                {
-                    field: "Parte",
-                    footerTemplate: "Total:"
-                },
-                {
-                    field: "Tiempo",
-                    footerTemplate: " #: sum #  Horas"
-                },
-                {
-                    field: "Precio",
-                    footerTemplate: "$ #: sum # "
-                }
-            ],
-            dataSource: {
-                data: [
-                    { Parte: "Cambio de aceite", Tiempo: 0.70, Precio: 35.10 },
-                    { Parte: "Cambio de llantas", Tiempo: 0.70, Precio: 35.10 },
-                    { Parte: "Cambio de banda", Tiempo: 0.70, Precio: 35.10 },
-                    { Parte: "Cambio de liquidos", Tiempo: 0.70, Precio: 35.10 }
-                ],
-                aggregate: [
-                    { field: "Parte", aggregate: "count" },
-                    { field: "Tiempo", aggregate: "sum" },
-                    { field: "Precio", aggregate: "sum" }
-                ]
-            }
-        });*/
     },
     afterShow: function () { },
     inicializa: function () {

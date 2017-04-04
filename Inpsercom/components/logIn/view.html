@@ -1,5 +1,4 @@
-<div data-role="view" data-layout="main-nonav" data-model="app.logIn" data-show="app.logIn.onShow" data-after-show="app.logIn.afterShow"
-    id="logInScreen" class="screen" style="align:center">
+<div data-role="view" data-layout="main-nonav" data-model="app.logIn" data-show="app.logIn.onShow" data-after-show="app.logIn.afterShow" id="logInScreen" class="screen" style="align:center">
     <header data-role="header">
         <div data-role="navbar" class="header-text"> <span data-bind="text: strings.logIn.title"></span>
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left"
@@ -7,35 +6,26 @@
         </div>
     </header>
     <div data-role="content" class="general">
-        <!--  <div style="width:70%; background: white;" class="blanco">    value: logInModel.email
-            style="background-image: url('resources/CarSeat.jpg');" -->
         <div class="blanco">
             <form>
                 <div class="form-group">
-                    <div class="col-xs-12"> <input type="email" class="form-control" id="email" placeholder="ID" required="true" autofocus onblur="ValidaMail();">                        </div>
+                    <div class="col-xs-12"> <input type="email" class="form-control" id="email" placeholder="Email" onblur="ValidaMail();"></div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12"> <input type="password" class="form-control" id="password" data-bind="value: logInModel.password" placeholder="Password"
-                            required="true" onblur="ValidaMail();"> </div>
+                    <div class="col-xs-12"> <input type="password" class="form-control" id="password" placeholder="Password"> </div>
                 </div>
                 <ul data-role="listview">
-                    <!-- <li> <input type="email"  id="email" required autofocus placeholder="ID" onblur="ValidaMail();"> </li>
-                        <li> <input type="password" data-bind="value: logInModel.password" id="password" required placeholder="Password"> </li> -->
                     <li> <a href="components/RecuperarContrasena/view.html">Olvide contraseña</a> </li>
                 </ul>
-                <div class="button-group button-group-vertical">
-                    <a data-role="button" class="primary" data-bind="events: { click: logInModel.signin }, buttonText: strings.logIn.logInModel.signinLabel"></a>
-                </div>
+                <div class="button-group button-group-vertical"> <a data-role="button" class="primary" onclick="signin()">Iniciar Sesión</a> </div>
             </form>
         </div>
-        <!-- </div>-->
     </div>
     <style>
         .general {
             text-align: left;
             margin: auto;
         }
-        
         .blanco {
             display: inline-block;
             background-color: #EEE;
@@ -44,7 +34,6 @@
             margin: 1rem;
             text-align: left;
         }
-        
         .screen {
             text-align: left;
             margin: auto;

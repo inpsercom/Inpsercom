@@ -2,12 +2,10 @@
 
 app.home = kendo.observable({
     onShow1: function () {
-        
         Device_identifier = device.uuid;
         var confIp = localStorage.getItem("urlService");
-
         var switchInstance = $("#switch").data("kendoMobileSwitch");
-        if (confIp != "" && (confIp))
+        if (confIp == urlInterno)
         {
             switchInstance.check(true);
         }
@@ -16,7 +14,7 @@ app.home = kendo.observable({
             switchInstance.check(false);
         }
         try{
-        configIp();
+        configIps();
         //alert(inspeccionar(device));
         if (localStorage.getItem("Inp_DatosUsuario")) {
             //datos_Cliente = localStorage.getItem("Inp_DatosUsuario");
@@ -25,7 +23,7 @@ app.home = kendo.observable({
             datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
             kendo.mobile.application.navigate("components/miKia/view.html");
         }
-        }catch(f){alert("alerta"+f);}
+        }catch(f){alert(f);}
     },
     afterShow: function () { }
 });
@@ -54,7 +52,7 @@ app.localization.registerView('home');
             /// start add model functions
             ingresar: function () {
                 try {
-
+                    configIps();
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 } catch (s) {
 
@@ -63,6 +61,7 @@ app.localization.registerView('home');
             },
             registro: function () {
                 try {
+                    configIps();
                     kendo.mobile.application.navigate("components/Registro/view.html");
                 } catch (s) {
                     alert(s);
@@ -88,7 +87,7 @@ app.localization.registerView('home');
 
 // START_CUSTOM_CODE_homeModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-function configIp() {
+function configIps() {
     // get a reference to the switch widget
     var switchInstance = $("#switch").data("kendoMobileSwitch");
     if (switchInstance.check()) {
@@ -97,7 +96,6 @@ function configIp() {
     else {
         urlService = urlExterno;
     }
-    
     localStorage.setItem("urlService", urlService);
 
 }

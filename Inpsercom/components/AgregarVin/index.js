@@ -48,11 +48,11 @@ function grabar() {
                         validavehiculo(params.mail);
                         return;
                     } catch (s) {
-                        alert(s);
+                        alert("1" + s);
                     }
                 } else { alert("Error: " + data); }
             } catch (e) {
-                alert(e);
+                alert("2" + e);
             }
         },
         error: function (err) {
@@ -61,7 +61,7 @@ function grabar() {
         }
     });
 }
-
+var grid;
 function validavehiculo(email) {
     if ((email != "") && (email)) {
         var resultado = "";
@@ -79,27 +79,72 @@ function validavehiculo(email) {
                             allowCopy: true,
                             columns: [
                                 { field: "mail", title: "Email" },
-                                { field: "chasis", title: "VIN" }
-                            ],
+                                { field: "chasis", title: "VIN" },
+                                { command: [{ name: "destroy", text: "Eliminar" }] }],
                             dataSource: resultado,
-                            selectable: "row"
+                            editable: {
+                                confirmation: "Quieres borrar este registro?"
+                            }
                         });
+                        grid = $("#chasisview").data("kendoGrid");
+                        grid.bind("remove", grid_remove);
                     } catch (e) {
-                        borraCampos();
+                        //orraCampos();
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
+                    alert("4" + JSON.stringify(err));
                 }
             });
         } catch (e) {
-            alert(e);
+            alert("5" + e);
         }
         return resultado;
     }
 }
+function grid_remove(e) {
+    try {
+        actualiza("4;" + e.model.mail + ";" + e.model.chasis);
+    } catch (s) {
+        alert(s);
+    }
+}
 
+function actualiza(chasisemail) {
+    var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/EliminaV";
+    var params = {
+        "vin": chasisemail
+        //output: "json"
+    };
+    $.ajax({
+        url: Url,
+        type: "POST",
+        data: JSON.stringify(params),
+        dataType: "json",
+        //Content-Type: application/json
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        success: function (data) {
+            try {
+                if (data == "Success") {
+                    try {
+                        alert("Se elimino el registro");
+                        return data;
+                    } catch (s) {
+                        alert("6" + s);
+                    }
+                } else { alert("Error: " + data); }
+            } catch (e) {
+                alert("7" + e);
+            }
+        },
+        error: function (err) {
+            alert("8" + JSON.stringify(err));
 
+        }
+    });
+}
 // START_CUSTOM_CODE_miKia2
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
