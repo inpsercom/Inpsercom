@@ -17,13 +17,7 @@
     }
   },
   "logIn": {
-    "title": "LogIn",
-    "logInModel": {
-      "emailLabel": "Id",
-      "passwordLabel": "Password",
-      "signinLabel": "Ingresar",
-      "remembermeLabel": "Auto LogIn"
-    }
+    "title": "LogIn"
   },
   "miKia": {
     "title": "Mi Kia"

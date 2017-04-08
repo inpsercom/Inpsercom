@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Registro Vehiculos" data-layout="main" data-model="app.mntVehiculos" data-show="app.mntVehiculos.onShow"
+<div data-role="view" data-title="Registro Vehículos" data-layout="main" data-model="app.mntVehiculos" data-show="app.mntVehiculos.onShow"
     data-after-show="app.mntVehiculos.afterShow" id="mntVehiculosScreen" class="screen" data-before-show="app.mntVehiculos.inicializa"
     data-use-native-scrolling="true">
     <header data-role="header">
@@ -11,9 +11,19 @@
     <div data-role="content">
         <!-- START_CUSTOM_CODE_mntVehiculos style="background-image: url('resources/CarMenu.jpg');"-->
         <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+        </br>Asignar Vehículo
         <ul data-role="listview" data-style="inset">
             <div id="nuevochasisview"></div>
         </ul>
+        </br></br></br></br></br></br></br></br></br>Agregar Vehículo
+        <table border="2px" style="text-align:center;width:100%;">
+            <tr>
+                <td> <input type="text" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" id="VIN" placeholder="Vehículo"> </td>
+                <td> <button id="btn_activar" onclick="grabar();">Grabar</button> </td>
+            </tr>
+        </table>
+        <div id="chasisview"></div>
     </div>
+    
     <!-- END_CUSTOM_CODE_mntVehiculos -->
 </div>

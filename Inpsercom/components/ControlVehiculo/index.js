@@ -9,9 +9,10 @@ app.localization.registerView('miKia4');
 
 function aperturaRemota(){
     try {
+        //NoOrden = 72353;
         if (NoOrden != "") {
             alert("AUTO ABIERTO LAS PUERTAS");
-            kendo.ui.progress($("#miKia2Screen"), true);
+            /*kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             //var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
             var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/A?" + NoOrden; 
@@ -24,9 +25,10 @@ function aperturaRemota(){
                 type: "GET",
                 data: params,
                 dataType: "json",
+                async: false,
                 success: function (data) {
                     try {
-                        alert(inspeccionar(data));
+                        //alert(inspeccionar(data));
                     } catch (e) {
                         alert(e);
                         kendo.ui.progress($("#miKia2Screen"), false);
@@ -36,7 +38,7 @@ function aperturaRemota(){
                     alert(JSON.stringify(err));
                     kendo.ui.progress($("#miKia2Screen"), false);
                 }
-            });
+            });*/
         }
     } catch (e) {
         alert(e);
@@ -45,6 +47,7 @@ function aperturaRemota(){
 
 function desbloqueAuto(){
     try {
+        //NoOrden = 72353;
         if (NoOrden != "") {
             alert("AUTO DESBLOQUEDO");
             /*kendo.ui.progress($("#miKia2Screen"), true);
@@ -60,9 +63,10 @@ function desbloqueAuto(){
                 type: "GET",
                 data: params,
                 dataType: "json",
+                async: false,
                 success: function (data) {
                     try {
-                        alert(inspeccionar(data));
+                        //alert(inspeccionar(data));
                     } catch (e) {
                         alert(e);
                         kendo.ui.progress($("#miKia2Screen"), false);
@@ -81,6 +85,7 @@ function desbloqueAuto(){
 
 function bloqueAuto() {
     try {
+        //NoOrden = 72353;
         if (NoOrden != "") {
             alert("AUTO BLOQUEDO");
             /*kendo.ui.progress($("#miKia2Screen"), true);
@@ -96,6 +101,7 @@ function bloqueAuto() {
                 type: "GET",
                 data: params,
                 dataType: "json",
+                async: false,
                 success: function (data) {
                     try {
                         

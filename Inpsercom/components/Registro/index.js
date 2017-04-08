@@ -28,6 +28,7 @@ function personaGet() {
             $.ajax({
                 url: Url,
                 type: "GET",
+                async: false,
                 dataType: "json",
                 success: function (data) {
                     try {
@@ -101,11 +102,12 @@ function registrar() {
         if (indicador == 1) {
             alert("Verificar datos en blanco"); return;
         }
-
+alert(Url);
         $.ajax({
             url: Url,
             type: "POST",
             data: JSON.stringify(params),
+            async: false,
             dataType: "json",
             //Content-Type: application/json
             headers: {
@@ -118,7 +120,7 @@ function registrar() {
                         try {
                             alert("Registro Exitoso");
                             sessionStorage.setItem("Registro", params);
-                            kendo.mobile.application.navigate("components/mikia/view.html");
+                            kendo.mobile.application.navigate("components/miKia/view.html");
                             return;
                         } catch (s) {
                             alert(s);

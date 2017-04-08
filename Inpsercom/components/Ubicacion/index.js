@@ -3,9 +3,8 @@ var map, marker, color, icon;
 app.miKia3 = kendo.observable({
     onShow: function () {
         try {
-            var cords = traeCordenadas();
+            var cords = traeCordenadasUbica();
             var PosVehi = { lat: parseFloat(cords.Latitud), lng: parseFloat(cords.Longitud) };
-
             //Calculo el % a restar al alto total de la pantalla para que el mapa se ajuste correctamente al 100%
             var height = (screen.height * 25.46875) / 100;
             var height1 = screen.height - height; //resto el valor en px que corresponde al % que sobra 
@@ -53,7 +52,7 @@ function reload() {
 }
 function reload2() {
     try {
-        var cords = traeCordenadas();
+        var cords = traeCordenadasUbica();
 
         var PosVehi = new google.maps.LatLng(
             cords.Latitud,
@@ -91,7 +90,7 @@ function reload2() {
 // END_CUSTOM_CODE_miKia3
 
 
-function traeCordenadas() {
+function traeCordenadasUbica() {
     try {
         var cords;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");

@@ -22,6 +22,8 @@ app.home = kendo.observable({
             //datos_Vehiculo = localStorage.getItem("Inp_DatosVehiculo");
             datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
             kendo.mobile.application.navigate("components/miKia/view.html");
+            //alert(inspeccionar(datos_Vehiculo));
+            //alert(inspeccionar(datos_Cliente));
         }
         }catch(f){alert(f);}
     },

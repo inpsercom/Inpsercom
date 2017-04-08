@@ -1,7 +1,6 @@
 'use strict';
 app.logIn = kendo.observable({
-    onShow: function () {
-    },
+    onShow: function () { },
     afterShow: function () { }
 });
 app.localization.registerView('logIn');
@@ -11,7 +10,7 @@ function signin() {
         var em = document.getElementById("email").value;
         var pa = document.getElementById("password").value;
         if (em == "" || !em) { alert("El Email no tiene datos"); return; }
-        if (pa == "" || !pa) { alert("El Password no tiene datos");document.getElementById("password").focus(); return; }
+        if (pa == "" || !pa) { alert("El Password no tiene datos"); document.getElementById("password").focus(); return; }
         var resul = validaLogin(document.getElementById("email").value, document.getElementById("password").value);
         if (resul == "false" || resul == "" || !resul) {
             alert("El ID o password son incorrectos por favor verifique");
@@ -37,25 +36,29 @@ function signin() {
         };
         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
         datos_Cliente = Usuario;
-        var veh = validavehiculo(em);
-        var Vehiculo = {
-            secuencia_mv01: veh[0].secuencia_mv01, //6,
-            mail: veh[0].mail, //"nerycarmela@hotmail.com",
-            chasis: veh[0].chasis, //"19JJDSXSMLSLXS",
-            numeroorden: veh[0].numeroorden,
-            contrato_tipo: veh[0].contrato_tipo, //"",
-            contrato_estado: veh[0].contrato_estado, //false,
-            contrato_fecha_desde: veh[0].contrato_fecha_desde, //"1900-01-01",
-            contrato_fecha_hasta: veh[0].contrato_fecha_hasta, //"1900-01-01",
-            estado_vh02: veh[0].estado_vh02, //false,
-            alta_movil_imei: veh[0].alta_movil_imei, // "",
-            alta_movil_ip: veh[0].alta_movil_ip // ""
+        var veh = validavehicu(em);
+        if (veh == "" || veh == null || !(veh)) { mens("Registre autos", "warning"); }
+        else {
+            veh=veh.Vehiculo[0];
+            var Vehiculo = {
+                secuencia_mv01: veh.secuencia_mv01, //6,
+                mail: veh.mail, //"nerycarmela@hotmail.com",
+                chasis: veh.chasis, //"19JJDSXSMLSLXS",
+                numeroorden: veh.numeroorden,
+                contrato_tipo: veh.contrato_tipo, //"",
+                contrato_estado: veh.contrato_estado, //false,
+                contrato_fecha_desde: veh.contrato_fecha_desde, //"1900-01-01",
+                contrato_fecha_hasta: veh.contrato_fecha_hasta, //"1900-01-01",
+                estado_vh02: veh.estado_vh02, //false,
+                alta_movil_imei: veh.alta_movil_imei, // "",
+                alta_movil_ip: veh.alta_movil_ip // ""
+            }
+            localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(Vehiculo));
+            datos_Vehiculo = Vehiculo;
         }
-        localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(Vehiculo));
-        datos_Vehiculo = Vehiculo;
         kendo.mobile.application.navigate("components/miKia/view.html");
     } catch (s) {
-        alert(s);
+        alert("signin " + s);
     }
 }
 
@@ -86,7 +89,7 @@ function validaLogin(email, password) {
             return resultado;
         }
     } catch (f) {
-        alert(f);
+        alert("ValidaLogin " + f);
     }
 }
 
@@ -114,15 +117,16 @@ function validausuario(email) {
             return resultado;
         }
     } catch (f) {
-        alert(f);
+        alert("validausuario " + f);
     }
 }
 
-function validavehiculo(email) {
+function validavehicu(emailp) {
     try {
-        if ((email != "") && (email)) {
+        if ((emailp !== "") && (emailp)) {
             var resultado = "";
-            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
+            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + emailp;
+            //alert(Url);
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -137,12 +141,13 @@ function validavehiculo(email) {
                 },
                 error: function (err) {
                     alert(JSON.stringify(err));
+
                 }
             });
             return resultado;
         }
     } catch (f) {
-        alert(f);
+        alert("validavehiculo " + f);
     }
 }
 
@@ -162,6 +167,6 @@ function ValidaMail() {
             }
         }
     } catch (f) {
-        alert(f);
+        alert("ValidaMail " + f);
     }
 }

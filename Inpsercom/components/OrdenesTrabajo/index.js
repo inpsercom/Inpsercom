@@ -44,16 +44,9 @@ function Consultar() {
     try {
         if (document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value) { alert("Fecha inicio no ha sido seleccionada"); return; }
         if (document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value) { alert("Fecha fin no ha sido seleccionada"); return; }
-        /*var fecha = new Date(document.getElementById("FechaInicio").value);
-        var year = fecha.getFullYear();
-        var month = fecha.getMonth() + 1;
-        var di = fecha.getDate();
-        alert(di + " " + month + " " + year);
-        var fechaf = new Date(document.getElementById("FechaFin").value);
-        if (fecha.getFullYear() > fechaf.getFullYear()) { alert("El año de fecha fin debe ser mayor o igual al inicial"); return; }
-        if ((fecha.getMonth() > fechaf.getMonth()) && (fecha.getFullYear() == fechaf.getFullYear())) { alert("El mes de fecha fin debe ser mayor al inicial"); return; }
-        if ((fecha.getDate() > fechaf.getDate()) && (fecha.getMonth() == fechaf.getMonth()) && (fecha.getFullYear() == fechaf.getFullYear())) { alert("El dia de fecha fin debe ser mayor al inicial"); return; }
-        if (document.getElementById("FechaInicio").value > document.getElementById("FechaFin").value) { alert("Fecha inicio no puede ser mayor que fecha fin"); return; }*/
+        var fechaI = new Date(document.getElementById("FechaInicio").value);
+        var fechaF = new Date(document.getElementById("FechaFin").value);
+        if (fechaI > fechaF) { mens("Error fecha inicio mayor a la final", "error"); return; }
     } catch (f) { alert(f); }
     var usu = localStorage.getItem("Inp_DatosUsuario");
     var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Ordenes/" + "2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value;

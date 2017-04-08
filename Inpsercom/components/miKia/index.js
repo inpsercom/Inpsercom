@@ -60,7 +60,7 @@ function AdmVehiculos() {
 }
 
 function OrdenTrabajo() {
-    kendo.mobile.application.navigate("components/OrdenesTrabajo/view.html");
+    kendo.mobile.application.navigate("components/HistorialVin/view.html");
 }
 
 function AgregarVin() {

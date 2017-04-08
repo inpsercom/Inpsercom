@@ -238,6 +238,10 @@ function mens(Mensaje, Tipo) {
             left: Math.floor($(window).width() / 2 - valorIzq),
             bottom: 0,
             right: 0
+        },
+        font:{
+            size: 14,
+            bold: true
         }
     });
     notificationWidget.showText(Mensaje, Tipo);
