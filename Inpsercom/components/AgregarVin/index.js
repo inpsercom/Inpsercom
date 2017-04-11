@@ -8,7 +8,7 @@ app.mntRegistroVin = kendo.observable({
 });
 app.localization.registerView('mntRegistroVin');
 
-function grabar() {
+/*function grabar() {
     if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { alert("esta vacio"); return; }
     var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
     var params = {
@@ -101,7 +101,7 @@ function actualiza(chasisemail) {
             alert(JSON.stringify(err));
         }
     });
-}
+}*/
 // START_CUSTOM_CODE_miKia2
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 

@@ -5,70 +5,95 @@ app.mntVehiculos = kendo.observable({
         try {
             var email = datos_Cliente.mail;
             if ((email != "") && (email)) {
-                var resultado = "";
-                var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
-                try {
-                    $.ajax({
-                        url: Url,
-                        type: "GET",
-                        dataType: "json",
-                        async: false,
-                        success: function (data) {
-                            try {
-                                resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
-                                $("#nuevochasisview").kendoGrid({
-                                    columns: [
-                                        { field: "mail", title: "Email" },
-                                        { field: "chasis", title: "Vehículo" }
-                                    ],
-                                    dataSource: resultado,
-                                    selectable: "row",
-                                    change: function (e) {
-                                        try {
-                                            var selectedRows = this.select();
-                                            var selectedDataItems = [];
-                                            for (var i = 0; i < selectedRows.length; i++) {
-                                                var dataItem = this.dataItem(selectedRows[i]);
-                                                selectedDataItems.push(dataItem);
-                                            }
-        
-                                            registro = selectedDataItems[0];
-                                            datos_Cliente.chasis = registro.chasis;
-                                            localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
-                                            datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
-                                            datos_Vehiculo.chasis = registro.chasis;
-                                            datos_Vehiculo.numeroorden = registro.numeroorden;
-                                            localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
-                                            datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
-                                            kendo.mobile.application.navigate("components/miKia/view.html");
-                                        } catch (f) { alert(f); }
-                                    }
-                                });
-                            } catch (e) {
-                                borraCampos();
-                            }
-                        },
-                        error: function (err) {
-                            alert(JSON.stringify(err));
-                        }
-                    });
-                } catch (e) {
-                    alert(e);
-                }
-                return resultado;
+                actualizaAsignar();
             }
         } catch (d) {
             alert(d);
         }
-        
-    },
-    afterShow: function () { 
-        validavehiculo(datos_Cliente.mail);},
-    inicializa: function () {
 
+    },
+    afterShow: function () {
+        validavehiculo(datos_Cliente.mail);
+    },
+    inicializa: function () {
+        $("#nuevochasisview").kendoGrid({
+            columns: [
+                { field: "mail", title: "Email" },
+                { field: "chasis", title: "Vehículo" }
+            ],
+            selectable: "row"
+        });
+        $("#nuevochasisview").data("kendoGrid").bind("change", grid_Change);
+
+        $("#chasisview").kendoGrid({
+            allowCopy: true,
+            columns: [
+                { field: "mail", title: "Email" },
+                { field: "chasis", title: "Vehículo" },
+                { command: [{ name: "destroy", text: "Eliminar" }] }],
+            editable: { confirmation: "Quieres borrar este registro?" }
+        });
+        grid = $("#chasisview").data("kendoGrid");
+        grid.bind("remove", grid_remove);
     }
 });
 app.localization.registerView('mntVehiculos');
+function grid_Change(e) {
+    try {
+        var selectedRows = this.select();
+        var selectedDataItems = [];
+        for (var i = 0; i < selectedRows.length; i++) {
+            var dataItem = this.dataItem(selectedRows[i]);
+            selectedDataItems.push(dataItem);
+        }
+        registro = selectedDataItems[0];
+        datos_Cliente.chasis = registro.chasis;
+        localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
+        //datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
+        datos_Vehiculo.chasis = registro.chasis;
+        datos_Vehiculo.numeroorden = registro.numeroorden;
+        localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
+        //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
+        kendo.mobile.application.navigate("components/miKia/view.html");
+    } catch (f) { alert(f); }
+}
+
+function actualizaAsignar() {
+    try {
+        var grid = $("#nuevochasisview").data("kendoGrid");
+        var email = datos_Cliente.mail;
+        var resultado = "";
+        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
+        try {
+            $.ajax({
+                url: Url,
+                type: "GET",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    try {
+                        resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
+                        var dataSource = new kendo.data.DataSource({
+                            data: resultado
+                        });
+                        grid.setDataSource(dataSource);
+
+                    } catch (e) {
+                        borraCampos();
+                    }
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err));
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    } catch (d) {
+        alert(d);
+    }
+
+}
 function grabar() {
     if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { alert("esta vacio"); return; }
     var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
@@ -97,48 +122,59 @@ function grabar() {
                     try {
                         mens("Registro Exitoso", "success");
                         document.getElementById("VIN").value = "";
+                        actualizaAsignar();
                         validavehiculo(params.mail);
-                        return;
-                    } catch (s) { alert(s); }
-                } else { alert("Error: " + data); }
-            } catch (e) { alert(e); }
+                    } catch (s) { 
+                        alert("graba" +s); }
+                } else {
+                    alert("Error: " + data);
+                }
+            } catch (e) {
+                alert(e);
+            }
         },
-        error: function (err) { alert(JSON.stringify(err)); }
+        error: function (err) {
+            alert("asd"+JSON.stringify(err));
+        }
     });
 }
 var grid;
 function validavehiculo(email) {
+    try{
     if ((email != "") && (email)) {
         var resultado = "";
         var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
         try {
+            var grid = $("#chasisview").data("kendoGrid");
             $.ajax({
                 url: Url, type: "GET", dataType: "json", async: false,
                 success: function (data) {
                     try {
                         resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
-                        $("#chasisview").kendoGrid({
-                            allowCopy: true,
-                            columns: [
-                                { field: "mail", title: "Email" },
-                                { field: "chasis", title: "Vehículo" },
-                                { command: [{ name: "destroy", text: "Eliminar" }] }],
-                            dataSource: resultado,
-                            editable: { confirmation: "Quieres borrar este registro?" }
+
+                        var dataSource = new kendo.data.DataSource({
+                            data: resultado
                         });
-                        grid = $("#chasisview").data("kendoGrid");
-                        grid.bind("remove", grid_remove);
+                        grid.setDataSource(dataSource);
                     } catch (e) { alert(e); }
                 },
-                error: function (err) { alert(JSON.stringify(err)); }
+                error: function (err) {
+                    alert(JSON.stringify(err));
+                }
             });
         } catch (e) { alert(e); }
         return resultado;
     }
+    } catch (e) { 
+        alert("asss"+e); }
 }
 function grid_remove(e) {
     try {
         actualiza("4;" + e.model.mail + ";" + e.model.chasis);
+        if (e.model.chasis == datos_Cliente.chasis) {
+            datos_Cliente.chasis = "";
+            localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
+        }
     } catch (s) { alert(s); }
 }
 
@@ -153,7 +189,7 @@ function actualiza(chasisemail) {
                 if (data == "Success") {
                     try {
                         mens("Se elimino el registro", "success");
-                        return data;
+                        actualizaAsignar();
                     } catch (s) { alert(s); }
                 } else { alert("Error: " + data); }
             } catch (e) { alert(e); }

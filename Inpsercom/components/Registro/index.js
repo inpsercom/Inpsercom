@@ -2,17 +2,20 @@
 var persona_numero ="0";
 app.miKia6 = kendo.observable({
     onShow: function () {
+        document.getElementById("numorden").value = 0;
         var fecha = new Date();
         var year = fecha.getFullYear() - 18;
         var mes = fecha.getMonth();
+        mes = mes + 1;
         var dia = fecha.getDate();
         $("#FechaNacimiento").kendoDatePicker({
             ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
             min: new Date(1900, 0, 1),
-            max: new Date(year, mes, dia)
+            max: new Date(year, mes, dia),
+            format: "yyyy-MM-dd"
         });
         document.getElementById("btnRegistrar").disabled = true;
-        //document-getElementById("identificacion").focus();
+        document.getElementById("FechaNacimiento").value = (year +"-"+ mes +"-"+ dia);
     },
     afterShow: function () { }
 });
@@ -65,7 +68,7 @@ function registrar() {
         var Apellidos = document.getElementById("Apellidos").value;
         var email = document.getElementById("email").value;
         var chasis = document.getElementById("Chasis").value;
-        var FechaNacimiento = document.getElementById("FechaNacimiento").value;
+        var FechaNacimiento = new Date(document.getElementById("FechaNacimiento").value); 
         var celular = document.getElementById("celular").value;
         var password = document.getElementById("password").value;
         var repassword = document.getElementById("repassword").value;
@@ -87,7 +90,8 @@ function registrar() {
             //output: "json"
         };
         //localStorage.setItem("Inp_DatosUsuario", params);
-       //alert(inspeccionar(params));
+
+       alert(FechaNacimiento);
         
         //kendo.mobile.application.navigate("components/miKia/view.html");
         var indicador = 0;
@@ -102,7 +106,6 @@ function registrar() {
         if (indicador == 1) {
             alert("Verificar datos en blanco"); return;
         }
-alert(Url);
         $.ajax({
             url: Url,
             type: "POST",
@@ -115,7 +118,6 @@ alert(Url);
             },
             success: function (data) {
                 try {
-                    //debugger;
                     if (data == "Success") {
                         try {
                             alert("Registro Exitoso");
@@ -126,6 +128,10 @@ alert(Url);
                             alert(s);
                         }
                     }
+                    else{if("String was not recognized as a valid DateTime"){ 
+                        alert("Formato de fecha incorrecto");
+                        document.getElementById("FechaNacimiento").value = "";
+                        }}
                     return;
                 } catch (e) {
                     //debugger;

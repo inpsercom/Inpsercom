@@ -10,24 +10,24 @@
     <div data-role="content">
         <div class="container">
             <form class="form-horizontal" id="ots">
-                <table>
+                <table style="text-align: center;">
                     <tr>
                         <td>
                             <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;Fecha Inicio
-                                <div class="col-xs-12"><input id="FechaInicio" align="center" placeholder="Fecha Inicio" onkeydown="return false;"></div>
+                                <div class="col-xs-12"><input id="FechaInicio" style="width: 75%;" align="center" placeholder="Fecha Inicio" onkeydown="return false;"></div>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
                         <td>
                             <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;Fecha Fin
-                                <div class="col-xs-12"><input id="FechaFin" align="center" placeholder="Fecha Fin" onkeydown="return false;"></div>
+                                <div class="col-xs-12"><input id="FechaFin" style="width: 75%;" align="center" placeholder="Fecha Fin" onkeydown="return false;"></div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="form-group" style="text-align:center"> <button id="btnConsultar" class="primary" data-role="button" onclick="Consultar()">Consultar</button>                                </div>
+                        <td colspan=2>
+                            <div class="form-group"> 
+                                <button id="btnConsultar" class="primary" data-role="button" onclick="Consultar()">Consultar</button>
+                            </div>
                         </td>
                     </tr>
                 </table>
