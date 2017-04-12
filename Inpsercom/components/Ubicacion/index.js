@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 var map, marker, color, icon;
 app.miKia3 = kendo.observable({
     onShow: function () {

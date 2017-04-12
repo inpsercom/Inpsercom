@@ -1,6 +1,6 @@
 'use strict';
 app.logIn = kendo.observable({
-    onShow: function () { },
+    onShow: function () {  document.getElementById("password").value = "";},
     afterShow: function () { }
 });
 app.localization.registerView('logIn');

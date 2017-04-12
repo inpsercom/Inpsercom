@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 var directionsDisplay;
 var directionsService;
 var map2, geocoder;

@@ -46,7 +46,10 @@ app.miKia = kendo.observable({
     }
 });
 app.localization.registerView('miKia');
+
 function logout() {
+    //mens("Se cierra la aplicación","success");
+    
     navigator.app.exitApp();
     //kendo.mobile.application.navigate("components/home/view.html"); 
 
