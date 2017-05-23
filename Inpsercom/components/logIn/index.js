@@ -1,20 +1,22 @@
-'use strict';
+//'use strict';
 app.logIn = kendo.observable({
-    onShow: function () {  document.getElementById("password").value = "";},
+    onShow: function () {  document.getElementById("passwordLogin").value = "";},
     afterShow: function () { }
 });
 app.localization.registerView('logIn');
 
 function signin() {
     try {
-        var em = document.getElementById("email").value;
-        var pa = document.getElementById("password").value;
-        if (em == "" || !em) { alert("El Email no tiene datos"); return; }
-        if (pa == "" || !pa) { alert("El Password no tiene datos"); document.getElementById("password").focus(); return; }
-        var resul = validaLogin(document.getElementById("email").value, document.getElementById("password").value);
+        var em = document.getElementById("emailLogin").value;
+        var pa = document.getElementById("passwordLogin").value;
+        if (em == "" || !em) { mens("El Email no tiene datos","error"); return; }
+        if (pa == "" || !pa) { mens("El Password no tiene datos","error"); document.getElementById("passwordLogin").focus(); return; }
+        var resul = validaLogin(document.getElementById("emailLogin").value, document.getElementById("passwordLogin").value);
         if (resul == "false" || resul == "" || !resul) {
-            alert("El ID o password son incorrectos por favor verifique");
-            document.getElementById("password").focus();
+            mens("El ID o password son incorrectos por favor verifique");
+            document.getElementById("emailLogin").value="";
+            document.getElementById("passwordLogin").value="";
+            document.getElementById("emailLogin").focus();
             return;
         }
         var usu = validausuario(em); //resultado.Cliente[0].persona_nombre
@@ -56,9 +58,10 @@ function signin() {
             localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(Vehiculo));
             datos_Vehiculo = Vehiculo;
         }
-        kendo.mobile.application.navigate("components/miKia/view.html");
+        //kendo.mobile.application.navigate("components/miKia/view.html");
+        kendo.mobile.application.navigate("components/MenuKia/view.html");
     } catch (s) {
-        alert("signin " + s);
+        mens("Error conexión a la base de datos ","error");
     }
 }
 
@@ -79,17 +82,21 @@ function validaLogin(email, password) {
                     try {
                         resultado = data.LoginGetResult;
                     } catch (e) {
+                        alert(inspéccionar(e));
+                        mens(data,"error");
                         borraCampos();
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
+                    alert(inspeccionar(err));
+                    mens("Error en conexión al servicio login","error");
                 }
             });
             return resultado;
         }
     } catch (f) {
-        alert("ValidaLogin " + f);
+        alert(inspéccionar(f));
+        mens("Error cenexión servicio login","error");
     }
 }
 
@@ -107,17 +114,18 @@ function validausuario(email) {
                     try {
                         resultado = JSON.parse(data.UsuarioGetResult);
                     } catch (e) {
+                        mens(data,"error");
                         borraCampos();
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
+                    mens("Error conexión servicio Ususario","error");
                 }
             });
             return resultado;
         }
     } catch (f) {
-        alert("validausuario " + f);
+        mens("Error conexión servicio Ususario","error");
     }
 }
 
@@ -126,7 +134,6 @@ function validavehicu(emailp) {
         if ((emailp !== "") && (emailp)) {
             var resultado = "";
             var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + emailp;
-            //alert(Url);
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -136,37 +143,39 @@ function validavehicu(emailp) {
                     try {
                         resultado = JSON.parse(data.VehiculoGetResult);
                     } catch (e) {
+                        mens(data,"error");
                         borraCampos();
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
+                    mens("Error conexión servicio Vehículo","error");
 
                 }
             });
             return resultado;
         }
     } catch (f) {
-        alert("validavehiculo " + f);
+        mens("Error conexión servicio Vehículo","error");
     }
 }
 
 function borraCampos() {
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
+    document.getElementById("emailLogin").value = "";
+    document.getElementById("passwordLogin").value = "";
 }
 
-function ValidaMail() {
+function ValidaMailLogin() {
     try {
-        if (document.getElementById("email").value != "") {
-            var result = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(document.getElementById("email").value);
+        if (document.getElementById("emailLogin").value != "") {
+            var result = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(document.getElementById("emailLogin").value);
             if (result == false) {
-                document.getElementById("email").style.borderColor = "red";
+                document.getElementById("emailLogin").style.borderColor = "red";
             } else {
-                document.getElementById("email").style.borderColor = "";
+                document.getElementById("emailLogin").style.borderColor = "";
+                document.getElementById("passwordLogin").focus();
             }
         }
     } catch (f) {
-        alert("ValidaMail " + f);
+        mens("Error validación del mail","error");
     }
 }

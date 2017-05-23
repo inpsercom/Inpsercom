@@ -2,7 +2,7 @@
   "ProjectName": "Inpsercom",
   "ProjectGuid": "b0ff3202-5463-437b-b3df-a39a2c066b89",
   "projectVersion": 1,
-  "AppIdentifier": "com.telerik.Inpsercom",
+  "AppIdentifier": "com.Inpsercom",
   "DisplayName": "Inpsercom",
   "Author": "Inpsercom",
   "Description": "Inpsercom",
@@ -20,7 +20,7 @@
   "DeviceOrientations": [
     "Portrait"
   ],
-  "AndroidHardwareAcceleration": "true",
+  "AndroidHardwareAcceleration": "False",
   "iOSStatusBarStyle": "Default",
   "Framework": "Cordova",
   "WP8TileTitle": "",
@@ -39,5 +39,6 @@
     "ID_RESOLUTION_WVGA",
     "ID_RESOLUTION_WXGA",
     "ID_RESOLUTION_HD720P"
-  ]
+  ],
+  "CordovaPluginVariables": {}
 }

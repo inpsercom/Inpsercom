@@ -1,8 +1,7 @@
-'use strict';
+//'use strict';
 
 app.miKia4 = kendo.observable({
-    onShow: function() {
-    },
+    onShow: function() {},
     afterShow: function() {},
 });
 app.localization.registerView('miKia4');
@@ -41,7 +40,7 @@ function aperturaRemota(){
             });*/
         }
     } catch (e) {
-        alert(e);
+        mens("Error de servicios Sherloc", "error");
     }
 }
 
@@ -79,7 +78,7 @@ function desbloqueAuto(){
             });*/
         }
     } catch (e) {
-        alert(e);
+        mens("Error de servicios Sherloc", "error");
     }
 }
 
@@ -117,6 +116,6 @@ function bloqueAuto() {
             });*/
         }
     } catch (e) {
-        alert(e);
+        mens("Error de servicios Sherloc", "error");
     }
 }

@@ -1,26 +1,37 @@
-'use strict';
+//'use strict';
 var registro;
 app.mntOTs = kendo.observable({
     onShow: function () {
-        var fecha = new Date();
-        var year = fecha.getFullYear();
-        var mes = fecha.getMonth();
-        var dia = fecha.getDate();
+        try {
+            $("#NumeroChasisOT").text(datos_Cliente.chasis);
+            var wd = (screen.width / 2) - 30;
+            var wx = wd - 15;
+            document.getElementById("FechaInicio").style.width = wd+"px";
+            document.getElementById("FechaFin").style.width = wd+"px";
+            var fecha = new Date();
+            var year = fecha.getFullYear();
+            var mes = fecha.getMonth();
+            var dia = fecha.getDate();
 
-        $("#FechaInicio").kendoDatePicker({
-            ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
-            min: new Date(1900, 0, 1),
-            value: new Date(),
-            format: "dd-MM-yyyy"
-            //max: new Date(year, mes, dia)
-        });
-        $("#FechaFin").kendoDatePicker({
-            ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
-            min: new Date(1900, 0, 1),
-            max: new Date(year, mes, dia),
-            value: new Date(),
-            format: "dd-MM-yyyy"
-        });
+            $("#FechaInicio").kendoDatePicker({
+                ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
+                min: new Date(1900, 0, 1),
+                value: new Date(),
+                format: "dd-MM-yyyy"
+                //max: new Date(year, mes, dia)
+            });
+            $("#FechaFin").kendoDatePicker({
+                ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
+                min: new Date(1900, 0, 1),
+                max: new Date(year, mes, dia),
+                value: new Date(),
+                format: "dd-MM-yyyy"
+            });
+            //alert(document.getElementById("cboxOT").cheked);
+            //document.getElementById("FechaInicio").value = "01-01-1910";
+            //ConsultarOT();
+            //document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;
+        } catch (e) { mens("Error en fechas", "error"); }
     },
     afterShow: function () { },
     inicializa: function () {
@@ -34,23 +45,26 @@ app.mntOTs = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/DetalleOT/view.html");
         } catch (s) {
-            alert(s);
+            mens("Error selección de registro");
         }
     }
 });
 app.localization.registerView('mntOTs');
 
-function Consultar() {
+function ConsultarOT() {
     try {
+        if(document.getElementById("cboxOT").checked == false){
+            document.getElementById("FechaInicio").value = "01-01-1910";
+        }
         if (document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value) { alert("Fecha inicio no ha sido seleccionada"); return; }
         if (document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value) { alert("Fecha fin no ha sido seleccionada"); return; }
         var fechaI = new Date(document.getElementById("FechaInicio").value);
         var fechaF = new Date(document.getElementById("FechaFin").value);
         if (fechaI > fechaF) { mens("Error fecha inicio mayor a la final", "error"); return; }
-    } catch (f) { alert(f); }
-    var usu = localStorage.getItem("Inp_DatosUsuario");
-    var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Ordenes/" + "2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value;
+    } catch (f) { mens("Error en fechas", "error"); }
     try {
+        var usu = localStorage.getItem("Inp_DatosUsuario");
+        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Ordenes/" + "2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value;
         var infor;
         $.ajax({
             url: Url,
@@ -61,11 +75,11 @@ function Consultar() {
                 try {
                     infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
                 } catch (e) {
-                    alert(e);
+                    mens("No existe datos para esta cosnulta", "error");
                 }
             },
             error: function (err) {
-                alert(JSON.stringify(err));
+                mens("Error en consulta OT", "error");
             }
         });
 
@@ -79,14 +93,16 @@ function Consultar() {
         secuencia_orden
         kilometraje
         */
-
+        var fecha = (screen.width * 20) / 100;
+        var ot = (screen.width * 25) / 100;
+        var taller = (screen.width * 35) / 100; 
         $("#listView").kendoGrid({
             allowCopy: true,
             columns: [
-                { field: "fecha_recepcion", title: "Fecha" },
-                { field: "numero_ot", title: "No. OT" },
-                { field: "nombre_taller", title: "Taller" },
-                { field: "kilometraje", title: "Km." }
+                { field: "fecha_recepcion", title: "Fecha", width: fecha },
+                { field: "numero_ot", title: "No. OT", width: ot },
+                { field: "nombre_taller", title: "Taller", width: taller },
+                { field: "kilometraje", title: "Km.", width: fecha }
             ],
             dataSource: infor,
             selectable: "row",
@@ -102,6 +118,9 @@ function Consultar() {
             }
         });
     } catch (e) {
-        alert(e);
+        mens("Error de conexión a la base");
     }
+   if(document.getElementById("cboxOT").checked == false){
+            document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;
+        } 
 }

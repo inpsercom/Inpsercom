@@ -1,8 +1,9 @@
-'use strict';
+//'use strict';
 app.detalleOT = kendo.observable({
     onShow: function () {
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Detalle/" + registro.codigo_empresa + "," + registro.anio_ga35 + "," + registro.secuencia_orden;
         try {
+            $("#NumeroChasisDOT").text(datos_Cliente.chasis);
+            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Detalle/" + registro.codigo_empresa + "," + registro.anio_ga35 + "," + registro.secuencia_orden;
             var infordet;
             $.ajax({
                 url: Url,
@@ -13,11 +14,11 @@ app.detalleOT = kendo.observable({
                     try {
                         infordet = (JSON.parse(data.DetalleOTGetResult)).DetalleOT01;
                     } catch (e) {
-                        alert(e);
+                        mens("Error en lectura de detalle OT", "error");
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
+                    mens("Error en servicio Detalle OT", "error"); //alert(JSON.stringify(err));
                 }
             });
 
@@ -31,16 +32,14 @@ app.detalleOT = kendo.observable({
             secuencia_orden
             kilometraje
             */
-
+            var descri = (screen.width * 50) / 100;
+            var cant = (screen.width * 25) / 100;
             $("#detalleOT").kendoGrid({
                 allowCopy: true,
                 columns: [
-                    { field: "Descripcion", title: "Descripción", footerTemplate: "Total:" },
-                    { field: "Cantidad", title: "Cantidad", footerTemplate: "#: sum # " },
-                    {
-                        field: "Total", format: "{0:c}", title: "Total",
-                        footerTemplate: "#= kendo.toString(sum, '0.00') #"
-                    }
+                    { field: "Descripcion", title: "Descripción", footerTemplate: "Total:", width: descri },
+                    { field: "Cantidad", title: "Cantidad",   footerTemplate: "#: sum # ", width: cant },
+                    { field: "Total", format: "{0:c}", title: "Total", footerTemplate: "#= kendo.toString(sum, '0.00') #" , width: cant}
 
                 ],
                 dataSource: {
@@ -54,7 +53,7 @@ app.detalleOT = kendo.observable({
                 selectable: "row"
             });
         } catch (e) {
-            alert(e);
+            mens("Error en servicio Progress", "error");
         }
     },
     afterShow: function () { },
@@ -63,11 +62,3 @@ app.detalleOT = kendo.observable({
     }
 });
 app.localization.registerView('detalleOT');
-
-
-
-
-// START_CUSTOM_CODE_miKia2
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_miKia2

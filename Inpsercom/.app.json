@@ -64,6 +64,13 @@
       "title": "Mi Kia",
       "addToNavigation": false
     },
+    /*{
+      "type": "kendo-ui-mobile:view",
+      "name": "MenuKia",
+      "components": [],
+      "title": "Menú Kia",
+      "addToNavigation": false
+    },*/
     {
       "type": "kendo-ui-mobile:view",
       "name": "miKia2",

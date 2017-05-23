@@ -3,15 +3,16 @@ var map, marker, color, icon;
 app.miKia3 = kendo.observable({
     onShow: function () {
         try {
+            $("#NoOrdenUB").text(datos_Vehiculo.numeroorden);
             var cords = traeCordenadasUbica();
+            if(cords.Latitud == null){mens("No existe datos","error"); return;}
             var PosVehi = { lat: parseFloat(cords.Latitud), lng: parseFloat(cords.Longitud) };
             //Calculo el % a restar al alto total de la pantalla para que el mapa se ajuste correctamente al 100%
             var height = (screen.height * 25.46875) / 100;
-            var height1 = screen.height - height; //resto el valor en px que corresponde al % que sobra 
-            document.getElementById("map").style = "height:" + height1 + "px";
+            var height1 = screen.height - height; //resto el valor en px que corresponde al % que sobra
+            document.getElementById("map").style.height  = height1 + "px";
 
             color = "red";
-
             if (cords.ApagadoEncendido == 0) {
                 color = "black";
             }
@@ -33,7 +34,7 @@ app.miKia3 = kendo.observable({
                 label: "Velocidad: " + cords.Velocidad + " KMpH"
             });
         } catch (s) {
-            alert(s);
+            mens("Error servicio sherloc","error");
         }
     },
     afterShow: function () { }
@@ -47,7 +48,7 @@ function reload() {
         }, 1000);
 
     } catch (f) {
-        alert(f);
+        mens("Error servicio sherloc","error");
     }
 }
 function reload2() {
@@ -81,14 +82,9 @@ function reload2() {
             }
         }
     } catch (f) {
-        alert(f);
+        mens("Error servicio sherloc","error");
     }
 }
-// START_CUSTOM_CODE_miKia3
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_miKia3
-
 
 function traeCordenadasUbica() {
     try {
@@ -110,15 +106,15 @@ function traeCordenadasUbica() {
                 try {
                     cords = data.EnviarMensajeResult;
                 } catch (e) {
-                    alert(e);
+                    mens("Error coordenadas servicio sherloc","error");
                 }
             },
             error: function (err) {
-                alert(JSON.stringify(err));
+                mens("Error servicio sherloc","error");
             }
         });
         return (cords);
     } catch (d) {
-        alert(d);
+        mens("Error en servicio sherloc","error");
     }
 }

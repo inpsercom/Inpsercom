@@ -4,7 +4,7 @@
         <div data-role="navbar" class="header-text"> <span data-bind="text: strings.miKia.title"></span> <span id="NumeroChasis" class="km-view-subtitle"></span>
             <a data-role="button"
                 href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
-            <a data-align="right" class="fa fa-sign-out" onclick="logout()" aria-hidden="true" data-role="button"></a>
+            <a data-align="right" class="fa fa-reply" href="components/MenuKia/view.html" aria-hidden="true" data-role="button"></a>
             
         </div>
     </header>
@@ -16,10 +16,10 @@
               <i class="fa fa-tasks fa-stack-1x fa-inverse"></i>
             </span> </a> <span class="icon-text clearfix ">Administrar vehículos</span> </div>
             <div class="col-xs-6 text-center">
-                <a onclick="ConfigurarSherlock()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
+                <a onclick="AgregarVin()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
               <i class="mi-icon fa-stack-2x "></i>
-              <i class="fa fa-wifi fa-stack-1x fa-inverse"></i>
-            </span> </a> <span class="icon-text clearfix ">Mi Kia Satelital</span> </div>
+              <i class="fa fa-credit-card-alt fa-stack-1x fa-inverse"></i>
+            </span> </a> <span class="icon-text clearfix ">Pre Factura</span> </div>
             <div class="col-xs-6 text-center">
                 <a onclick="HistorialVin()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
               <i class="mi-icon fa-stack-2x "></i>
@@ -31,24 +31,21 @@
               <i class="fa fa-truck  fa-stack-1x fa-inverse"></i>
             </span> </a> <span class="icon-text clearfix ">Orden de trabajo en curso</span> </div>
             <div class="col-xs-6 text-center">
-                <a onclick="AgendarCita()" class="icon-wrapper"> <span class="fa-stack fa-lg">
+                <a href="http://citatallerkia.com.ec/cliente/login" class="icon-wrapper"> <span class="fa-stack fa-lg"> <!-- onclick="agendarCitas()"-->
               <i class="mi-icon fa-stack-2x"></i>
               <i class="fa fa-calendar fa-stack-1x fa-inverse"></i>
-            </span> <span class="icon-text clearfix">Agendar Cita</span> </a>
-            </div>
+            </span> <span class="icon-text clearfix">Agendar Cita</span> </a></div>
             <div class="col-xs-6 text-center">
-                <a onclick="AgregarVin()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
-              <i class="mi-icon fa-stack-2x "></i>
-              <i class="fa fa-credit-card-alt fa-stack-1x fa-inverse"></i>
-            </span> </a> <span class="icon-text clearfix ">Pre Factura</span> </div>
-            
-            
+                <a onclick="estadoMan();" class="icon-wrapper"> <span class="fa-stack fa-lg"> <!-- onclick="agendarCitas()"-->
+              <i class="mi-icon fa-stack-2x"></i>
+              <i class="fa fa-wrench fa-stack-1x fa-inverse"></i>
+            </span> <span class="icon-text clearfix">Estado Mantenimiento</span> </a></div>
         </div>
     </div>
 </div>
 <style>
     .fondoRojo {
-        background-color: #ff4350;
+        background-color: #bb162b; // #ff4350;
     }
 </style>
 <!-- END_CUSTOM_CODE_miKia -->

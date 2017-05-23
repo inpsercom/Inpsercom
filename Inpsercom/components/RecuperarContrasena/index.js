@@ -6,9 +6,6 @@ app.miKia5 = kendo.observable({
 });
 app.localization.registerView('miKia5');
 
-// START_CUSTOM_CODE_miKia5
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
 function enviarMail() {
     var _mail = document.getElementById("recuperar_email").value;
 
@@ -22,14 +19,11 @@ function enviarMail() {
                     document.getElementById("recuperar_email").style.borderColor = "red";
                 } else {
                     document.getElementById("recuperar_email").style.borderColor = "";
-                    alert("Su contraseña fue enviada al su correo");
+                    mens("Su contraseña fue enviada al su correo","success");
                     document.getElementById("recuperar_email").value = "";
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 }
             }
-        } catch (f) { alert(f); }
+        } catch (f) { mens("Error validacion mail","error"); }
     }
 }
-
-
-// END_CUSTOM_CODE_miKia5

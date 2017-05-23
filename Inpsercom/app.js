@@ -1,6 +1,6 @@
-'use strict';
+//'use strict';
 var datos_Cliente, Device_identifier, datos_Vehiculo, urlService;
-var urlInterno = 'http://IPS10:8089';
+var urlInterno = 'http://IPS10:8089';  // 'http://192.168.1.3:8089'; 
 var urlExterno = 'http://190.108.66.10:8089';
 var notificationWidget;
 (function () {
@@ -200,10 +200,7 @@ var notificationWidget;
 
     localization.set('currentCulture', localization.defaultCulture);
 })(window.app);
-/// end app modules
 
-// START_CUSTOM_CODE_kendoUiMobileApp
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 function inspeccionar(obj) {
     try {
         var msg = '';

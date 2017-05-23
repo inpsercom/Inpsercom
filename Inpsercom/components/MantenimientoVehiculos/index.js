@@ -1,14 +1,15 @@
-'use strict';
+//'use strict';
 
 app.mntVehiculos = kendo.observable({
     onShow: function () {
         try {
+            $("#NumeroChasisRV").text(datos_Cliente.chasis);
             var email = datos_Cliente.mail;
             if ((email != "") && (email)) {
                 actualizaAsignar();
             }
         } catch (d) {
-            alert(d);
+            mens("Error servicio cliente", "error");
         }
 
     },
@@ -16,25 +17,27 @@ app.mntVehiculos = kendo.observable({
         validavehiculo(datos_Cliente.mail);
     },
     inicializa: function () {
-        $("#nuevochasisview").kendoGrid({
-            columns: [
-                { field: "mail", title: "Email" },
-                { field: "chasis", title: "Vehículo" }
-            ],
-            selectable: "row"
-        });
-        $("#nuevochasisview").data("kendoGrid").bind("change", grid_Change);
+        try {
+            $("#nuevochasisview").kendoGrid({
+                columns: [
+                    { field: "mail", title: "Email" },
+                    { field: "chasis", title: "Vehículo" }
+                ],
+                selectable: "row"
+            });
+            $("#nuevochasisview").data("kendoGrid").bind("change", grid_Change);
 
-        $("#chasisview").kendoGrid({
-            allowCopy: true,
-            columns: [
-                { field: "mail", title: "Email" },
-                { field: "chasis", title: "Vehículo" },
-                { command: [{ name: "destroy", text: "Eliminar" }] }],
-            editable: { confirmation: "Quieres borrar este registro?" }
-        });
-        grid = $("#chasisview").data("kendoGrid");
-        grid.bind("remove", grid_remove);
+            $("#chasisview").kendoGrid({
+                allowCopy: true,
+                columns: [
+                    { field: "mail", title: "Email" },
+                    { field: "chasis", title: "Vehículo" },
+                    { command: [{ name: "destroy", text: "Eliminar" }] }],
+                editable: { confirmation: "Quieres borrar este registro?" }
+            });
+            grid = $("#chasisview").data("kendoGrid");
+            grid.bind("remove", grid_remove);
+        } catch (e) { mens("actualizar vehículo", "error"); }
     }
 });
 app.localization.registerView('mntVehiculos');
@@ -55,7 +58,7 @@ function grid_Change(e) {
         localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
         //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
         kendo.mobile.application.navigate("components/miKia/view.html");
-    } catch (f) { alert(f); }
+    } catch (f) { mens("Error servicio actualizar vehículo", "error"); }
 }
 
 function actualizaAsignar() {
@@ -64,109 +67,97 @@ function actualizaAsignar() {
         var email = datos_Cliente.mail;
         var resultado = "";
         var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
-        try {
-            $.ajax({
-                url: Url,
-                type: "GET",
-                dataType: "json",
-                async: false,
-                success: function (data) {
-                    try {
-                        resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
-                        var dataSource = new kendo.data.DataSource({
-                            data: resultado
-                        });
-                        grid.setDataSource(dataSource);
+        $.ajax({
+            url: Url,
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                try {
+                    resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
+                    var dataSource = new kendo.data.DataSource({
+                        data: resultado
+                    });
+                    grid.setDataSource(dataSource);
 
-                    } catch (e) {
-                        borraCampos();
-                    }
-                },
-                error: function (err) {
-                    alert(JSON.stringify(err));
+                } catch (e) {
+                    mens("Error servicio actualizar vehículo", "error");
                 }
-            });
-        } catch (e) {
-            alert(e);
-        }
+            },
+            error: function (err) {
+                mens("Error conexión al servicio vehículo", "error"); //alert(JSON.stringify(err));
+            }
+        });
     } catch (d) {
-        alert(d);
+        mens("Error servicio actualizar vehículo", "error");
     }
-
 }
 function grabar() {
-    if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { alert("esta vacio"); return; }
-    var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
-    var params = {
-        "secuencia_mv01": 5,
-        "identificacion_cliente": "",
-        "persona_nombre": "",
-        "persona_apellido": "",
-        "mail": datos_Cliente.mail,
-        "chasis": document.getElementById("VIN").value,
-        "fecha_nacimiento": "",
-        "telefono_celular": "",
-        "numeroorden": "",
-        "password": "",
-        "persona_numero": "",
-        "alta_movil_imei": ""
-        //output: "json"
-    };
+    try {
+        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { alert("esta vacio"); return; }
+        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
+        var params = {
+            "secuencia_mv01": 5,
+            "identificacion_cliente": "",
+            "persona_nombre": "",
+            "persona_apellido": "",
+            "mail": datos_Cliente.mail,
+            "chasis": document.getElementById("VIN").value,
+            "fecha_nacimiento": "",
+            "telefono_celular": "",
+            "numeroorden": "",
+            "password": "",
+            "persona_numero": "",
+            "alta_movil_imei": ""
+            //output: "json"
+        };
 
-    $.ajax({
-        url: Url, type: "POST", data: JSON.stringify(params), dataType: "json", //Content-Type: application/json
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        success: function (data) {
-            try {
+        $.ajax({
+            url: Url, type: "POST", data: JSON.stringify(params), dataType: "json", //Content-Type: application/json
+            headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+            success: function (data) {
                 if (data == "Success") {
                     try {
                         mens("Registro Exitoso", "success");
                         document.getElementById("VIN").value = "";
                         actualizaAsignar();
                         validavehiculo(params.mail);
-                    } catch (s) { 
-                        alert("graba" +s); }
+                    } catch (s) { mens("Error serrvicio actualizar vehículo", "error"); }
                 } else {
-                    alert("Error: " + data);
+                    mens(data, "error");
                 }
-            } catch (e) {
-                alert(e);
+            },
+            error: function (err) {
+                mens("Error conexión servicio vehículo", "error");
             }
-        },
-        error: function (err) {
-            alert("asd"+JSON.stringify(err));
-        }
-    });
+        });
+    } catch (e) { mens("Error servicio grabar vehículo", "error"); }
 }
 var grid;
 function validavehiculo(email) {
-    try{
-    if ((email != "") && (email)) {
-        var resultado = "";
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
-        try {
+    try {
+        if ((email != "") && (email)) {
+            var resultado = "";
+            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
             var grid = $("#chasisview").data("kendoGrid");
             $.ajax({
                 url: Url, type: "GET", dataType: "json", async: false,
                 success: function (data) {
                     try {
                         resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
-
                         var dataSource = new kendo.data.DataSource({
                             data: resultado
                         });
                         grid.setDataSource(dataSource);
-                    } catch (e) { alert(e); }
+                    } catch (e) { mens("Error servicio vehículo", "error"); }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
+                    mens("Error conexión servicio vehículo", "error");
                 }
             });
-        } catch (e) { alert(e); }
-        return resultado;
-    }
-    } catch (e) { 
-        alert("asss"+e); }
+            return resultado;
+        }
+    } catch (e) { mens("Error servicio vehículo", "error"); }
 }
 function grid_remove(e) {
     try {
@@ -175,31 +166,23 @@ function grid_remove(e) {
             datos_Cliente.chasis = "";
             localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
         }
-    } catch (s) { alert(s); }
+    } catch (s) { mens("Error al eliminar vehículo", "error"); }
 }
 
 function actualiza(chasisemail) {
-    var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/EliminaV";
-    var params = { "vin": chasisemail };
-    $.ajax({
-        url: Url, type: "POST", data: JSON.stringify(params), dataType: "json",//Content-Type: application/json
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        success: function (data) {
-            try {
+    try {
+        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/EliminaV";
+        var params = { "vin": chasisemail };
+        $.ajax({
+            url: Url, type: "POST", data: JSON.stringify(params), dataType: "json",//Content-Type: application/json
+            headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+            success: function (data) {
                 if (data == "Success") {
-                    try {
-                        mens("Se elimino el registro", "success");
-                        actualizaAsignar();
-                    } catch (s) { alert(s); }
-                } else { alert("Error: " + data); }
-            } catch (e) { alert(e); }
-        },
-        error: function (err) {
-            alert(JSON.stringify(err));
-        }
-    });
+                    mens("Se elimino el registro", "success");
+                    actualizaAsignar();
+                } else { mens(data, "error"); }
+            },
+            error: function (err) { mens("Error servicio actualizar vehículo", "error"); }
+        });
+    } catch (e) { mens("Error servicio eliminar vehículo", "error"); }
 }
-// START_CUSTOM_CODE_miKia2
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_miKia2
