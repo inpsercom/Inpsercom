@@ -11,12 +11,58 @@ app.reporteApaEnce = kendo.observable({
         colorAE.push(["#e74c3c"]);
         colorAE.push(["#99a3a4"]);
         colorAE.push(["#186a3b"]);
-        initMapAE();
+        //initMapAE();
+        initMap();
     },
     afterShow: function () { },
     inicializa: function () { }
 });
 app.localization.registerView('reporteApaEnce');
+function initMap() {
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var directionsService = new google.maps.DirectionsService;
+    var height = (screen.height * 25.46875) / 100;
+    var height1 = screen.height - height; //resto el valor en px que corresponde al % que sobra 
+    document.getElementById("mapapen").style.height = height1 + "px";
+    mapAE = new google.maps.Map(document.getElementById('mapapen'), {
+        zoom: 14,
+        center: { lat: parseFloat(registroAE1.LatitudInicial), lng: registroAE1.LongitudInicial },
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    directionsDisplay.setMap(mapAE);
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    //document.getElementById('mode').addEventListener('change', function() {
+    //calculateAndDisplayRoute(directionsService, directionsDisplay);
+    //});
+}
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    var selectedMode = "DRIVING"; //document.getElementById('mode').value;
+    directionsService.route({
+        origin: { lat: parseFloat(registroAE1.LatitudInicial), lng: parseFloat(registroAE1.LongitudInicial) },  // Haight.
+        destination: { lat: parseFloat(registroAE1.LatitudFinal), lng: parseFloat(registroAE1.LongitudFinal) },  // Ocean Beach.
+        // Note that Javascript allows us to access the constant
+        // using square brackets and a string value as its
+        // "property."
+        travelMode: google.maps.TravelMode[selectedMode]
+    }, function (response, status) {
+        if (status == 'OK') {
+            directionsDisplay.setDirections(response);
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
 var infoWindow;
 var mapAE;
 var nombre = [];

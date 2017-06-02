@@ -60,9 +60,11 @@ function setMarkersE(mapE) {
     try {
         beachesE = [];
         var tama = registro.lstAlarmas.length;
-        if (tama > 15) { registro.lstAlarmas.length = 15; }
+        var factor = 0;
+            if (tama > 15) { factor = Math.trunc((tama-2) / 15); }
         for (var i = 0; i < registro.lstAlarmas.length; i++) {
             beachesE.push([parseFloat(registro.lstAlarmas[i].Latitud), parseFloat(registro.lstAlarmas[i].Longitud), registro.lstAlarmas[i].Velocidad,registro.lstAlarmas[i].Fecha]);
+            i = i + factor;
         }
         
         // Adds markers to the map.
@@ -96,29 +98,30 @@ function setMarkersE(mapE) {
           map: map,
           icon: iconBase + 'parking_lot_maps.png'  'library_maps.png  'info-i_maps.png'
         });
-        iconBase + 'parking_lot_maps.png'*/
-        for (var i = 0; i < beachesE.length; i++) {
-            var beach = beachesE[i];
+        iconBase + 'parking_lot_maps.png' beachesE.length*/
+        for (var j = 0; j < beachesE.length; j++) {
+            //alert(j);
+            var beach = beachesE[j];
             var marker = new google.maps.Marker({
                 position: { lat: beach[0], lng: beach[1] },
                 map: mapE,
                 icon: 'resources/icy_road.png',
                 shape: shape,
-                nombre: "marcado" + i
+                nombre: "marcado" + j
             });
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            google.maps.event.addListener(marker, 'click', (function (marker, j) {
                 return function () {
                     infowindow = new google.maps.InfoWindow({
                         content: '<div style="text-align:center;">' +
                         '<b>Fecha y Hora </b><br/>' +
-                            beachesE[i][3] +
+                            beachesE[j][3] +
                         '<p><b>Velocidad del vehículo</b></p>' +
-                        '<p>' + beachesE[i][2] + ' KMPH</p>' +
+                        '<p>' + beachesE[j][2] + ' KMPH</p>' +
                         '</div>'
                     });
                     infowindow.open(mapE, marker);
                 }
-            })(marker, i));
+            })(marker, j));
         }
     } catch (e) { alert(e); }
 }

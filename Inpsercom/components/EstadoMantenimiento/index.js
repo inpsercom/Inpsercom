@@ -13,7 +13,7 @@ app.localization.registerView('estadoMante');
 function cargar() {
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Mantenimiento/" + "2," + datos_Cliente.chasis;
+        var Url = urlService + "Mantenimiento/" + "2," + datos_Cliente.chasis;
         var inforEM;
         $.ajax({
             url: Url,
@@ -48,6 +48,7 @@ function cargar() {
                 document.getElementById(bandera).style.display = "";
                 document.getElementById("fec").value = inforEM[i].fecha_kilometraje;
                 document.getElementById("KM").value = inforEM[i].kilometraje;
+                document.getElementById("KM").style.fontZise = "100px";
                 i = 30;
             }
         }

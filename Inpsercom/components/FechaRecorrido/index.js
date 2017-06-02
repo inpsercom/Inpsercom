@@ -6,6 +6,7 @@ app.fechaReco = kendo.observable({
             $("#NoOrdenRA").text(datos_Vehiculo.numeroorden);
             document.getElementById("FechaRecor").style.fontSize = "large";
             document.getElementById("myLabel").style.fontSize = "large";
+            document.getElementById("myLabel").style.color = "black";
             document.getElementById("btnConsultarFecha").style.fontSize = "large";
             FechaRec = new Date();
             var fecha = new Date();

@@ -11,13 +11,16 @@ app.reporteGeocercas = kendo.observable({
             document.getElementById("FechaFinGC").style.width = wd + "px";
             var fecha = new Date();
             var year = fecha.getFullYear();
-            var mes = fecha.getMonth();
+            var mes = fecha.getMonth() + 1;
             var dia = fecha.getDate();
-
+            alert(document.getElementById("FechaInicioGC").value);
+            if (document.getElementById("FechaInicioGC").value == "") {
+                document.getElementById("FechaInicioGC").value = dia + "-" + mes +"-" + year;
+            }
             $("#FechaInicioGC").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(1900, 0, 1),
-                value: new Date(),
+                value: document.getElementById("FechaInicioGC").value,
                 format: "dd-MM-yyyy",
                 max: new Date(year, mes, dia)
             });
@@ -53,6 +56,7 @@ app.localization.registerView('reporteGeocercas');
 function regresaGC() {
     registroGC = "";
     registroGC1 = "";
+    document.getElementById("FechaInicioGC").value = "";
     $("#listViewGC").kendoGrid().dataSource = "";
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
@@ -91,16 +95,18 @@ function traeCordenadasUbicaGC() {
                     registroGC1 = cords1;
                     for (var i = 0; i < data[0].lstPuntosGeo.length; i++) {
                         if (data[0].lstPuntosGeo[i] != null) {
-                            cords.push({
-                                Fecha: data[0].lstPuntosGeo[i].Fecha,
-                                lstCoordGeo: data[0].lstPuntosGeo[i].lstCoordGeo
-                                //Latitud: data[i].Latitud,
-                                //Longitud: data[i].Longitud,
-                                //Velocidad: data[i].Velocidad,
-                                //Sentido: data[i].Sentido,
-                                //FecharegistroPA: data[i].FecharegistroPA,
-                                //Estado: data[i].Estado
-                            });
+                            if (data[0].lstPuntosGeo[i].lstCoordGeo != null) {
+                                cords.push({
+                                    Fecha: data[0].lstPuntosGeo[i].Fecha,
+                                    lstCoordGeo: data[0].lstPuntosGeo[i].lstCoordGeo
+                                    //Latitud: data[i].Latitud,
+                                    //Longitud: data[i].Longitud,
+                                    //Velocidad: data[i].Velocidad,
+                                    //Sentido: data[i].Sentido,
+                                    //FecharegistroPA: data[i].FecharegistroPA,
+                                    //Estado: data[i].Estado
+                                });
+                            }
                         }
                     }
                 } catch (e) {

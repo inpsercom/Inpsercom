@@ -66,7 +66,7 @@ function actualizaAsignar() {
         var grid = $("#nuevochasisview").data("kendoGrid");
         var email = datos_Cliente.mail;
         var resultado = "";
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
+        var Url = urlService + "Vehiculo/" + email;
         $.ajax({
             url: Url,
             type: "GET",
@@ -81,21 +81,24 @@ function actualizaAsignar() {
                     grid.setDataSource(dataSource);
 
                 } catch (e) {
+                    //alert(inspeccionar(e));
                     mens("Error servicio actualizar vehículo", "error");
                 }
             },
             error: function (err) {
+                //alert(err);
                 mens("Error conexión al servicio vehículo", "error"); //alert(JSON.stringify(err));
             }
         });
     } catch (d) {
+        //alert(d);
         mens("Error servicio actualizar vehículo", "error");
     }
 }
 function grabar() {
     try {
         if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { alert("esta vacio"); return; }
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
+        var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 5,
             "identificacion_cliente": "",
@@ -138,7 +141,7 @@ function validavehiculo(email) {
     try {
         if ((email != "") && (email)) {
             var resultado = "";
-            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + email;
+            var Url = urlService + "Vehiculo/" + email;
             var grid = $("#chasisview").data("kendoGrid");
             $.ajax({
                 url: Url, type: "GET", dataType: "json", async: false,
@@ -171,7 +174,7 @@ function grid_remove(e) {
 
 function actualiza(chasisemail) {
     try {
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/EliminaV";
+        var Url = urlService + "EliminaV";
         var params = { "vin": chasisemail };
         $.ajax({
             url: Url, type: "POST", data: JSON.stringify(params), dataType: "json",//Content-Type: application/json

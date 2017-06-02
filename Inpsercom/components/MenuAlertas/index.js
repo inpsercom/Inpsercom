@@ -5,15 +5,14 @@ app.menuAlertas = kendo.observable({
     },
     afterShow: function () { }
 });
+
 app.localization.registerView('menuAlertas');
-var tipoReporte = "";
+
 function excesos() {
-    tipoReporte = "E";
     kendo.mobile.application.navigate("components/ReporteAlertas/view.html");
 }
 
 function panico() {
-    tipoReporte = "P";
     kendo.mobile.application.navigate("components/ReportePanicos/view.html");
 }
 
@@ -26,6 +25,5 @@ function apaencendido() {
 }
 
 function paradas() {
-    tipoReporte = "S";
     kendo.mobile.application.navigate("components/ReporteParadas/view.html");
 }

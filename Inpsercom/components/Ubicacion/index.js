@@ -5,12 +5,12 @@ app.miKia3 = kendo.observable({
         try {
             $("#NoOrdenUB").text(datos_Vehiculo.numeroorden);
             var cords = traeCordenadasUbica();
-            if(cords.Latitud == null){mens("No existe datos","error"); return;}
+            if (cords.Latitud == null) { mens("No existe datos", "error"); return; }
             var PosVehi = { lat: parseFloat(cords.Latitud), lng: parseFloat(cords.Longitud) };
             //Calculo el % a restar al alto total de la pantalla para que el mapa se ajuste correctamente al 100%
-            var height = (screen.height * 25.46875) / 100;
+            var height = (screen.height * 27.46875) / 100;
             var height1 = screen.height - height; //resto el valor en px que corresponde al % que sobra
-            document.getElementById("map").style.height  = height1 + "px";
+            document.getElementById("map").style.height = height1 + "px";
 
             color = "red";
             if (cords.ApagadoEncendido == 0) {
@@ -34,7 +34,7 @@ app.miKia3 = kendo.observable({
                 label: "Velocidad: " + cords.Velocidad + " KMpH"
             });
         } catch (s) {
-            mens("Error servicio sherloc","error");
+            mens("Error servicio sherloc", "error");
         }
     },
     afterShow: function () { }
@@ -48,7 +48,7 @@ function reload() {
         }, 1000);
 
     } catch (f) {
-        mens("Error servicio sherloc","error");
+        mens("Error servicio sherloc", "error");
     }
 }
 function reload2() {
@@ -82,7 +82,7 @@ function reload2() {
             }
         }
     } catch (f) {
-        mens("Error servicio sherloc","error");
+        mens("Error servicio sherloc", "error");
     }
 }
 
@@ -106,15 +106,20 @@ function traeCordenadasUbica() {
                 try {
                     cords = data.EnviarMensajeResult;
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc","error");
+                    mens("Error coordenadas servicio sherloc", "error");
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc","error");
+                mens("Error servicio sherloc", "error");
             }
         });
         return (cords);
     } catch (d) {
-        mens("Error en servicio sherloc","error");
+        mens("Error en servicio sherloc", "error");
     }
+}
+function regreso() {
+    if (datos_Vehiculo.tipoContratoSherloc == "GOLDEN") {
+        kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
+    } else { kendo.mobile.application.navigate("components/OrdenInstalacionBasico/view.html"); }
 }

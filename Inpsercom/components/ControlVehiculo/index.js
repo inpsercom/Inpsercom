@@ -1,10 +1,16 @@
 //'use strict';
 
 app.miKia4 = kendo.observable({
-    onShow: function() {},
+    onShow: function() {$("#NoOrdenDB").text(datos_Vehiculo.numeroorden);},
     afterShow: function() {},
 });
 app.localization.registerView('miKia4');
+
+function regresar(){
+    if (datos_Vehiculo.tipoContratoSherloc == "GOLDEN") {
+        kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
+    } else { kendo.mobile.application.navigate("components/OrdenInstalacionBasico/view.html"); }
+}
 
 function aperturaRemota(){
     try {

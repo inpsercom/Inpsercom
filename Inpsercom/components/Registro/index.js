@@ -26,7 +26,7 @@ function personaGet() {
     try {
         var _identificacion = document.getElementById("identificacion").value;
         if ((_identificacion != "") && (_identificacion)) {
-            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/json/" + _identificacion;
+            var Url = urlService + "json/" + _identificacion;
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -74,7 +74,7 @@ function registrar() {
         var password = document.getElementById("password").value;
         var repassword = document.getElementById("repassword").value;
         var numorden = 0; //document.getElementById("numorden").value;
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/ClienteSet";
+        var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 3,
             "identificacion_cliente": identificacion,

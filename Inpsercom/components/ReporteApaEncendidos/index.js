@@ -3,6 +3,7 @@ app.reporteApaEnces = kendo.observable({
     onShow: function () {
         try {
             $("#NoOrdenAE").text(datos_Vehiculo.numeroorden);
+            document.getElementById("btnConsultarAE").style.borderColor = "#bb162b";
             registroAE = "";
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;
@@ -18,10 +19,20 @@ app.reporteApaEnces = kendo.observable({
                 min: new Date(1900, 0, 1),
                 value: new Date(),
                 format: "dd-MM-yyyy",
-                max: new Date(year, mes, dia)
+                max: new Date(year, mes, dia),
+                animation: {
+                    close: {
+                        effects: "fadeOut zoom:out",
+                        duration: 300
+                    },
+                    open: {
+                        effects: "fadeIn zoom:in",
+                        duration: 300
+                    }
+                }
             });
             $("#FechaFinAE").kendoDatePicker({
-                ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
+                //ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(1900, 0, 1),
                 max: new Date(year, mes, dia),
                 value: new Date(),
@@ -39,9 +50,10 @@ app.reporteApaEnces = kendo.observable({
         try {
             //var servicioRA = JSON.stringify(e.dataItem);
             registroAE = JSON.stringify(e.dataItem);
+            localStorage.setItem("registro_AE", JSON.stringify(registroAE));
             //sessionStorage.setItem("servicioRA", servicioRA);
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
-            kendo.mobile.application.navigate("components/ReporteApaEncendido/view.html");
+            kendo.mobile.application.navigate("components/ReporteApaEncendidoPuntos/view.html");
         } catch (s) {
             mens("Error selección de registroAE");
         }
@@ -73,15 +85,14 @@ function traeCordenadasUbicaAE() {
             async: false,
             success: function (data) {
                 try {
-                    data = data.ReporteApagadoEncendidoResult.lstReporteAlarmas;
-                    alert(inspeccionar(data));
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i] != null) {
+                    var data1 = data.ReporteApagadoEncendidoResult.lstReporteAlarmas;
+                    for (var i = 0; i < data1.length; i++) {
+                        if (data1[i] != null) {
                             cords.push({
-                                Fecha: data[i].Fecha,
-                                TotalRecorrido: data[i].TotalRecorrido,
-                                TotalTiempoEncendido: data[i].TotalTiempoEncendido,
-                                lstRecorridos: data[i].lstRecorridos
+                                Fecha: data1[i].Fecha,
+                                TotalRecorrido: data1[i].TotalRecorrido,
+                                TotalTiempoEncendido: data1[i].TotalTiempoEncendido,
+                                lstRecorridos: data1[i].lstRecorridos
                             });
                         }
                     }
@@ -97,15 +108,15 @@ function traeCordenadasUbicaAE() {
             Latitud
             Longitud
             Kilometraje*/
-        var fechaU = (screen.width * 30) / 100;
-        var Lati = (screen.width * 35) / 100;
-        var Kilo = (screen.width * 20) / 100;
+        var fechaU = (screen.width * 27) / 100;
+        var Lati = (screen.width * 33) / 100;
+        var Kilo = (screen.width * 40) / 100;
         $("#listViewAE").kendoGrid({
             allowCopy: true,
             columns: [
                 { field: "Fecha", title: "Fecha", width: fechaU },
-                { field: "TotalRecorrido", title: "Total Recorrido", width: Lati },
-                { field: "TotalTiempoEncendido", title: "Total Encendido", width: Lati }
+                { field: "TotalRecorrido", title: "Tot Recorrido", width: Lati },
+                { field: "TotalTiempoEncendido", title: "Tot Encendido", width: Kilo }
                 //{ field: "Velocidad", title: "Velocidad", width: Kilo }
             ],
             dataSource: cords,
@@ -117,9 +128,10 @@ function traeCordenadasUbicaAE() {
                     var dataItem = this.dataItem(selectedRows[i]);
                     selectedDataItems.push(dataItem);
                 }
-                registroAE = selectedDataItems[0];
+                registroAE = selectedDataItems[0].lstRecorridos;
+                localStorage.setItem("registro_AE", JSON.stringify(registroAE));
                 //alert(inspeccionar(registroPA.lstAlarmas));
-                kendo.mobile.application.navigate("components/ReporteApaEncendido/view.html");
+                kendo.mobile.application.navigate("components/ReporteApaEncendidoPuntos/view.html");
             }
         });
     } catch (d) {

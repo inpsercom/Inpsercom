@@ -3,7 +3,7 @@ app.detalleOT = kendo.observable({
     onShow: function () {
         try {
             $("#NumeroChasisDOT").text(datos_Cliente.chasis);
-            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Detalle/" + registro.codigo_empresa + "," + registro.anio_ga35 + "," + registro.secuencia_orden;
+            var Url = urlService + "Detalle/" + registro.codigo_empresa + "," + registro.anio_ga35 + "," + registro.secuencia_orden;
             var infordet;
             $.ajax({
                 url: Url,

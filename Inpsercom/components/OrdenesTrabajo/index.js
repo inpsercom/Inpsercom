@@ -53,9 +53,9 @@ app.localization.registerView('mntOTs');
 
 function ConsultarOT() {
     try {
-        if(document.getElementById("cboxOT").checked == false){
+        /*if(document.getElementById("cboxOT").checked == false){
             document.getElementById("FechaInicio").value = "01-01-1910";
-        }
+        }*/
         if (document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value) { alert("Fecha inicio no ha sido seleccionada"); return; }
         if (document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value) { alert("Fecha fin no ha sido seleccionada"); return; }
         var fechaI = new Date(document.getElementById("FechaInicio").value);
@@ -64,7 +64,7 @@ function ConsultarOT() {
     } catch (f) { mens("Error en fechas", "error"); }
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Ordenes/" + "2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value;
+        var Url = urlService + "Ordenes/" + "1,2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value;
         var infor;
         $.ajax({
             url: Url,
@@ -120,7 +120,7 @@ function ConsultarOT() {
     } catch (e) {
         mens("Error de conexión a la base");
     }
-   if(document.getElementById("cboxOT").checked == false){
+   /*if(document.getElementById("cboxOT").checked == false){
             document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;
-        } 
+        }*/ 
 }

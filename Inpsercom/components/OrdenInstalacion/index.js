@@ -53,10 +53,7 @@ function habilitarOpciones() {
     try { 
         var NoOrden1 = datos_Vehiculo.numeroorden; //document.getElementById("NoOrdenn").value;
         if (NoOrden1 != "") {
-            //kendo.ui.progress($("#miKia2Screen"), true);
-            //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
-            //var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/U";
             //var params = { orden: NoOrden1, output: "json" }; data: params,
             $.ajax({
                 url: Url, type: "GET",  dataType: "json",async: false,
@@ -65,7 +62,7 @@ function habilitarOpciones() {
                         data1 = data.perfilClienteResult;
                         if (data1.estadoServicio == "A") {
                             var chasisemail = "3;" + datos_Cliente.mail + ";" + datos_Vehiculo.chasis + ";" + data1.orden;
-                            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/EliminaV";
+                            var Url = urlService + "EliminaV";
                             var params = { "vin": chasisemail };
                             $.ajax({
                                 url: Url, type: "POST", data: JSON.stringify(params), dataType: "json", //Content-Type: application/json
@@ -117,7 +114,7 @@ function habilitarOpciones() {
 
 function registra(chasisemail) {
     try {
-        var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/EliminaV";
+        var Url = urlService + "EliminaV";
         var params = { "vin": chasisemail };
         $.ajax({
             url: Url, type: "POST", data: JSON.stringify(params), dataType: "json", //Content-Type: application/json

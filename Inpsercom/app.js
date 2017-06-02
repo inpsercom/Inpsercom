@@ -1,7 +1,8 @@
 //'use strict';
 var datos_Cliente, Device_identifier, datos_Vehiculo, urlService;
-var urlInterno = 'http://IPS10:8089';  // 'http://192.168.1.3:8089'; 
-var urlExterno = 'http://190.108.66.10:8089';
+var urlInterno = 'http://192.168.1.3:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089'; 
+var urlExterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';
+//var urlsherloc = 'http://190.110.193.131/ReportService.svc/';
 var notificationWidget;
 (function () {
     var app = {

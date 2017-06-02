@@ -9,13 +9,16 @@ function signin() {
     try {
         var em = document.getElementById("emailLogin").value;
         var pa = document.getElementById("passwordLogin").value;
+        var co = document.getElementById("codigoLogin").value; 
         if (em == "" || !em) { mens("El Email no tiene datos","error"); return; }
         if (pa == "" || !pa) { mens("El Password no tiene datos","error"); document.getElementById("passwordLogin").focus(); return; }
-        var resul = validaLogin(document.getElementById("emailLogin").value, document.getElementById("passwordLogin").value);
+        if (co == "" || !co) { mens("El Código no tiene datos","error"); document.getElementById("codigoLogin").focus(); return; }
+        var resul = validaLogin(document.getElementById("emailLogin").value, document.getElementById("passwordLogin").value, document.getElementById("codigoLogin").value);
         if (resul == "false" || resul == "" || !resul) {
-            mens("El ID o password son incorrectos por favor verifique");
+            mens("El ID, password o código son incorrectos por favor verifique");
             document.getElementById("emailLogin").value="";
             document.getElementById("passwordLogin").value="";
+            document.getElementById("codigoLogin").value="";
             document.getElementById("emailLogin").focus();
             return;
         }
@@ -61,18 +64,20 @@ function signin() {
         //kendo.mobile.application.navigate("components/miKia/view.html");
         kendo.mobile.application.navigate("components/MenuKia/view.html");
     } catch (s) {
+        //alert(s);
         mens("Error conexión a la base de datos ","error");
     }
 }
 
-//190.108.66.10
-function validaLogin(email, password) {
+//190.108.66.10  urlService
+function validaLogin(email, password, codigo) {
     try {
         var resultado = "";
-        var _identificacion = email + ";" + password;
+        var _identificacion = email + ";" + password + ";" + codigo;
         if ((_identificacion !== "") && (_identificacion)) {
             resultado = "";
-            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/" + _identificacion;
+            var Url = urlService + "Login/" + _identificacion;
+            //alert(Url);
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -82,20 +87,20 @@ function validaLogin(email, password) {
                     try {
                         resultado = data.LoginGetResult;
                     } catch (e) {
-                        alert(inspéccionar(e));
+                        //alert(e);
                         mens(data,"error");
                         borraCampos();
                     }
                 },
                 error: function (err) {
-                    alert(inspeccionar(err));
+                    //alert(inspeccionar(err));
                     mens("Error en conexión al servicio login","error");
                 }
             });
             return resultado;
         }
     } catch (f) {
-        alert(inspéccionar(f));
+        //alert(f);
         mens("Error cenexión servicio login","error");
     }
 }
@@ -104,7 +109,7 @@ function validausuario(email) {
     try {
         if ((email != "") && (email)) {
             var resultado = "";
-            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Usuario/" + email;
+            var Url = urlService + "Usuario/" + email;
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -133,7 +138,7 @@ function validavehicu(emailp) {
     try {
         if ((emailp !== "") && (emailp)) {
             var resultado = "";
-            var Url = urlService + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Vehiculo/" + emailp;
+            var Url = urlService + "Vehiculo/" + emailp;
             $.ajax({
                 url: Url,
                 type: "GET",

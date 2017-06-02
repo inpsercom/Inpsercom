@@ -61,18 +61,7 @@ function traeCordenadasUbicaPN() {
         var FechaRecEX = document.getElementById("FechaInicioPN").value;
         var FechaRecEX1 = document.getElementById("FechaFinPN").value;;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-        if (tipoReporte == "E") {
-            var Url = "http://190.110.193.131/ReportService.svc/ReporteExVelocidad/" + FechaRecEX + "/" + FechaRecEX1 + "?" + ordenUsuario;
-        }
-        if (tipoReporte == "P") {
-            var Url = "http://190.110.193.131/ReportService.svc/ReporteEventoPanico/" + FechaRecEX + "/" + FechaRecEX1 + "?" + ordenUsuario;
-        }
-        if (tipoReporte == "G") {
-            var Url = "http://190.110.193.131/ReportService.svc/ReporteEventoPanico/" + FechaRecEX + "/" + FechaRecEX1 + "?" + ordenUsuario;
-        }
-        if (tipoReporte == "S") {
-            var Url = "http://190.110.193.131/ReportService.svc/ReporteParadas/" + FechaRecEX + "/" + FechaRecEX1 + "?" + ordenUsuario;
-        }
+        var Url = "http://190.110.193.131/ReportService.svc/ReporteEventoPanico/" + FechaRecEX + "/" + FechaRecEX1;
         var params = {
             orden: ordenUsuario,
             output: "json"
@@ -90,16 +79,13 @@ function traeCordenadasUbicaPN() {
                     if (tipoReporte == "G") { data = data.ReporteEventoPanicoResult.lstReporteAlarmas; }
                     if (tipoReporte == "S") { data = data.ReporteParadasResult.lstReporteAlarmas; }
                     for (var i = 0; i < data.length; i++) {
-                        if (data[i].lstAlarmas != null) {
+                        if (data[i].totalRegistros != "0") {
                             cords.push({
                                 Fecha: data[i].Fecha,
+                                totalRegistros: data[i].totalRegistros,
+                                valorMaximoRegistrado: data[i].valorMaximoRegistrado,
+                                limiteVelocidadActual: data[i].limiteVelocidadActual,
                                 lstAlarmas: data[i].lstAlarmas
-                                //Latitud: data[i].Latitud,
-                                //Longitud: data[i].Longitud,
-                                //Velocidad: data[i].Velocidad,
-                                //Sentido: data[i].Sentido,
-                                //FecharegistroPA: data[i].FecharegistroPA,
-                                //Estado: data[i].Estado
                             });
                         }
                     }
@@ -111,20 +97,16 @@ function traeCordenadasUbicaPN() {
                 mens("Error servicio sherloc", "error");
             }
         });
-        /*FechaUbicacion
-            Latitud
-            Longitud
-            Kilometraje*/
-        var fechaU = (screen.width * 20) / 100;
-        var Lati = (screen.width * 30) / 100;
-        var Kilo = (screen.width * 20) / 100;
+        var fechaU = (screen.width * 22) / 100;
+        var Lati = (screen.width * 28) / 100;
+        var Kilo = (screen.width * 26) / 100;
         $("#listViewPN").kendoGrid({
             allowCopy: true,
             columns: [
-                { field: "Fecha", title: "Fecha", width: fechaU }
-                //,{ field: "Latitud", title: "Latitud", width: Lati },
-                //{ field: "Longitud", title: "Logitud", width: Lati },
-                //{ field: "Velocidad", title: "Velocidad", width: Kilo }
+                { field: "Fecha", title: "Fecha", width: Lati },
+                { field: "totalRegistros", title: "Excesos", width: Kilo },
+                { field: "valorMaximoRegistrado", title: "Velocidad", width: Kilo },
+                { field: "limiteVelocidadActual", title: "Lim Veloc.", width: fechaU }
             ],
             dataSource: cords,
             selectable: "row",
