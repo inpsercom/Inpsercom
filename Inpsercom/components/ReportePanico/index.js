@@ -98,7 +98,9 @@ function setMarkersPN(mapPN) {
           icon: iconBase + 'parking_lot_maps.png'  'library_maps.png  'info-i_maps.png'
         });
         iconBase + 'parking_lot_maps.png'*/
+        
         for (var i = 0; i < beachesPN.length; i++) {
+            //alert(inspeccionar(beachesPN[i]));
             var beachPN = beachesPN[i];
             var markerPN = new google.maps.Marker({
                 position: { lat: beachPN[0], lng: beachPN[1] },
@@ -121,5 +123,5 @@ function setMarkersPN(mapPN) {
                 }
             })(markerPN, i));
         }
-    } catch (e) { alert(e); }
+    } catch (e) { mens("Error en mapa","mens");return; }
 }

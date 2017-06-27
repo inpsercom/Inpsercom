@@ -14,11 +14,11 @@ app.detalleOT = kendo.observable({
                     try {
                         infordet = (JSON.parse(data.DetalleOTGetResult)).DetalleOT01;
                     } catch (e) {
-                        mens("Error en lectura de detalle OT", "error");
+                        mens("Error en lectura de detalle OT", "mens");return;
                     }
                 },
                 error: function (err) {
-                    mens("Error en servicio Detalle OT", "error"); //alert(JSON.stringify(err));
+                    mens("Error en servicio Detalle OT", "mens"); return;//alert(JSON.stringify(err));
                 }
             });
 
@@ -38,7 +38,7 @@ app.detalleOT = kendo.observable({
                 allowCopy: true,
                 columns: [
                     { field: "Descripcion", title: "Descripción", footerTemplate: "Total:", width: descri },
-                    { field: "Cantidad", title: "Cantidad",   footerTemplate: "#: sum # ", width: cant },
+                    { field: "Cantidad", title: "Cantidad",   width: cant },
                     { field: "Total", format: "{0:c}", title: "Total", footerTemplate: "#= kendo.toString(sum, '0.00') #" , width: cant}
 
                 ],
@@ -53,7 +53,7 @@ app.detalleOT = kendo.observable({
                 selectable: "row"
             });
         } catch (e) {
-            mens("Error en servicio Progress", "error");
+            mens("Error en servicio Progress", "mens");return;
         }
     },
     afterShow: function () { },

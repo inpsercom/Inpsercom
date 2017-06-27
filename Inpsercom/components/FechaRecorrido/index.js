@@ -13,24 +13,29 @@ app.fechaReco = kendo.observable({
             var year = fecha.getFullYear();
             var mes = fecha.getMonth();
             var dia = fecha.getDate();
-
+            if (document.getElementById("FechaRecor").value == "") {
+                document.getElementById("FechaRecor").value = dia + "-" + (mes+1) + "-" + year;
+            }
             $("#FechaRecor").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(year, (mes - 2), dia),
-                value: new Date(),
+                value: document.getElementById("FechaRecor").value,
                 format: "dd-MM-yyyy",
                 max: new Date(year, mes, dia)
             });
-        } catch (e) { mens("Error en la fecha", "error"); }
+        } catch (e) { mens("Error en la fecha", "mens"); return;}
     },
     afterShow: function () { },
     inicializa: function () { },
 
 });
 app.localization.registerView('fechaReco');
-
+function regresaREC(){
+    document.getElementById("FechaRecor").value = "";
+    kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
+}
 function Consultar() {
-    if (document.getElementById("FechaRecor").value == "" || !document.getElementById("FechaRecor").value) { alert("Fecha inicio no ha sido seleccionada"); return; }
+    if (document.getElementById("FechaRecor").value == "" || !document.getElementById("FechaRecor").value) { mens("Fecha inicio no ha sido seleccionada","mens"); return; }
     FechaRec = document.getElementById("FechaRecor").value;
     kendo.mobile.application.navigate("components/ControlarAuto/view.html");
 }

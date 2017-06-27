@@ -1,6 +1,8 @@
 app.estadoMante = kendo.observable({
     onShow: function () {
         $("#NumeroChasisEM").text(datos_Cliente.chasis);
+        document.getElementById("verde").style.display = "none";
+        document.getElementById("rojo").style.display = "none";
         borrar();
         cargar();
     },
@@ -10,6 +12,10 @@ app.estadoMante = kendo.observable({
     }
 });
 app.localization.registerView('estadoMante');
+
+function estadoMA(){
+    kendo.mobile.application.navigate("components/ReactivacionGarantia/view.html");
+}
 function cargar() {
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
@@ -24,11 +30,13 @@ function cargar() {
                 try {
                     inforEM = (JSON.parse(data.MantenimientoGetResult)).KilometrajeOT;
                 } catch (e) {
-                    mens("No existe datos para esta cosnulta", "error");
+                    mens("No existe datos para esta cosnulta", "mens");
+                    return;
                 }
             },
             error: function (err) {
-                mens("Error en consulta OT", "error");
+                mens("Error en consulta OT", "mens");
+                return;
             }
         });
         var bandera = "verde";
@@ -45,7 +53,7 @@ function cargar() {
             if (inforEM[i].ultimo == true) {
                 //alert(inforEM[i].fecha_kilometraje);
                 //alert(inforEM[i].kilometraje);
-                document.getElementById(bandera).style.display = "";
+                document.getElementById(bandera).style.display = "block";
                 document.getElementById("fec").value = inforEM[i].fecha_kilometraje;
                 document.getElementById("KM").value = inforEM[i].kilometraje;
                 document.getElementById("KM").style.fontZise = "100px";
@@ -53,7 +61,8 @@ function cargar() {
             }
         }
     } catch (e) {
-        mens("Error de conexión a la base");
+        mens("Error de conexión a la base","mens");
+        return;
     }
 }
 

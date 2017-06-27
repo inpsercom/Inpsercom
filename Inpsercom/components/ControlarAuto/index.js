@@ -48,7 +48,7 @@ app.mntControlVehiculo = kendo.observable({
             
             calculateAndDisplayRoute2(directionsService, directionsDisplay, latuno, lnguno, latlng, latfin, lngfin);
         } catch (f) {
-            mens("Error en servicio Sherloc", "error");
+            mens("Error en servicio Sherloc", "mens");return;
         }
     },
     afterShow: function () { },
@@ -77,12 +77,12 @@ function traeCordenadas() {
             success: function (data) {
                 try {
                     cords = data.HistoricoResult.lstHistorico[0].lstCoordenadas;
-                } catch (e) { mens("Error en Base de Sherloc", "error"); }
+                } catch (e) { mens("Error en Base de Sherloc", "mens"); return;}
             },
-            error: function (err) { mens("Error en servicio Sherloc", "error"); } //alert(JSON.stringify("error conexion err"+err)); }
+            error: function (err) { mens("Error en servicio Sherloc", "mens");return; } //alert(JSON.stringify("error conexion err"+err)); }
         });
         return (cords);
-    } catch (d) { mens("Error en servicio Sherloc", "error"); }
+    } catch (d) { mens("Error en servicio Sherloc", "mens"); return;}
 }
 
 function calculateAndDisplayRoute2(directionsService, directionsDisplay, lat1, long1, puntosInt, lat2, long2) {
@@ -98,10 +98,10 @@ function calculateAndDisplayRoute2(directionsService, directionsDisplay, lat1, l
             if (status == google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(result);
             } else {
-                alert('Se ha producido un error en la solicitud de' + status);
+                mens('Se ha producido un error en la solicitud de' + status,"mens");return;
             }
         });
     } catch (k) {
-        alert("Error al depliegue del mapa" );
+        mens("Error al depliegue del mapa","mens" );return;
     }
 }

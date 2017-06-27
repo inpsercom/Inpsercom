@@ -9,7 +9,7 @@ app.mntVehiculos = kendo.observable({
                 actualizaAsignar();
             }
         } catch (d) {
-            mens("Error servicio cliente", "error");
+            mens("Error servicio cliente", "mens");return;
         }
 
     },
@@ -37,7 +37,7 @@ app.mntVehiculos = kendo.observable({
             });
             grid = $("#chasisview").data("kendoGrid");
             grid.bind("remove", grid_remove);
-        } catch (e) { mens("actualizar vehículo", "error"); }
+        } catch (e) { mens("actualizar vehículo", "mens"); return;}
     }
 });
 app.localization.registerView('mntVehiculos');
@@ -58,7 +58,7 @@ function grid_Change(e) {
         localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
         //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
         kendo.mobile.application.navigate("components/miKia/view.html");
-    } catch (f) { mens("Error servicio actualizar vehículo", "error"); }
+    } catch (f) { mens("Error servicio actualizar vehículo", "mens");return; }
 }
 
 function actualizaAsignar() {
@@ -82,22 +82,22 @@ function actualizaAsignar() {
 
                 } catch (e) {
                     //alert(inspeccionar(e));
-                    mens("Error servicio actualizar vehículo", "error");
+                    mens("Error servicio actualizar vehículo", "mens");return;
                 }
             },
             error: function (err) {
                 //alert(err);
-                mens("Error conexión al servicio vehículo", "error"); //alert(JSON.stringify(err));
+                mens("Error conexión al servicio vehículo", "mens");return; //alert(JSON.stringify(err));
             }
         });
     } catch (d) {
         //alert(d);
-        mens("Error servicio actualizar vehículo", "error");
+        mens("Error servicio actualizar vehículo", "mens");return;
     }
 }
 function grabar() {
     try {
-        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { alert("esta vacio"); return; }
+        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("esta vacio","mens"); return; }
         var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 5,
@@ -121,20 +121,20 @@ function grabar() {
             success: function (data) {
                 if (data == "Success") {
                     try {
-                        mens("Registro Exitoso", "success");
+                        mens("Registro Exitoso", "mens");
                         document.getElementById("VIN").value = "";
                         actualizaAsignar();
                         validavehiculo(params.mail);
-                    } catch (s) { mens("Error serrvicio actualizar vehículo", "error"); }
+                    } catch (s) { mens("Error serrvicio actualizar vehículo", "mens");return; }
                 } else {
-                    mens(data, "error");
+                    mens(data, "mens");return;
                 }
             },
             error: function (err) {
-                mens("Error conexión servicio vehículo", "error");
+                mens("Error conexión servicio vehículo", "mens");return;
             }
         });
-    } catch (e) { mens("Error servicio grabar vehículo", "error"); }
+    } catch (e) { mens("Error servicio grabar vehículo", "mens");return; }
 }
 var grid;
 function validavehiculo(email) {
@@ -152,15 +152,15 @@ function validavehiculo(email) {
                             data: resultado
                         });
                         grid.setDataSource(dataSource);
-                    } catch (e) { mens("Error servicio vehículo", "error"); }
+                    } catch (e) { mens("Error servicio vehículo", "mens"); return;}
                 },
                 error: function (err) {
-                    mens("Error conexión servicio vehículo", "error");
+                    mens("Error conexión servicio vehículo", "mens");return;
                 }
             });
             return resultado;
         }
-    } catch (e) { mens("Error servicio vehículo", "error"); }
+    } catch (e) { mens("Error servicio vehículo", "mens");return; }
 }
 function grid_remove(e) {
     try {
@@ -169,7 +169,7 @@ function grid_remove(e) {
             datos_Cliente.chasis = "";
             localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
         }
-    } catch (s) { mens("Error al eliminar vehículo", "error"); }
+    } catch (s) { mens("Error al eliminar vehículo", "mens"); return;}
 }
 
 function actualiza(chasisemail) {
@@ -181,11 +181,11 @@ function actualiza(chasisemail) {
             headers: { 'Content-Type': 'application/json;charset=UTF-8' },
             success: function (data) {
                 if (data == "Success") {
-                    mens("Se elimino el registro", "success");
+                    mens("Se elimino el registro", "mens");
                     actualizaAsignar();
-                } else { mens(data, "error"); }
+                } else { mens(data, "mens"); return;}
             },
-            error: function (err) { mens("Error servicio actualizar vehículo", "error"); }
+            error: function (err) { mens("Error servicio actualizar vehículo", "mens"); return;}
         });
-    } catch (e) { mens("Error servicio eliminar vehículo", "error"); }
+    } catch (e) { mens("Error servicio eliminar vehículo", "mens");return; }
 }

@@ -1,8 +1,8 @@
 var registroPA;
 app.reporteParadas = kendo.observable({
     onShow: function () {
-        try { 
-            $("#NoOrdenPA").text(datos_Vehiculo.numeroorden);  
+        try {
+            $("#NoOrdenPA").text(datos_Vehiculo.numeroorden);
             registro = "";
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;
@@ -12,11 +12,13 @@ app.reporteParadas = kendo.observable({
             var year = fecha.getFullYear();
             var mes = fecha.getMonth();
             var dia = fecha.getDate();
-
+            if (document.getElementById("FechaInicioPA").value == "") {
+                document.getElementById("FechaInicioPA").value = dia + "-" + (mes + 1) + "-" + year;
+            }
             $("#FechaInicioPA").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(1900, 0, 1),
-                value: new Date(),
+                value: document.getElementById("FechaInicioPA").value,
                 format: "dd-MM-yyyy",
                 max: new Date(year, mes, dia)
             });
@@ -30,7 +32,7 @@ app.reporteParadas = kendo.observable({
             //document.getElementById("FechaInicio").value = "01-01-1910";
             //ConsultarOT();
             //document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;*/
-        } catch (e) { mens("Error en fechas", "error"); }
+        } catch (e) { mens("Error en fechas", "mens");return; }
     },
     afterShow: function () { },
     inicializa: function () {
@@ -44,13 +46,15 @@ app.reporteParadas = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteParada/view.html");
         } catch (s) {
-            mens("Error selección de registroPA");
+            mens("Error selección de registroPA","mens");
+            return;
         }
     }
 });
 app.localization.registerView('reporteParadas');
-function regresaPA(){
+function regresaPA() {
     registroPA = "";
+    document.getElementById("FechaInicioPA").value="";
     $("#listViewPA").kendoGrid().dataSource = "";
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
@@ -62,7 +66,7 @@ function traeCordenadasUbicaPA() {
         var FechaRecEX = document.getElementById("FechaInicioPA").value;
         var FechaRecEX1 = document.getElementById("FechaFinPA").value;;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-                    var Url = "http://190.110.193.131/ReportService.svc/ReporteParadas/" + FechaRecEX + "/" + FechaRecEX1;
+        var Url = "http://190.110.193.131/ReportService.svc/ReporteParadas/" + FechaRecEX + "/" + FechaRecEX1;
         var params = {
             orden: ordenUsuario,
             output: "json"
@@ -75,7 +79,7 @@ function traeCordenadasUbicaPA() {
             async: false,
             success: function (data) {
                 try {
-                    data = data.ReporteParadasResult.lstReporteAlarmas; 
+                    data = data.ReporteParadasResult.lstReporteAlarmas;
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].totalRegistros != "0") {
                             cords.push({
@@ -88,23 +92,25 @@ function traeCordenadasUbicaPA() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "error");
+                    mens("Error coordenadas servicio sherloc", "mens");
+                    return;
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc", "error");
+                mens("Error servicio sherloc", "mens");
+                return;
             }
         });
-        var fechaU = (screen.width * 22) / 100;
-        var Lati = (screen.width * 28) / 100;
-        var Kilo = (screen.width * 26) / 100;
+        var fechaU = (screen.width * 35) / 100;
+        var Lati = (screen.width * 30) / 100;
+        var Kilo = (screen.width * 35) / 100;
         $("#listViewPA").kendoGrid({
             allowCopy: true,
             columns: [
                 { field: "Fecha", title: "Fecha", width: Lati },
-                { field: "totalRegistros", title: "Excesos", width: Kilo },
-                { field: "valorMaximoRegistrado", title: "Velocidad", width: Kilo },
-                { field: "limiteVelocidadActual", title: "Lim Veloc.", width: fechaU }
+                { field: "totalRegistros", title: "Paradas", width: Kilo },
+                //{ field: "valorMaximoRegistrado", title: "Velocidad", width: Kilo },
+                { field: "limiteVelocidadActual", title: "Veloc. Limite", width: fechaU }
             ],
             dataSource: cords,
             selectable: "row",
@@ -121,6 +127,7 @@ function traeCordenadasUbicaPA() {
             }
         });
     } catch (d) {
-        mens("Error en servicio sherloc", "error");
+        mens("Error en servicio sherloc", "mens");
+        return;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:versionCode="$AndroidVersionCode$"
-          android:versionName="$BundleVersion$"
+<manifest android:versionCode= "2"
+          android:versionName="AeKia"
           package="$AppIdentifier$"
           android:windowSoftInputMode="adjustPan"
           android:hardwareAccelerated="$AndroidHardwareAcceleration$"

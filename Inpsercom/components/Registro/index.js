@@ -15,8 +15,8 @@ app.miKia6 = kendo.observable({
                 format: "yyyy-MM-dd"
             });
             document.getElementById("btnRegistrar").disabled = true;
-            document.getElementById("FechaNacimiento").value = (year + "-" + (mes + 1) + "-" + dia);
-        } catch (e) { mens("Error en formato fecha", "error"); }
+            //document.getElementById("FechaNacimiento").value = (year + "-" + (mes + 1) + "-" + dia);
+        } catch (e) { mens("Error en formato fecha", "mens"); return;}
     },
     afterShow: function () { }
 });
@@ -43,21 +43,23 @@ function personaGet() {
                             document.getElementById("celular").value = data.telefono_celular;
                             persona_numero = data.persona_numero;
                         } else {
-                            mens("Error no existe persona", "error");
+                            mens("Error no existe persona", "mens");
                             borraCampos();
+                            return;
                         }
                     } catch (e) {
-                        mens("Error consulta cliente", "error");
+                        mens("Error consulta cliente", "mens");
                         borraCampos();
+                        return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio clientes", "error");
+                    mens("Error conexión servicio clientes", "mens");return;
                 }
             });
         }
     } catch (e) {
-        mens("Error servicio clientes", "error");
+        mens("Error servicio clientes", "mens");return;
     }
 }
 
@@ -158,15 +160,15 @@ function registrar() {
                             datos_Vehiculo = Vehiculo;
                         }
                         //kendo.mobile.application.navigate("components/miKia/view.html");
-                        kendo.mobile.application.navigate("components/MenuKia/view.html");
+                        kendo.mobile.application.navigate("components/LogIn/view.html");
                         return;
-                    } catch (s) {  mens("Error servicio cliente", "error");} //alert (s); 
+                    } catch (s) {  mens("Error servicio cliente", "mens");return;} //alert (s); 
                 }
-                else { mens(data, "error"); }
+                else { mens(data, "mens");return; }
             },
-            error: function (err) { mens("Error en servicio clientes", "error"); } //alert(err);
+            error: function (err) { mens("Error en servicio clientes", "mens");return; } //alert(err);
         });
-    } catch (e) {mens("Error en el servicio clientes", "error"); } //aler(e);
+    } catch (e) {mens("Error en el servicio clientes", "mens"); return;} //aler(e);
 }
 
 function ValidaMailRegistro() {
@@ -181,7 +183,7 @@ function ValidaMailRegistro() {
                 document.getElementById("email").style.borderColor = "";
             }
         }
-    } catch (f) { mens("Error validación mail", "error"); }
+    } catch (f) { mens("Error validación mail", "mens"); return;}
 }
 function ValidaCelular() {
     try {
@@ -195,7 +197,7 @@ function ValidaCelular() {
             }
         }
     }
-    catch (f) { mens("Error validación celular","error"); }
+    catch (f) { mens("Error validación celular","mens"); return;}
 }
 function ValidaPassword() {
     var pass = document.getElementById("password").value;

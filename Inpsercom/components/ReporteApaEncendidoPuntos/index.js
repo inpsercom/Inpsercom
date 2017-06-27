@@ -35,8 +35,8 @@ app.detalleTR = kendo.observable({
                 }
             });
         } catch (e) {
-            alert(e);
-            mens("Error en servicio Progress", "error");
+            //alert(e);
+            mens("Error en servicio Progress", "mens");return;
         }
     },
     afterShow: function () { },
@@ -50,7 +50,7 @@ app.detalleTR = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteApaEncendido/view.html");
         } catch (s) {
-            mens("Error selección de registroAE");
+            mens("Error selección de registroAE","mens");return;
         }
     }
 });

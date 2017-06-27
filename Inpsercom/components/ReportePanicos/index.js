@@ -1,8 +1,8 @@
 var registroPN;
 app.reportePanicos = kendo.observable({
     onShow: function () {
-        try { 
-            $("#NoOrdenPN").text(datos_Vehiculo.numeroorden);  
+        try {
+            $("#NoOrdenPN").text(datos_Vehiculo.numeroorden);
             registroPN = "";
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;
@@ -12,11 +12,13 @@ app.reportePanicos = kendo.observable({
             var year = fecha.getFullYear();
             var mes = fecha.getMonth();
             var dia = fecha.getDate();
-
+            if (document.getElementById("FechaInicioPN").value == "") {
+                document.getElementById("FechaInicioPN").value = dia + "-" + (mes + 1) + "-" + year;
+            }
             $("#FechaInicioPN").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(1900, 0, 1),
-                value: new Date(),
+                value: document.getElementById("FechaInicioPN").value,
                 format: "dd-MM-yyyy",
                 max: new Date(year, mes, dia)
             });
@@ -30,7 +32,7 @@ app.reportePanicos = kendo.observable({
             //document.getElementById("FechaInicio").value = "01-01-1910";
             //ConsultarOT();
             //document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;*/
-        } catch (e) { mens("Error en fechas", "error"); }
+        } catch (e) { mens("Error en fechas", "mens");return; }
     },
     afterShow: function () { },
     inicializa: function () {
@@ -44,13 +46,15 @@ app.reportePanicos = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReportePanico/view.html");
         } catch (s) {
-            mens("Error selección de registroPN");
+            mens("Error selección de registroPN","mens");
+            return;
         }
     }
 });
 app.localization.registerView('reportePanicos');
-function regresaPN(){
+function regresaPN() {
     registroPN = "";
+    document.getElementById("FechaInicioPN").value="";
     $("#listViewPN").kendoGrid().dataSource = "";
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
@@ -74,10 +78,7 @@ function traeCordenadasUbicaPN() {
             async: false,
             success: function (data) {
                 try {
-                    if (tipoReporte == "E") { data = data.ReporteExVelocidadResult.lstReporteAlarmas; }
-                    if (tipoReporte == "P") { data = data.ReporteEventoPanicoResult.lstReporteAlarmas; }
-                    if (tipoReporte == "G") { data = data.ReporteEventoPanicoResult.lstReporteAlarmas; }
-                    if (tipoReporte == "S") { data = data.ReporteParadasResult.lstReporteAlarmas; }
+                    data = data.ReporteEventoPanicoResult.lstReporteAlarmas;
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].totalRegistros != "0") {
                             cords.push({
@@ -90,23 +91,25 @@ function traeCordenadasUbicaPN() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "error");
+                    mens("Error coordenadas servicio sherloc", "mens");
+                    return;
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc", "error");
+                mens("Error servicio sherloc", "mens");
+                return;
             }
         });
-        var fechaU = (screen.width * 22) / 100;
-        var Lati = (screen.width * 28) / 100;
-        var Kilo = (screen.width * 26) / 100;
+        var fechaU = (screen.width * 35) / 100;
+        var Lati = (screen.width * 30) / 100;
+        var Kilo = (screen.width * 35) / 100;
         $("#listViewPN").kendoGrid({
             allowCopy: true,
             columns: [
                 { field: "Fecha", title: "Fecha", width: Lati },
-                { field: "totalRegistros", title: "Excesos", width: Kilo },
-                { field: "valorMaximoRegistrado", title: "Velocidad", width: Kilo },
-                { field: "limiteVelocidadActual", title: "Lim Veloc.", width: fechaU }
+                { field: "totalRegistros", title: "Pánico", width: Kilo },
+                //{ field: "valorMaximoRegistrado", title: "Velocidad", width: Kilo },
+                { field: "limiteVelocidadActual", title: "Veloc. limite", width: fechaU }
             ],
             dataSource: cords,
             selectable: "row",
@@ -123,6 +126,7 @@ function traeCordenadasUbicaPN() {
             }
         });
     } catch (d) {
-        mens("Error en servicio sherloc", "error");
+        mens("Error en servicio sherloc", "mens");
+        return;
     }
 }

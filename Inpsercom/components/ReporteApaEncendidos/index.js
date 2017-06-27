@@ -13,11 +13,13 @@ app.reporteApaEnces = kendo.observable({
             var year = fecha.getFullYear();
             var mes = fecha.getMonth();
             var dia = fecha.getDate();
-
+            if (document.getElementById("FechaInicioAE").value == "") {
+                document.getElementById("FechaInicioAE").value = dia + "-" + (mes + 1) + "-" + year;
+            }
             $("#FechaInicioAE").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(1900, 0, 1),
-                value: new Date(),
+                value: document.getElementById("FechaInicioAE").value,
                 format: "dd-MM-yyyy",
                 max: new Date(year, mes, dia),
                 animation: {
@@ -41,7 +43,7 @@ app.reporteApaEnces = kendo.observable({
             //document.getElementById("FechaInicio").value = "01-01-1910";
             //ConsultarOT();
             //document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;*/
-        } catch (e) { mens("Error en fechas", "error"); }
+        } catch (e) { mens("Error en fechas", "mens");return; }
     },
     afterShow: function () { },
     inicializa: function () { },
@@ -55,13 +57,14 @@ app.reporteApaEnces = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteApaEncendidoPuntos/view.html");
         } catch (s) {
-            mens("Error selección de registroAE");
+            mens("Error selección de registroAE","mens");return;
         }
     }
 });
 app.localization.registerView('reporteApaEnces');
 function regresaAE() {
     registroAE = "";
+    document.getElementById("FechaInicioAE").value="";
     $("#listViewAE").kendoGrid().dataSource = "";
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
@@ -87,7 +90,7 @@ function traeCordenadasUbicaAE() {
                 try {
                     var data1 = data.ReporteApagadoEncendidoResult.lstReporteAlarmas;
                     for (var i = 0; i < data1.length; i++) {
-                        if (data1[i] != null) {
+                        if (data1[i].TotalRecorrido != "0") {
                             cords.push({
                                 Fecha: data1[i].Fecha,
                                 TotalRecorrido: data1[i].TotalRecorrido,
@@ -97,11 +100,11 @@ function traeCordenadasUbicaAE() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "error");
+                    mens("Error coordenadas servicio sherloc", "mens");return;
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc", "error");
+                mens("Error servicio sherloc", "mens");return;
             }
         });
         /*FechaUbicacion
@@ -115,8 +118,8 @@ function traeCordenadasUbicaAE() {
             allowCopy: true,
             columns: [
                 { field: "Fecha", title: "Fecha", width: fechaU },
-                { field: "TotalRecorrido", title: "Tot Recorrido", width: Lati },
-                { field: "TotalTiempoEncendido", title: "Tot Encendido", width: Kilo }
+                { field: "TotalRecorrido", title: "Km Recorrido", width: Lati },
+                { field: "TotalTiempoEncendido", title: "Min Encendido", width: Kilo }
                 //{ field: "Velocidad", title: "Velocidad", width: Kilo }
             ],
             dataSource: cords,
@@ -135,6 +138,6 @@ function traeCordenadasUbicaAE() {
             }
         });
     } catch (d) {
-        mens("Error en servicio sherloc", "error");
+        mens("Error en servicio sherloc", "mens");return;
     }
 }

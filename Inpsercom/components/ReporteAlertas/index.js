@@ -1,8 +1,8 @@
 var registro;
 app.reporteAlertas = kendo.observable({
     onShow: function () {
-        try { 
-            $("#NoOrdenEX").text(datos_Vehiculo.numeroorden); 
+        try {
+            $("#NoOrdenEX").text(datos_Vehiculo.numeroorden);
             registro = "";
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;
@@ -12,11 +12,13 @@ app.reporteAlertas = kendo.observable({
             var year = fecha.getFullYear();
             var mes = fecha.getMonth();
             var dia = fecha.getDate();
-
+            if (document.getElementById("FechaInicioRA").value == "") {
+                document.getElementById("FechaInicioRA").value = dia + "-" + (mes + 1) + "-" + year;
+            }
             $("#FechaInicioRA").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(1900, 0, 1),
-                value: new Date(),
+                value: document.getElementById("FechaInicioRA").value,
                 format: "dd-MM-yyyy",
                 max: new Date(year, mes, dia)
             });
@@ -30,7 +32,7 @@ app.reporteAlertas = kendo.observable({
             //document.getElementById("FechaInicio").value = "01-01-1910";
             //ConsultarOT();
             //document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;*/
-        } catch (e) { mens("Error en fechas", "error"); }
+        } catch (e) { mens("Error en fechas", "mens"); return;}
     },
     afterShow: function () { },
     inicializa: function () {
@@ -44,13 +46,14 @@ app.reporteAlertas = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteExceso/view.html");
         } catch (s) {
-            mens("Error selección de registro");
+            mens("Error selección de registro","mens");return;
         }
     }
 });
 app.localization.registerView('reporteAlertas');
-function regresaE(){
+function regresaE() {
     registro = "";
+    document.getElementById("FechaInicioRA").value = "";
     $("#listViewRA").kendoGrid().dataSource = "";
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
@@ -75,8 +78,8 @@ function traeCordenadasUbicaRA() {
             async: false,
             success: function (data) {
                 try {
-                     data = data.ReporteExVelocidadResult.lstReporteAlarmas; 
-                     for (var i = 0; i < data.length; i++) {
+                    data = data.ReporteExVelocidadResult.lstReporteAlarmas;
+                    for (var i = 0; i < data.length; i++) {
                         if (data[i].totalRegistros != "0") {
                             cords.push({
                                 Fecha: data[i].Fecha,
@@ -88,27 +91,27 @@ function traeCordenadasUbicaRA() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "error");
+                    mens("Error coordenadas servicio sherloc", "mens");return;
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc", "error");
+                mens("Error servicio sherloc", "mens");return;
             }
         });
         /*FechaUbicacion
             Latitud
             Longitud
             Kilometraje*/
-        var fechaU = (screen.width * 22) / 100;
+        var fechaU = (screen.width * 30) / 100;
         var Lati = (screen.width * 28) / 100;
-        var Kilo = (screen.width * 26) / 100;
+        var Kilo = (screen.width * 22) / 100;
         $("#listViewRA").kendoGrid({
             allowCopy: true,
             columns: [
                 { field: "Fecha", title: "Fecha", width: Lati },
                 { field: "totalRegistros", title: "Excesos", width: Kilo },
-                { field: "valorMaximoRegistrado", title: "Velocidad", width: Kilo },
-                { field: "limiteVelocidadActual", title: "Lim Veloc.", width: fechaU }
+                { field: "valorMaximoRegistrado", title: "Veloc.", width: Kilo },
+                { field: "limiteVelocidadActual", title: "Veloc. Limite", width: fechaU }
             ],
             dataSource: cords,
             selectable: "row",
@@ -126,6 +129,6 @@ function traeCordenadasUbicaRA() {
             }
         });
     } catch (d) {
-        mens("Error en servicio sherloc", "error");
+        mens("Error en servicio sherloc", "mens");return;
     }
 }

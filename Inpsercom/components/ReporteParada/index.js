@@ -118,5 +118,5 @@ function setMarkersP(mapP) {
                 }
             })(markerP, i));
         }
-    } catch (e) { alert(e); }
+    } catch (e) { mens("Error en mapa","mens");return;  }
 }

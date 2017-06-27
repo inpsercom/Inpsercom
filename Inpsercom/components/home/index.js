@@ -10,7 +10,7 @@ app.home = kendo.observable({
                     urlService = urlInterno;
                 } else { urlService = urlExterno; }
                 localStorage.setItem("urlService", urlService);
-            } catch (e) { mens("No existe conexión con el servidor ","error"); }
+            } catch (e) { mens("No existe conexión con el servidor ","mens"); return;}
 
             /*var confIp = localStorage.getItem("urlService");
             var switchInstance = $("#switch").data("kendoMobileSwitch");
@@ -20,7 +20,7 @@ app.home = kendo.observable({
             else {
                 switchInstance.check(false);
             }*/
-        } catch (e) { mens("Error lectura ip", "error"); }
+        } catch (e) { mens("Error lectura ip", "mens"); return;}
         try {
             //configIps();
             if (localStorage.getItem("Inp_DatosUsuario")) {
@@ -33,7 +33,7 @@ app.home = kendo.observable({
                 //alert(inspeccionar(datos_Vehiculo));
                 //alert(inspeccionar(datos_Cliente));
             }
-        } catch (f) { mens("Error en conexión a la base", "error"); }
+        } catch (f) { mens("Error en conexión a la base", "mens"); return;}
     },
     afterShow: function () { }
 });
@@ -55,13 +55,13 @@ app.localization.registerView('home');
                 try {
                     //configIps();
                     kendo.mobile.application.navigate("components/logIn/view.html");
-                } catch (s) { mens("Error en conexión", "error"); }
+                } catch (s) { mens("Error en conexión", "mens"); return;}
             },
             registro: function () {
                 try {
                     //configIps();
                     kendo.mobile.application.navigate("components/Registro/view.html");
-                } catch (s) { mens("Error en conexión", "error"); }
+                } catch (s) { mens("Error en conexión", "mens"); return;}
             }
         });
 
@@ -91,7 +91,8 @@ function configIps() {
 
 //190.108.66.10
 function validaLoginPrueba() {
-    var Url = "http://190.108.66.10:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a";
+    var Url = urlExterno + "Login/vinicio.ortega@inpsercom.com.com;a;3314"; 
+    //"http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a;3314";
     $.ajax({
         url: Url,
         type: "GET",

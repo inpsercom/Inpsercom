@@ -24,7 +24,7 @@ function enviarMail() {
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 }
             }
-        } catch (f) { mens("Error validacion mail", "error"); }
+        } catch (f) { mens("Error validacion mail", "mens"); return;}
     }
 }
 
@@ -68,12 +68,12 @@ function registrar() {
                 if (data == "Success") {
                     try {
                         mens("Su contraseña fue enviada al su correo", "success");
-                    } catch (s) { mens("Error servicio login", "error"); alert(s); } //alert (s); 
+                    } catch (s) { mens("Error servicio login", "mens");return;  } //alert (s); 
                 }
-                else { mens(data, "error"); }
+                else { mens(data, "mens"); return;}
             },
-            error: function (err) { mens("Error en servicio cliente", "error"); alert(err); } //alert(err);
+            error: function (err) { mens("Error en servicio cliente", "mens"); return; } //alert(err);
         });
-    } catch (e) { mens("Error en el servicio clientess", "error"); alert(e); } //aler(e);
+    } catch (e) { mens("Error en el servicio clientess", "mens"); return; } //aler(e);
     return data;
 }

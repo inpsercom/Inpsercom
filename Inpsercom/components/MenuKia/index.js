@@ -20,12 +20,12 @@ function ConfigurarSherlock() {
                 data1 = data.perfilClienteResult;
             },
             error: function (err) {
-                mens("Error servicio Sherloc", "error")
+                mens("Error servicio Sherloc", "mens");return;
                 //kendo.ui.progress($("#miKia2Screen"), false);
             }
         });
-    } catch (e) { mens("Error servicio Sherloc") }
-    if(data1.orden == 0){mens("Cliente no tiene servicio","warning");return;}
+    } catch (e) { mens("Error servicio Sherloc","mens");return; }
+    if(data1.orden == 0){mens("Cliente no tiene servicio","mens");return;}
     datos_Vehiculo.numeroorden = data1.orden;
     datos_Vehiculo.tipoContratoSherloc = data1.tipoContrato; 
     if (data1.tipoContrato == "GOLDEN") {

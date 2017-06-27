@@ -10,9 +10,9 @@ function signin() {
         var em = document.getElementById("emailLogin").value;
         var pa = document.getElementById("passwordLogin").value;
         var co = document.getElementById("codigoLogin").value; 
-        if (em == "" || !em) { mens("El Email no tiene datos","error"); return; }
-        if (pa == "" || !pa) { mens("El Password no tiene datos","error"); document.getElementById("passwordLogin").focus(); return; }
-        if (co == "" || !co) { mens("El Código no tiene datos","error"); document.getElementById("codigoLogin").focus(); return; }
+        if (em == "" || !em) { mens("El Email no tiene datos","mens"); return; }
+        if (pa == "" || !pa) { mens("El Password no tiene datos","mens"); document.getElementById("passwordLogin").focus(); return; }
+        if (co == "" || !co) { mens("El Código no tiene datos","mens"); document.getElementById("codigoLogin").focus(); return; }
         var resul = validaLogin(document.getElementById("emailLogin").value, document.getElementById("passwordLogin").value, document.getElementById("codigoLogin").value);
         if (resul == "false" || resul == "" || !resul) {
             mens("El ID, password o código son incorrectos por favor verifique");
@@ -65,7 +65,7 @@ function signin() {
         kendo.mobile.application.navigate("components/MenuKia/view.html");
     } catch (s) {
         //alert(s);
-        mens("Error conexión a la base de datos ","error");
+        mens("Error conexión a la base de datos ","mens");return;
     }
 }
 
@@ -74,8 +74,10 @@ function validaLogin(email, password, codigo) {
     try {
         var resultado = "";
         var _identificacion = email + ";" + password + ";" + codigo;
+        //_identificacion="7,vinicio.ortega@inpsercom.com;;http://186.71.68.154:8090/prefactura_taller/DEBITOCONFIAMED2015.pdf"
         if ((_identificacion !== "") && (_identificacion)) {
             resultado = "";
+            //var Url = urlService + "Login/" + _identificacion;
             var Url = urlService + "Login/" + _identificacion;
             //alert(Url);
             $.ajax({
@@ -88,20 +90,18 @@ function validaLogin(email, password, codigo) {
                         resultado = data.LoginGetResult;
                     } catch (e) {
                         //alert(e);
-                        mens(data,"error");
-                        borraCampos();
+                        mens(data,"mens");
+                        borraCampos();return;
                     }
                 },
                 error: function (err) {
-                    //alert(inspeccionar(err));
-                    mens("Error en conexión al servicio login","error");
+                    mens("Error en conexión al servicio login","mens");return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        //alert(f);
-        mens("Error cenexión servicio login","error");
+        mens("Error cenexión servicio login","mens");return;
     }
 }
 
@@ -119,18 +119,18 @@ function validausuario(email) {
                     try {
                         resultado = JSON.parse(data.UsuarioGetResult);
                     } catch (e) {
-                        mens(data,"error");
-                        borraCampos();
+                        mens(data,"mens");
+                        borraCampos();return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio Ususario","error");
+                    mens("Error conexión servicio Ususario","mens");return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexión servicio Ususario","error");
+        mens("Error conexión servicio Ususario","mens");return;
     }
 }
 
@@ -148,19 +148,19 @@ function validavehicu(emailp) {
                     try {
                         resultado = JSON.parse(data.VehiculoGetResult);
                     } catch (e) {
-                        mens(data,"error");
-                        borraCampos();
+                        mens(data,"mens");
+                        borraCampos();return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio Vehículo","error");
+                    mens("Error conexión servicio Vehículo","mens");return;
 
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexión servicio Vehículo","error");
+        mens("Error conexión servicio Vehículo","mens");return;
     }
 }
 
@@ -181,6 +181,6 @@ function ValidaMailLogin() {
             }
         }
     } catch (f) {
-        mens("Error validación del mail","error");
+        mens("Error validación del mail","mens");return;
     }
 }

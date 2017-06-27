@@ -49,7 +49,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         if (status == 'OK') {
             directionsDisplay.setDirections(response);
         } else {
-            window.alert('Directions request failed due to ' + status);
+            mens('Directions request failed due to ' + status,"mens");return;
         }
     });
 }

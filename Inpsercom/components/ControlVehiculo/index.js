@@ -16,7 +16,7 @@ function aperturaRemota(){
     try {
         //NoOrden = 72353;
         if (NoOrden != "") {
-            alert("AUTO ABIERTO LAS PUERTAS");
+            mens("AUTO ABIERTO LAS PUERTAS","warning");
             /*kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             //var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
@@ -46,7 +46,7 @@ function aperturaRemota(){
             });*/
         }
     } catch (e) {
-        mens("Error de servicios Sherloc", "error");
+        mens("Error de servicios Sherloc", "mens");return;
     }
 }
 
@@ -54,7 +54,7 @@ function desbloqueAuto(){
     try {
         //NoOrden = 72353;
         if (NoOrden != "") {
-            alert("AUTO DESBLOQUEADO");
+            mens("AUTO DESBLOQUEADO");
             /*kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             //var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
@@ -84,7 +84,7 @@ function desbloqueAuto(){
             });*/
         }
     } catch (e) {
-        mens("Error de servicios Sherloc", "error");
+        mens("Error de servicios Sherloc", "mens");return;
     }
 }
 
@@ -92,7 +92,7 @@ function bloqueAuto() {
     try {
         //NoOrden = 72353;
         if (NoOrden != "") {
-            alert("AUTO BLOQUEADO");
+            mens("AUTO BLOQUEADO");
             /*kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             //var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
@@ -122,6 +122,6 @@ function bloqueAuto() {
             });*/
         }
     } catch (e) {
-        mens("Error de servicios Sherloc", "error");
+        mens("Error de servicios Sherloc", "mens");return;
     }
 }

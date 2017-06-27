@@ -1,7 +1,7 @@
 //'use strict';
-var datos_Cliente, Device_identifier, datos_Vehiculo, urlService;
-var urlInterno = 'http://192.168.1.3:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089'; 
-var urlExterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';
+var datos_Cliente, Device_identifier, datos_Vehiculo, urlService, observa, observa1;
+var urlInterno = 'http://IPS10:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089';http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a 
+var urlExterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';// 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';
 //var urlsherloc = 'http://190.110.193.131/ReportService.svc/';
 var notificationWidget;
 (function () {
@@ -237,7 +237,7 @@ function mens(Mensaje, Tipo) {
             bottom: 0,
             right: 0
         },
-        font:{
+        font: {
             size: 14,
             bold: true
         }
@@ -245,3 +245,124 @@ function mens(Mensaje, Tipo) {
     notificationWidget.showText(Mensaje, Tipo);
 }
 
+function mens2(Mensaje, Tipo) {
+ var notificationElement = $("#notification");
+
+    notificationElement.kendoNotification({
+        templates: [{
+                // define a custom template for the built-in "warning" notification type
+                type: "warning",
+                template: "<div class='myWarning' style='width:280px;'> #= myMessage #</div>"
+            }, {
+                // define a template for the custom "timeAlert" notification type
+                type: "sucess",
+                template: "<div class='mySucess' style='width:280px;'> #= myMessage #</div>"
+                // template content can also be defined separately
+                //template: $("#myAlertTemplate").html()
+        }],
+         autoHideAfter: 10000,
+         position: {
+            top: Math.floor($(window).width() / 2),
+            left: Math.floor($(window).width() / 2 - 145),
+            bottom: 0,
+            right: 0
+        },
+        font:{
+            size: 14,
+            bold: true
+        },
+
+       
+    });
+
+    var n = notificationElement.data("kendoNotification");
+
+    // show a warning message using the built-in shorthand method
+    n.warning({
+        myMessage: Mensaje
+    });
+    
+
+}
+
+
+/* -----------------------------------------------------------------------------------------------
+RRP:            12-06-2017
+Descripción:	Presenta mensajes parametrizados
+--------------------------------------------------------------------------------------------------
+Tipo:           timeAlert / warning / success / info / error 
+Tiempo:         Tiempo de espera para el cierre automatico (1000 = 1 seg. / 0 = no se oculta)
+Logo:           Dirección del logotipo (path)
+Mensaje:        Texto del mensaje, admite formato HTML
+Cerrar:         Agrega el boton cerrar haya o no Tiempo de espera
+-------------------------------------------------------------------------------------------------*/
+
+function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar) {
+    var notificationElement = $("#notification");
+  
+    var ocultaClick = false;
+    if(Tiempo == 0 || Cerrar == true) 
+        ocultaClick = true;
+
+    notificationElement.kendoNotification({
+        templates: [{
+                // define a custom template for the built-in "warning" notification type
+                type: "timeAlert",
+                template: "<div class='mytimeAlert' style='width:280px;'> #= myMessage #</div>"          
+        }],
+         autoHideAfter: Tiempo, // tiempo para ocultar automaticamente
+         hideOnClick: ocultaClick, // Desactiva ocultar al hacer click        
+         position: {
+            top: Math.floor($(window).width() / 2),
+            left: Math.floor($(window).width() / 2 - 140),
+            bottom: 0,
+            right: 0
+        }
+    });
+
+    var n = notificationElement.data("kendoNotification");
+
+    // El mensaje se inserta en una tabla y centrado
+    Mensaje = "<table width='100%' border='0'><tr><td>&nbsp</td><td align='justify'>" + Mensaje + "</td><td>&nbsp</td></tr></table>";
+
+    // Recibe el path del logo seleccionado
+    Logo = "<table width='100%' border='0'><tr><td>&nbsp;</td></tr><tr><td></td><td align='lefth'>" + Logo +"</td></tr></table> ";
+
+    // Titulo en negrilla y centrado
+    Titulo = "<table width='100%' border='0'><tr><td align='center'><font style='font-weight: bold; font-size: 20px;'>" + Titulo + "</font></td></tr></table>"; 
+
+    // Composición del mensaje
+    Mensaje = Logo + Titulo + Mensaje;
+
+    // Si envia "1" presenta el boton CERRAR
+    var botCerrar = "<table width='100%' border='0'><tr><td align='center'><input name='cmdCerrar' type='button' class='k-button fondoRojoLogin' value='CERRAR' id='cmdCerrar'/></td></tr></table>";
+    if(Tiempo == 0 || Cerrar == true)
+        Mensaje += botCerrar;
+    
+    Mensaje += "<table width='100%' border='0'><tr><td align='center'>&nbsp;</td></tr></table>";
+
+    if(Tipo == "info")
+    {
+        n.info({ myMessage: Mensaje });
+    }
+    else if(Tipo == "warning")
+    {
+        n.warning({ myMessage: Mensaje });
+    }
+    else if(Tipo == "success")
+    {
+        n.success({ myMessage: Mensaje });
+    }
+    else if(Tipo == "error")
+    {
+        n.error({ myMessage: Mensaje });
+    }
+    else if(Tipo == "timeAlert")
+    {
+        n.show({ time: new Date().toLocaleTimeString(), myMessage: Mensaje }, "timeAlert");
+    }
+    else
+    {
+        n.show({ myMessage: Mensaje});
+    }
+}

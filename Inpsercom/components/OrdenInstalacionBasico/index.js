@@ -10,7 +10,7 @@ app.ordenBasico = kendo.observable({
             if (NoOrden == "") {
                 kendo.ui.progress($("#btnHabilita"), true);
             }
-        } catch (f) { mens("Error número de orden","error"); }
+        } catch (f) { mens("Error número de orden","mens");return; }
     },
     afterShow: function () { },
     inicializa: function () {
@@ -65,20 +65,21 @@ function habilitarOpciones() {
                                                 //document.getElementById("NoOrdenn").value = "";
                                                 $("#NoOrden").text(datos_Vehiculo.numeroorden);
                                                 mens("Orden Guardada", "success");
-                                            } catch (s) { mens("Error consulta sherloc","error"); }
-                                        } else { mens(data,"error"); }//kendo.ui.progress($("#miKia2Screen"), false);  }
-                                    } catch (e) { mens("Error servicio sherloc","erre"); }
+                                            } catch (s) { mens("Error consulta sherloc","mens"); return;}
+                                        } else { mens(data,"mens"); return;}//kendo.ui.progress($("#miKia2Screen"), false);  }
+                                    } catch (e) { mens("Error servicio sherloc","mens");return; }
                                 },
                                 error: function (err) {
-                                    mens("Error conexión Sherloc")
+                                    mens("Error conexión Sherloc","mens");return;
                                 }
                             });
                         } else {
-                            mens("Cliente no esta activo", "error");
+                            mens("Cliente no esta activo", "mens");
                             datos_Vehiculo.numeroorden = "";
                             datos_Vehiculo.estado_vh02 = false;
                             kendo.ui.progress($("#btnHabilita"), true);
                             //kendo.ui.progress($("#miKia2Screen"), false);
+                            return;
                         }
                         document.getElementById("NoOrden").value = "";
                         localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
@@ -86,17 +87,17 @@ function habilitarOpciones() {
                         datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
                         datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
                     } catch (e) {
-                        mens("Error servicio Sherloc","error");
+                        mens("Error servicio Sherloc","mens");return;
                         //kendo.ui.progress($("#miKia2Screen"), false);
                     }
                 },
                 error: function (err) {
-                    mens("Error servicio Sherloc","error")
+                    mens("Error servicio Sherloc","mens");return;
                     //kendo.ui.progress($("#miKia2Screen"), false);
                 }
             });
         }
-    } catch (e) {mens("Error servicio Sherloc")}
+    } catch (e) {mens("Error servicio Sherloc","mens");return;}
 }
 
 function registra(chasisemail) {
@@ -111,12 +112,12 @@ function registra(chasisemail) {
                         try {
                             mens("Orden Guardada", "success");
                             return data;
-                        } catch (s) { mens("Error al grabar orden","error"); }
-                    } else { mens(data,"error"); }
+                        } catch (s) { mens("Error al grabar orden","mens"); return;}
+                    } else { mens(data,"mens");return; }
             },
             error: function (err) {
-                mens("Error servicio grabar orden","error");
+                mens("Error servicio grabar orden","mens");return;
             }
         });
-    } catch (f) { mens("Error servicio grabar orden","error"); }
+    } catch (f) { mens("Error servicio grabar orden","mens");return; }
 }

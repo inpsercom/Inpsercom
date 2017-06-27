@@ -20,6 +20,8 @@ app.mntAgendarCita = kendo.observable({
         document.getElementById("autokia13").style.width  = height1 + "px";
         document.getElementById("autokia14").style.width  = height1 + "px";
         document.getElementById("autokia15").style.width  = height1 + "px";
+        document.getElementById("autokia16").style.width  = height1 + "px";
+        document.getElementById("autokia17").style.width  = height1 + "px";
     },
     afterShow: function () { },
     inicializa: function () {

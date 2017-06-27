@@ -11,11 +11,10 @@ app.reporteGeocercas = kendo.observable({
             document.getElementById("FechaFinGC").style.width = wd + "px";
             var fecha = new Date();
             var year = fecha.getFullYear();
-            var mes = fecha.getMonth() + 1;
+            var mes = fecha.getMonth();
             var dia = fecha.getDate();
-            alert(document.getElementById("FechaInicioGC").value);
             if (document.getElementById("FechaInicioGC").value == "") {
-                document.getElementById("FechaInicioGC").value = dia + "-" + mes +"-" + year;
+                document.getElementById("FechaInicioGC").value = dia + "-" + (mes+1) +"-" + year;
             }
             $("#FechaInicioGC").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
@@ -34,7 +33,7 @@ app.reporteGeocercas = kendo.observable({
             //document.getElementById("FechaInicio").value = "01-01-1910";
             //ConsultarOT();
             //document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;*/
-        } catch (e) { mens("Error en fechas", "error"); }
+        } catch (e) { mens("Error en fechas", "mens");return; }
     },
     afterShow: function () { },
     inicializa: function () {
@@ -48,7 +47,7 @@ app.reporteGeocercas = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteGeocerca/view.html");
         } catch (s) {
-            mens("Error selección de registroGC");
+            mens("Error selección de registroGC","mens");return;
         }
     }
 });
@@ -110,11 +109,13 @@ function traeCordenadasUbicaGC() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "error");
+                    mens("Error coordenadas servicio sherloc", "mens");
+                    return;
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc", "error");
+                mens("Error servicio sherloc", "mens");
+                return;
             }
         });
         /*FechaUbicacion
@@ -147,6 +148,6 @@ function traeCordenadasUbicaGC() {
             }
         });
     } catch (d) {
-        mens("Error en servicio sherloc", "error");
+        mens("Error en servicio sherloc", "mens");return;
     }
 }

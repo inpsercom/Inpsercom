@@ -123,5 +123,5 @@ function setMarkersE(mapE) {
                 }
             })(marker, j));
         }
-    } catch (e) { alert(e); }
+    } catch (e) { mens("Error en mapa","mens");return; }
 }
