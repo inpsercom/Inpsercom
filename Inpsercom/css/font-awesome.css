@@ -19,6 +19,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.fa-miop:before {
+  content: "\f1eb";
+}
 /* makes the font 33% larger relative to the icon container */
 .fa-lg {
   font-size: 1.33333333em;
@@ -1595,8 +1598,8 @@
 .fa-newspaper-o:before {
   content: "\f1ea";
 }
-.fa-wifi:before {
-  content: "\f1eb";
+.fa-wifi1:before {
+  content: "\resources\lKia1.png";
 }
 .fa-calculator:before {
   content: "\f1ec";

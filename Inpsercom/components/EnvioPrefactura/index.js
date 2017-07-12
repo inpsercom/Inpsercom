@@ -5,10 +5,29 @@ app.envioPrefactura = kendo.observable({
         $("#NumeroChasisPR").text(datos_Cliente.chasis);
         document.getElementById("recuperar_emailPR").focus();
         document.getElementById("recuperar_emailPR").value = datos_Cliente.mail;
+        //document.getElementById("cameraTakePicture").addEventListener("click", cameraTakePicture); 
+
     },
     afterShow: function () { }
 });
 app.localization.registerView('envioPrefactura');
+/*function cameraGetPicture() {
+   navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+   });
+
+   function onSuccess(imageURL) {
+      var image = document.getElementById('myImage');
+      image.src = imageURL;
+   }
+
+   function onFail(message) {
+      alert('Failed because: ' + message);
+   }
+
+}*/
+
 
 function enviarMailPR() {
     var documento;

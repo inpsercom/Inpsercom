@@ -12,9 +12,9 @@ function excesos() {
     kendo.mobile.application.navigate("components/ReporteAlertas/view.html");
 }
 
-function panico() {
+/*function panico() {
     kendo.mobile.application.navigate("components/ReportePanicos/view.html");
-}
+}*/
 
 function geocercas() {
     kendo.mobile.application.navigate("components/ReporteGeocercas/view.html");

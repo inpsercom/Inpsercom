@@ -9,7 +9,7 @@ app.mntVehiculos = kendo.observable({
                 actualizaAsignar();
             }
         } catch (d) {
-            mens("Error servicio cliente", "mens");return;
+            mens("Error servicio cliente", "mens"); return;
         }
 
     },
@@ -18,10 +18,13 @@ app.mntVehiculos = kendo.observable({
     },
     inicializa: function () {
         try {
+            var obs = (screen.width * 15) / 100;
+            var alias = (screen.width * 30) / 100;
+            var vin = (screen.width * 50) / 100;
             $("#nuevochasisview").kendoGrid({
                 columns: [
-                    { field: "mail", title: "Email" },
-                    { field: "chasis", title: "Vehículo" }
+                    { field: "nombre_alias", title: "Alias", width: alias },
+                    { field: "chasis", title: "Vehículo", width: vin }
                 ],
                 selectable: "row"
             });
@@ -30,14 +33,13 @@ app.mntVehiculos = kendo.observable({
             $("#chasisview").kendoGrid({
                 allowCopy: true,
                 columns: [
-                    { field: "mail", title: "Email" },
-                    { field: "chasis", title: "Vehículo" },
-                    { command: [{ name: "destroy", text: "Eliminar" }] }],
-                editable: { confirmation: "Quieres borrar este registro?" }
-            });
-            grid = $("#chasisview").data("kendoGrid");
-            grid.bind("remove", grid_remove);
-        } catch (e) { mens("actualizar vehículo", "mens"); return;}
+                    { field: "nombre_alias", title: "Alias", width: alias },
+                    { field: "chasis", title: "Vehículo", width: vin },
+                    { command: { name: "destroy", template: "<div><span><i onclick='grid_remove(this)' class='fa fa-trash' style='width: 25%;color:red;'></i></span></div>",
+                            width: obs}
+                        }]
+                    });
+        } catch (e) { mens("actualizar vehículo", "mens"); return; }
     }
 });
 app.localization.registerView('mntVehiculos');
@@ -58,12 +60,13 @@ function grid_Change(e) {
         localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
         //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
         kendo.mobile.application.navigate("components/miKia/view.html");
-    } catch (f) { mens("Error servicio actualizar vehículo", "mens");return; }
+    } catch (f) { mens("Error servicio actualizar vehículo", "mens"); return; }
 }
 
 function actualizaAsignar() {
     try {
         var grid = $("#nuevochasisview").data("kendoGrid");
+        var grid1 = $("#chasisview").data("kendoGrid");
         var email = datos_Cliente.mail;
         var resultado = "";
         var Url = urlService + "Vehiculo/" + email;
@@ -75,29 +78,24 @@ function actualizaAsignar() {
             success: function (data) {
                 try {
                     resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
-                    var dataSource = new kendo.data.DataSource({
-                        data: resultado
-                    });
+                    var dataSource = new kendo.data.DataSource({ data: resultado });
                     grid.setDataSource(dataSource);
-
+                    grid1.setDataSource(dataSource);
                 } catch (e) {
-                    //alert(inspeccionar(e));
-                    mens("Error servicio actualizar vehículo", "mens");return;
+                    mens("Error servicio actualizar vehículo", "mens"); return;
                 }
             },
             error: function (err) {
-                //alert(err);
-                mens("Error conexión al servicio vehículo", "mens");return; //alert(JSON.stringify(err));
+                mens("Error conexión al servicio vehículo", "mens"); return; //alert(JSON.stringify(err));
             }
         });
     } catch (d) {
-        //alert(d);
-        mens("Error servicio actualizar vehículo", "mens");return;
+        mens("Error servicio actualizar vehículo", "mens"); return;
     }
 }
 function grabar() {
     try {
-        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("esta vacio","mens"); return; }
+        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("Vehículo esta vacio", "mens"); return; }
         var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 5,
@@ -106,6 +104,7 @@ function grabar() {
             "persona_apellido": "",
             "mail": datos_Cliente.mail,
             "chasis": document.getElementById("VIN").value,
+            "nombre_alias": document.getElementById("Alias").value,
             "fecha_nacimiento": "",
             "telefono_celular": "",
             "numeroorden": "",
@@ -123,18 +122,19 @@ function grabar() {
                     try {
                         mens("Registro Exitoso", "mens");
                         document.getElementById("VIN").value = "";
+                        document.getElementById("Alias").value = "";
                         actualizaAsignar();
                         validavehiculo(params.mail);
-                    } catch (s) { mens("Error serrvicio actualizar vehículo", "mens");return; }
+                    } catch (s) { mens("Error serrvicio actualizar vehículo", "mens"); return; }
                 } else {
-                    mens(data, "mens");return;
+                    mens(data, "mens"); return;
                 }
             },
             error: function (err) {
-                mens("Error conexión servicio vehículo", "mens");return;
+                mens("Error conexión servicio vehículo", "mens"); return;
             }
         });
-    } catch (e) { mens("Error servicio grabar vehículo", "mens");return; }
+    } catch (e) { mens("Error servicio grabar vehículo", "mens"); return; }
 }
 var grid;
 function validavehiculo(email) {
@@ -152,24 +152,34 @@ function validavehiculo(email) {
                             data: resultado
                         });
                         grid.setDataSource(dataSource);
-                    } catch (e) { mens("Error servicio vehículo", "mens"); return;}
+                    } catch (e) { mens("Error servicio vehículo", "mens"); return; }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio vehículo", "mens");return;
+                    mens("Error conexión servicio vehículo", "mens"); return;
                 }
             });
             return resultado;
         }
-    } catch (e) { mens("Error servicio vehículo", "mens");return; }
+    } catch (e) { mens("Error servicio vehículo", "mens"); return; }
 }
 function grid_remove(e) {
     try {
-        actualiza("4;" + e.model.mail + ";" + e.model.chasis);
-        if (e.model.chasis == datos_Cliente.chasis) {
-            datos_Cliente.chasis = "";
-            localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
+         var sino1 = mensajePrmOpc("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+            "AVISO", "Escoja una opción<br><br>", true);
+            alert(sino1);
+        var sino = confirm("Quieres borrar este registro?");
+        
+        if (sino == true) {
+            var grid = $(e).closest('.k-grid').data('kendoGrid'); //get the grid
+            var dataItem = grid.dataItem($(e).closest('tr'));
+            actualiza("4;" + dataItem.mail + ";" + dataItem.chasis);
+            if (dataItem.chasis == datos_Cliente.chasis) {
+                datos_Cliente.chasis = "";
+                datos_Cliente.alias = "";
+                localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
+            }
         }
-    } catch (s) { mens("Error al eliminar vehículo", "mens"); return;}
+    } catch (s) { mens("Error al eliminar vehículo", "mens"); return; }
 }
 
 function actualiza(chasisemail) {
@@ -183,9 +193,9 @@ function actualiza(chasisemail) {
                 if (data == "Success") {
                     mens("Se elimino el registro", "mens");
                     actualizaAsignar();
-                } else { mens(data, "mens"); return;}
+                } else { mens(data, "mens"); return; }
             },
-            error: function (err) { mens("Error servicio actualizar vehículo", "mens"); return;}
+            error: function (err) { mens("Error servicio actualizar vehículo", "mens"); return; }
         });
-    } catch (e) { mens("Error servicio eliminar vehículo", "mens");return; }
+    } catch (e) { mens("Error servicio eliminar vehículo", "mens"); return; }
 }

@@ -1,7 +1,8 @@
 //'use strict';
 var datos_Cliente, Device_identifier, datos_Vehiculo, urlService, observa, observa1;
-var urlInterno = 'http://IPS10:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089';http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a 
-var urlExterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';// 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';
+var VersionHM = "ver 1.0";
+var urlInterno = 'http://192.168.1.3:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089';http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a 
+var urlExterno = 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';//'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';// 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';
 //var urlsherloc = 'http://190.110.193.131/ReportService.svc/';
 var notificationWidget;
 (function () {
@@ -297,13 +298,13 @@ Mensaje:        Texto del mensaje, admite formato HTML
 Cerrar:         Agrega el boton cerrar haya o no Tiempo de espera
 -------------------------------------------------------------------------------------------------*/
 
-function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar) {
+function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar, Cerrar1) {
     var notificationElement = $("#notification");
   
     var ocultaClick = false;
-    if(Tiempo == 0 || Cerrar == true) 
+    if(Tiempo == 0 || Cerrar == true){ 
         ocultaClick = true;
-
+    }
     notificationElement.kendoNotification({
         templates: [{
                 // define a custom template for the built-in "warning" notification type
@@ -323,7 +324,7 @@ function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar) {
     var n = notificationElement.data("kendoNotification");
 
     // El mensaje se inserta en una tabla y centrado
-    Mensaje = "<table width='100%' border='0'><tr><td>&nbsp</td><td align='justify'>" + Mensaje + "</td><td>&nbsp</td></tr></table>";
+    Mensaje = "<table width='100%' border='0'><tr><td>&nbsp</td><td align='justify'><div style='overflow: scroll;'>" + Mensaje + "</div></td><td>&nbsp</td></tr></table>";
 
     // Recibe el path del logo seleccionado
     Logo = "<table width='100%' border='0'><tr><td>&nbsp;</td></tr><tr><td></td><td align='lefth'>" + Logo +"</td></tr></table> ";
@@ -336,7 +337,81 @@ function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar) {
 
     // Si envia "1" presenta el boton CERRAR
     var botCerrar = "<table width='100%' border='0'><tr><td align='center'><input name='cmdCerrar' type='button' class='k-button fondoRojoLogin' value='CERRAR' id='cmdCerrar'/></td></tr></table>";
+    //var botCerrar1 = "<table width='100%' border='0'><tr><td align='center'><input name='cmdCerrar1' type='button' class='k-button fondoRojoLogin' value='CERRAR1' id='cmdCerrar1'/></td></tr></table>";
+    //if (Cerrar1==true){return true;}
     if(Tiempo == 0 || Cerrar == true)
+        Mensaje += botCerrar;
+    
+    Mensaje += "<table width='100%' border='0'><tr><td align='center'>&nbsp;</td></tr></table>";
+
+    if(Tipo == "info")
+    {
+        n.info({ myMessage: Mensaje });
+    }
+    else if(Tipo == "warning")
+    {
+        n.warning({ myMessage: Mensaje });
+    }
+    else if(Tipo == "success")
+    {
+        n.success({ myMessage: Mensaje });
+    }
+    else if(Tipo == "error")
+    {
+        n.error({ myMessage: Mensaje });
+    }
+    else if(Tipo == "timeAlert")
+    {
+        n.show({ time: new Date().toLocaleTimeString(), myMessage: Mensaje }, "timeAlert");
+    }
+    else
+    {
+        n.show({ myMessage: Mensaje});
+    }
+}
+
+function mensajePrmOpc(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar) {  
+ 
+    var notificationElement = $("#notification");
+	
+ var ocultaClick = false;
+    if(Tiempo == 0 || Cerrar == true) 
+        ocultaClick = true;
+
+    notificationElement.kendoNotification({
+        templates: [{
+                // define a custom template for the built-in "warning" notification type
+                type: "timeAlert",
+                template: "<div class='mytimeAlert' style='width:280px;'> #= myMessage #</div>"          
+        }],
+         autoHideAfter: Tiempo, // tiempo para ocultar automaticamente
+         hideOnClick: ocultaClick, // Desactiva ocultar al hacer click        
+         position: {
+            top: Math.floor($(window).width() / 2),
+            left: Math.floor($(window).width() / 2 - 140),
+            bottom: 0,
+            right: 0
+            }
+    });
+
+    var n = notificationElement.data("kendoNotification");
+
+    // El mensaje se inserta en una tabla y centrado
+    Mensaje = "<table width='100%' border='0'><tr><td>&nbsp</td><td align='justify'>" + Mensaje + "</td><td>&nbsp</td></tr></table>";
+
+    // Recibe el path del logo seleccionado
+    Logo = "<table width='100%' border='0'><tr><td>&nbsp;</td></tr><tr><td></td><td align='lefth'>" + Logo +"</td></tr></table> ";
+
+    // Titulo en negrilla y centrado
+    Titulo = "<table width='100%' border='0'><tr><td align='center'><font style='font-weight: bold; font-size: 20px;'>" + Titulo + "</font></td></tr></table>"; 
+
+    // Composición del mensaje
+    Mensaje = Logo + Titulo + Mensaje;
+
+    // Si envia "1" presenta el boton CERRAR
+    var botCerrar = "<table width='100%' border='0'><tr><td align='center'><a href='components/EstadoMantenimiento/view.html?op=si' style='font: bold 14px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333;  padding: 2px 6px 2px 6px;  border-top: 1px solid #CCCCCC;  border-right: 1px solid #333333;  border-bottom: 1px solid #333333;  border-left: 1px solid #CCCCCC;'>OK</a>&nbsp;&nbsp;<a href='components/EstadoMantenimiento/view.html?op=no' style='font: bold 14px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333;  padding: 2px 6px 2px 6px;  border-top: 1px solid #CCCCCC;  border-right: 1px solid #333333;  border-bottom: 1px solid #333333;  border-left: 1px solid #CCCCCC;'>Cancelar</a></td></tr></table>";
+
+  //  if(Tiempo == 0 || Cerrar == true)
         Mensaje += botCerrar;
     
     Mensaje += "<table width='100%' border='0'><tr><td align='center'>&nbsp;</td></tr></table>";

@@ -1,8 +1,10 @@
 app.menuKia = kendo.observable({
     init: function () { },
     onShow: function () {
+        try{
         $("#NumeroChasisMenu").text(datos_Cliente.chasis);
         var Registro = sessionStorage.getItem("Registro");
+        }catch(e){alert(e);}
     },
     afterShow: function () { }
 });

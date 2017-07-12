@@ -91,7 +91,7 @@ function validaLogin(email, password, codigo) {
                     } catch (e) {
                         //alert(e);
                         mens(data,"mens");
-                        borraCampos();return;
+                        borraCamposLogin();return;
                     }
                 },
                 error: function (err) {
@@ -120,7 +120,7 @@ function validausuario(email) {
                         resultado = JSON.parse(data.UsuarioGetResult);
                     } catch (e) {
                         mens(data,"mens");
-                        borraCampos();return;
+                        borraCamposLogin();return;
                     }
                 },
                 error: function (err) {
@@ -149,7 +149,7 @@ function validavehicu(emailp) {
                         resultado = JSON.parse(data.VehiculoGetResult);
                     } catch (e) {
                         mens(data,"mens");
-                        borraCampos();return;
+                        borraCamposLogin();return;
                     }
                 },
                 error: function (err) {
@@ -164,7 +164,7 @@ function validavehicu(emailp) {
     }
 }
 
-function borraCampos() {
+function borraCamposLogin() {
     document.getElementById("emailLogin").value = "";
     document.getElementById("passwordLogin").value = "";
 }

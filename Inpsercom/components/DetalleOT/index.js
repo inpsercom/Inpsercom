@@ -55,6 +55,7 @@ app.detalleOT = kendo.observable({
         } catch (e) {
             mens("Error en servicio Progress", "mens");return;
         }
+        document.getElementById("txtDetalle").innerHTML = registro.observacion.substring(2, registro.observacion.length);
     },
     afterShow: function () { },
     inicializa: function () {

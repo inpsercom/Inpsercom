@@ -3,7 +3,6 @@ var persona_numero = "0";
 app.miKia6 = kendo.observable({
     onShow: function () {
         try {
-            //document.getElementById("numorden").value = 0;
             var fecha = new Date();
             var year = fecha.getFullYear() - 18;
             var mes = fecha.getMonth();
@@ -11,21 +10,51 @@ app.miKia6 = kendo.observable({
             $("#FechaNacimiento").kendoDatePicker({
                 ARIATemplate: "Date: #=kendo.toString(data.current, 'G')#",
                 min: new Date(1900, 0, 1),
-                max: new Date(year, (mes + 1), dia),
+                max: new Date(year, mes, dia),
                 format: "yyyy-MM-dd"
             });
             document.getElementById("btnRegistrar").disabled = true;
             //document.getElementById("FechaNacimiento").value = (year + "-" + (mes + 1) + "-" + dia);
-        } catch (e) { mens("Error en formato fecha", "mens"); return;}
+        } catch (e) { mens("Error en formato fecha", "mens"); return; }
     },
     afterShow: function () { }
 });
 app.localization.registerView('miKia6');
-
-function personaGet() {
+function terminosC(){
+    kendo.mobile.application.navigate("components/TerminosCondiciones/view.html");
+}
+function validacedula(cedula) {
+    try {
+        var verificado = "false";
+        var total = 0;
+        var isNumeric;
+        var coeficiente = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        if (cedula.length == 10) {
+            if (cedula.substring(0, 2) <= 24 && cedula.substring(0, 2) > 0) {
+                var digito = cedula.substr(9, 1);
+                for (var k = 0; k < coeficiente.length; k++) {
+                    var valor = coeficiente[k] * cedula[k];
+                    if (valor > 9) {
+                        valor = valor - 9;
+                    }
+                    total = total + valor;
+                }
+                if (total > 9) {
+                    total = total % 10;
+                }
+                var digi = 10 - total;
+                if(digito == digi){verificado = "true";}
+            }
+        }
+    } catch (e) { mens(e,"mens"); }
+    return verificado;
+}
+function personaGetReg() {
     try {
         var _identificacion = document.getElementById("identificacion").value;
         if ((_identificacion != "") && (_identificacion)) {
+            //var validaced = validacedula(_identificacion);
+            //if (validaced == "false") { mens("Cedula incorrecta", "mens");document.getElementById("identificacion").focus();  return; }
             var Url = urlService + "json/" + _identificacion;
             $.ajax({
                 url: Url,
@@ -43,34 +72,36 @@ function personaGet() {
                             document.getElementById("celular").value = data.telefono_celular;
                             persona_numero = data.persona_numero;
                         } else {
+                            borraCamposRE();
                             mens("Error no existe persona", "mens");
-                            borraCampos();
+                            //borraCamposRE();
                             return;
                         }
                     } catch (e) {
                         mens("Error consulta cliente", "mens");
-                        borraCampos();
+                        borraCamposRE();
                         return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio clientes", "mens");return;
+                    mens("Error conexión servicio clientes", "mens"); return;
                 }
             });
         }
     } catch (e) {
-        mens("Error servicio clientes", "mens");return;
+        mens("Error servicio clientes", "mens"); return;
     }
 }
 
 
-function registrar() {
+function registrarRN() {
     try {
         var identificacion = document.getElementById("identificacion").value;
         var Nombres = document.getElementById("Nombres").value;
         var Apellidos = document.getElementById("Apellidos").value;
         var email = document.getElementById("email").value;
         var chasis = document.getElementById("Chasis").value;
+        var alias = document.getElementById("Alias").value;
         var FechaNacimiento = document.getElementById("FechaNacimiento").value;
         var celular = document.getElementById("celular").value;
         var password = document.getElementById("password").value;
@@ -84,6 +115,7 @@ function registrar() {
             "persona_apellido": Apellidos,
             "mail": email,
             "chasis": chasis,
+            "nombre_alias": alias,
             "fecha_nacimiento": FechaNacimiento,
             "telefono_celular": celular,
             //"numeroorden": numorden,
@@ -101,8 +133,9 @@ function registrar() {
             }
         });
         if (indicador == 1) {
-            alert("Verificar datos en blanco"); return;
+            mens("Verificar datos en blanco", "mens"); return;
         }
+        //if(document.getElementById("cbkterminos").checked == false){mens("Debe aceptar términos y condiciones","mens");return;}
         $.ajax({
             url: Url,
             type: "POST",
@@ -114,7 +147,6 @@ function registrar() {
                 'Content-Type': 'application/json;charset=UTF-8'
             },
             success: function (data) {
-                //alert(data);
                 if (data == "Success") {
                     try {
                         mens("Registro Exitoso", "success");
@@ -129,6 +161,7 @@ function registrar() {
                         }
                         var Usuario = {
                             chasis: usu.Cliente[0].chasis,//"8LGJE5520CE010039",
+                            alias: usu.Cliente[0].nombre_alias,
                             identificacion_cliente: usu.Cliente[0].identificacion_cliente,  //"0992327685001",
                             tipodocumento: tipo, //"R",
                             uid: "1234567890", // usu.Cliente[0].alta_movil_imei,
@@ -147,6 +180,7 @@ function registrar() {
                                 secuencia_mv01: veh.secuencia_mv01, //6,
                                 mail: veh.mail, //"nerycarmela@hotmail.com",
                                 chasis: veh.chasis, //"19JJDSXSMLSLXS",
+                                alias: veh.nombre_alias,
                                 numeroorden: veh.numeroorden,
                                 contrato_tipo: veh.contrato_tipo, //"",
                                 contrato_estado: veh.contrato_estado, //false,
@@ -160,15 +194,15 @@ function registrar() {
                             datos_Vehiculo = Vehiculo;
                         }
                         //kendo.mobile.application.navigate("components/miKia/view.html");
-                        kendo.mobile.application.navigate("components/LogIn/view.html");
+                        kendo.mobile.application.navigate("components/logIn/view.html");
                         return;
-                    } catch (s) {  mens("Error servicio cliente", "mens");return;} //alert (s); 
+                    } catch (s) { mens("Error servicio cliente", "mens"); return; } //alert (s); 
                 }
-                else { mens(data, "mens");return; }
+                else { mens(data, "mens"); return; }
             },
-            error: function (err) { mens("Error en servicio clientes", "mens");return; } //alert(err);
+            error: function (err) { mens("Error en servicio clientes", "mens"); return; } //alert(err);
         });
-    } catch (e) {mens("Error en el servicio clientes", "mens"); return;} //aler(e);
+    } catch (e) {mens("Error en el servicio clientes", "mens"); return; } //aler(e);
 }
 
 function ValidaMailRegistro() {
@@ -183,7 +217,7 @@ function ValidaMailRegistro() {
                 document.getElementById("email").style.borderColor = "";
             }
         }
-    } catch (f) { mens("Error validación mail", "mens"); return;}
+    } catch (f) { mens("Error validación mail", "mens"); return; }
 }
 function ValidaCelular() {
     try {
@@ -197,7 +231,7 @@ function ValidaCelular() {
             }
         }
     }
-    catch (f) { mens("Error validación celular","mens"); return;}
+    catch (f) { mens("Error validación celular", "mens"); return; }
 }
 function ValidaPassword() {
     var pass = document.getElementById("password").value;
@@ -212,7 +246,7 @@ function ValidaPassword() {
     }
 }
 
-function borraCampos() {
+function borraCamposRE() {
     document.getElementById("Nombres").value = "";
     document.getElementById("Apellidos").value = "";
     document.getElementById("email").value = "";

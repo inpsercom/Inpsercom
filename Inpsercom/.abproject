@@ -2,7 +2,7 @@
   "ProjectName": "Inpsercom",
   "ProjectGuid": "b0ff3202-5463-437b-b3df-a39a2c066b89",
   "projectVersion": 1,
-  "AppIdentifier": "Aekia",
+  "AppIdentifier": "com.Aekia",
   "DisplayName": "Aekia",
   "Author": "Aekia",
   "Description": "Aekia",
@@ -12,17 +12,7 @@
     "1",
     "2"
   ],
-  "iOSBackgroundMode": [
-    "audio",
-    "location",
-    "voip",
-    "newsstand-content",
-    "external-accessory",
-    "bluetooth-central",
-    "bluetooth-peripheral",
-    "fetch",
-    "remote-notification"
-  ],
+  "iOSBackgroundMode": [],
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
   "FrameworkVersion": "4.0.0",
   "AndroidPermissions": [

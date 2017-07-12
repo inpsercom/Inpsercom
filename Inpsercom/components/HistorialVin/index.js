@@ -111,7 +111,7 @@ function ConsultarHV() {
             if (infor1[0].estado_interno == "RECIBIDO") {
                 document.getElementById("colorRE").style.background = "green";
                 document.getElementById("vistoRE").style.color = "green";
-                document.getElementById("vistoRE1").style.color = "green";
+                //document.getElementById("vistoRE1").style.color = "green";
             }
             if (infor1[0].estado_interno == "TRABAJANDO") {
                 document.getElementById("colorRE").style.background = "green"; document.getElementById("vistoRE").style.color = "green";
@@ -128,6 +128,7 @@ function ConsultarHV() {
                 document.getElementById("colorLA").style.background = "green"; document.getElementById("vistoLA").style.color = "green";
                 document.getElementById("colorCO").style.background = "green"; document.getElementById("vistoCO").style.color = "green";
                 document.getElementById("colorLT").style.background = "green"; document.getElementById("vistoLT").style.color = "green";
+                document.getElementById("vistoLT1").style.color = "red";
             }
             observa = infor1[0];
         }
@@ -143,6 +144,7 @@ function ConsultarHV() {
                 document.getElementById("colorPRO").style.background = "green"; document.getElementById("vistoPRO").style.color = "green";
                 document.getElementById("colorLVA").style.background = "green"; document.getElementById("vistoLVA").style.color = "green";
                 document.getElementById("colorCCC").style.background = "green"; document.getElementById("vistoCCC").style.color = "green";
+                document.getElementById("vistoCCC1").style.color = "red";
             }
             observa1 = infor2[0];
         }
