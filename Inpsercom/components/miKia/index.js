@@ -3,7 +3,12 @@
 app.miKia = kendo.observable({
     init: function () { },
     onShow: function () {
-        $("#NumeroChasis").text(datos_Cliente.chasis);
+        //$("#NumeroChasis").text(datos_Cliente.chasis);
+        // RRP: alias - mikia
+        $("#NumeroChasis").text(datos_Cliente.nombre_alias);
+        
+// alert(inspeccionar(datos_Cliente)); //RRP
+
         var Registro = sessionStorage.getItem("Registro");
     },
     afterShow: function () { }

@@ -5,7 +5,10 @@ app.mntOTs = kendo.observable({
     onShow: function () {
         try {
             registro = "";
-            $("#NumeroChasisOT").text(datos_Cliente.chasis);
+          //  $("#NumeroChasisOT").text(datos_Cliente.chasis);
+        // RRP: alias - ordenestrabajo
+        $("#NumeroChasisOT").text(datos_Cliente.nombre_alias);
+            
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;
             document.getElementById("FechaInicio").style.width = wd + "px";
@@ -61,7 +64,7 @@ app.mntOTs = kendo.observable({
                     { field: "nombre_taller", title: "Taller", width: fecha },
                     { field: "kilometraje", title: "Km.", width: taller },
                     { field: "observacion", title: "OBS",width: obs,
-                    template: "#if (observacion != '0,') { #<div><span><i onclick='showDetails(this)' class='fa fa-eercast' style='width: 25%;color:red;'></i></span></div># } #"
+                    template: "#if (observacion != '0,' || observacion != '') { #<div><span><i onclick='showDetails(this)' class='fa fa-eercast' style='width: 25%;color:red;'></i></span></div># } #"
                     }
                     ],
                 selectable: "row",
@@ -101,6 +104,7 @@ function showDetails(e) {
         banderaOT = 1;
         var grid = $(e).closest('.k-grid').data('kendoGrid'); //get the grid
         var dataItem = grid.dataItem($(e).closest('tr'));
+        alert(inspeccionar(dataItem));
         mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
             "OBSERVACION", "<span align='justify'>"+ dataItem.observacion.substring(2, dataItem.observacion.length) +"</b></span>" , true,true);
          

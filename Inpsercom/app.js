@@ -1,8 +1,8 @@
 //'use strict';
 var datos_Cliente, Device_identifier, datos_Vehiculo, urlService, observa, observa1;
 var VersionHM = "ver 1.0";
-var urlInterno = 'http://192.168.1.3:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089';http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a 
-var urlExterno = 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';//'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';// 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';
+var urlInterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';//'http://192.168.1.3:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089';http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a 
+var urlExterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';// 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';
 //var urlsherloc = 'http://190.110.193.131/ReportService.svc/';
 var notificationWidget;
 (function () {
@@ -409,7 +409,7 @@ function mensajePrmOpc(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar) {
     Mensaje = Logo + Titulo + Mensaje;
 
     // Si envia "1" presenta el boton CERRAR
-    var botCerrar = "<table width='100%' border='0'><tr><td align='center'><a href='components/EstadoMantenimiento/view.html?op=si' style='font: bold 14px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333;  padding: 2px 6px 2px 6px;  border-top: 1px solid #CCCCCC;  border-right: 1px solid #333333;  border-bottom: 1px solid #333333;  border-left: 1px solid #CCCCCC;'>OK</a>&nbsp;&nbsp;<a href='components/EstadoMantenimiento/view.html?op=no' style='font: bold 14px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333;  padding: 2px 6px 2px 6px;  border-top: 1px solid #CCCCCC;  border-right: 1px solid #333333;  border-bottom: 1px solid #333333;  border-left: 1px solid #CCCCCC;'>Cancelar</a></td></tr></table>";
+    var botCerrar = "<table width='100%' border='0'><tr><td align='center'><a onclick='onSI()' style='font: bold 14px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333;  padding: 2px 6px 2px 6px;  border-top: 1px solid #CCCCCC;  border-right: 1px solid #333333;  border-bottom: 1px solid #333333;  border-left: 1px solid #CCCCCC;'>SI</a>&nbsp;&nbsp;<a onclick='onNO()' style='font: bold 14px Arial; text-decoration: none; background-color: #EEEEEE; color: #333333;  padding: 2px 6px 2px 6px;  border-top: 1px solid #CCCCCC;  border-right: 1px solid #333333;  border-bottom: 1px solid #333333;  border-left: 1px solid #CCCCCC;'>NO</a></td></tr></table>";
 
   //  if(Tiempo == 0 || Cerrar == true)
         Mensaje += botCerrar;

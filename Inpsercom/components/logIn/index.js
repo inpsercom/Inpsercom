@@ -37,7 +37,8 @@ function signin() {
             telefono_celular: usu.Cliente[0].telefono_celular, //"0995545554",
             //numeroorden: "72363",
             secuencia_mv01: usu.Cliente[0].secuencia_mv01,
-            mail: usu.Cliente[0].mail
+            mail: usu.Cliente[0].mail,
+            nombre_alias: usu.Cliente[0].nombre_alias
         };
         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
         datos_Cliente = Usuario;
@@ -56,7 +57,9 @@ function signin() {
                 contrato_fecha_hasta: veh.contrato_fecha_hasta, //"1900-01-01",
                 estado_vh02: veh.estado_vh02, //false,
                 alta_movil_imei: veh.alta_movil_imei, // "",
-                alta_movil_ip: veh.alta_movil_ip // ""
+                alta_movil_ip: veh.alta_movil_ip, // ""
+                nombre_alias: veh.nombre_alias,
+                terminos: "no" //acepta terminos
             }
             localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(Vehiculo));
             datos_Vehiculo = Vehiculo;

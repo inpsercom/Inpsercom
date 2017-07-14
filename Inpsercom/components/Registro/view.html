@@ -14,7 +14,7 @@
                                 required="true" onblur="personaGetReg();"> </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-12"> <input type="text" style="color:white;" class="form-control" id="Nombres" placeholder="Nombres" required="true">                            
+                        <div class="col-xs-12"> <input type="text" style="color:white;" class="form-control" id="Nombres" placeholder="Nombres" required>                            
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,9 +53,20 @@
                                 onkeyup="ValidaPassword();"> </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-12"> <input type="checkbox" name="cbkterminos" id="cbkterminos"><spam style="color:white;">
-                        <a id="terminos" onclick="terminosC()">&nbsp; Acepta términos y condiciones<br>
-                        </a></spam></div>
+                    
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><div class="col-xs-12"> <input type="checkbox" name="cbkterminos" id="cbkterminos"></td>
+    <td>&nbsp;</td>
+    <td valign="top"><div class="col-xs-12"><spam style="color:white;">
+                        <a id="terminos" onclick="terminosC()">Acepta las políticas de privacidad<br>
+              </a></spam></td>
+  </tr>
+ 
+</table>
+
+                    
+                        </div>
                     </div>
                 </form>
                 <div class="form-group" style="text-align:center"> <button id="btnRegistrar" class="fondoGris" data-role="button" onclick="registrarRN()">Registrarse</button>                    

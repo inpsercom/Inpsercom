@@ -1,10 +1,16 @@
 app.menuKia = kendo.observable({
     init: function () { },
     onShow: function () {
-        try{
-        $("#NumeroChasisMenu").text(datos_Cliente.chasis);
-        var Registro = sessionStorage.getItem("Registro");
-        }catch(e){alert(e);}
+        try {
+            //    $("#NumeroChasisMenu").text(datos_Cliente.chasis);
+            // RRP: alias
+            $("#NumeroChasisMenu").text(datos_Cliente.nombre_alias);
+            var Registro = sessionStorage.getItem("Registro");
+
+
+            // alert(inspeccionar(datos_Cliente)); //RRP
+
+        } catch (e) { alert(e); }
     },
     afterShow: function () { }
 });
@@ -22,17 +28,30 @@ function ConfigurarSherlock() {
                 data1 = data.perfilClienteResult;
             },
             error: function (err) {
-                mens("Error servicio Sherloc", "mens");return;
+                mens("Error servicio Sherloc", "mens"); return;
                 //kendo.ui.progress($("#miKia2Screen"), false);
             }
         });
-    } catch (e) { mens("Error servicio Sherloc","mens");return; }
-    if(data1.orden == 0){mens("Cliente no tiene servicio","mens");return;}
+    } catch (e) { mens("Error servicio Sherloc", "mens"); return; }
+
+   // alert(inspeccionar(data1));
+
+    if (data1.orden == 0) {
+        datos_Vehiculo.terminos = "no";
+        localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
+        mens("Cliente no tiene servicio", "mens"); return;
+    }
     datos_Vehiculo.numeroorden = data1.orden;
-    datos_Vehiculo.tipoContratoSherloc = data1.tipoContrato; 
-    if (data1.tipoContrato == "GOLDEN") {
-        kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
-    } else { kendo.mobile.application.navigate("components/OrdenInstalacionBasico/view.html"); }
+    datos_Vehiculo.tipoContratoSherloc = data1.tipoContrato;
+
+    if (datos_Vehiculo.terminos == "no") {
+        kendo.mobile.application.navigate("components/TerminosCondic2/view.html");
+    }
+    else {
+        if (data1.tipoContrato == "GOLDEN") {
+            kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
+        } else { kendo.mobile.application.navigate("components/OrdenInstalacionBasico/view.html"); }
+    }
 }
 
 function servicioKia() {
@@ -42,6 +61,7 @@ function servicioKia() {
 function compraKia() {
     kendo.mobile.application.navigate("components/AgendarCita/view.html");
 }
+
 /*
 function AdmVehiculos() {
     kendo.mobile.application.navigate("components/MantenimientoVehiculos/view.html");

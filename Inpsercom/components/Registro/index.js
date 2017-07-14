@@ -20,7 +20,7 @@ app.miKia6 = kendo.observable({
     afterShow: function () { }
 });
 app.localization.registerView('miKia6');
-function terminosC(){
+function terminosC() {
     kendo.mobile.application.navigate("components/TerminosCondiciones/view.html");
 }
 function validacedula(cedula) {
@@ -43,10 +43,10 @@ function validacedula(cedula) {
                     total = total % 10;
                 }
                 var digi = 10 - total;
-                if(digito == digi){verificado = "true";}
+                if (digito == digi) { verificado = "true"; }
             }
         }
-    } catch (e) { mens(e,"mens"); }
+    } catch (e) { mens(e, "mens"); }
     return verificado;
 }
 function personaGetReg() {
@@ -124,13 +124,22 @@ function registrarRN() {
             //"alta_movil_imei": Device_identifier
             //output: "json"
         };
+
         var indicador = 0;
         $.each(params, function (k, v) {
             //display the key and value pair
-            if (v == "") {
-                indicador = 1;
-                //alert(k + ' esta en blanco ' + v);
+          
+            if (k != "nombre_alias") {
+                if (v == "") {
+                    indicador = 1;                    
+                }
             }
+
+            /*           if (v == "") {
+                           indicador = 1;
+                           //alert(k + ' esta en blanco ' + v);
+                       }
+           */
         });
         if (indicador == 1) {
             mens("Verificar datos en blanco", "mens"); return;
@@ -202,7 +211,7 @@ function registrarRN() {
             },
             error: function (err) { mens("Error en servicio clientes", "mens"); return; } //alert(err);
         });
-    } catch (e) {mens("Error en el servicio clientes", "mens"); return; } //aler(e);
+    } catch (e) { mens("Error en el servicio clientes", "mens"); return; } //aler(e);
 }
 
 function ValidaMailRegistro() {

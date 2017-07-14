@@ -2,7 +2,11 @@
 
 app.envioPrefactura = kendo.observable({
     onShow: function () {
-        $("#NumeroChasisPR").text(datos_Cliente.chasis);
+       // $("#NumeroChasisPR").text(datos_Cliente.chasis);
+
+        // RRP: alias - envioprefactura
+        $("#NumeroChasisPR").text(datos_Cliente.nombre_alias);
+        
         document.getElementById("recuperar_emailPR").focus();
         document.getElementById("recuperar_emailPR").value = datos_Cliente.mail;
         //document.getElementById("cameraTakePicture").addEventListener("click", cameraTakePicture); 

@@ -6,7 +6,10 @@ app.mntRegistroVin = kendo.observable({
         var dp = "";
         diip = "";
         //kendo.ui.progress($("#btnPDF"), true);
-        $("#NumeroChasisPF").text(datos_Cliente.chasis);
+      //  $("#NumeroChasisPF").text(datos_Cliente.chasis);
+        // RRP: alias - agregarvin
+        $("#NumeroChasisPF").text(datos_Cliente.nombre_alias);
+
         document.getElementById("logoPR").style.display = "none";
         var alto = screen.height - 160;
         var ancho = screen.width - 10;

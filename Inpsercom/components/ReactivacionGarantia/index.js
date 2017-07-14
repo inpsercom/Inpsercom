@@ -2,7 +2,10 @@
 
 app.reactivacionG = kendo.observable({
     onShow: function () {
-        $("#NumeroChasisGA").text(datos_Cliente.chasis);
+        //$("#NumeroChasisGA").text(datos_Cliente.chasis);
+        // RRP: alias - reactivaciongarantia
+        $("#NumeroChasisGA").text(datos_Cliente.nombre_alias);
+        
         //document.getElementById("recuperar_email").focus();
         //document.getElementById("recuperar_email").value = datos_Cliente.mail;
     },

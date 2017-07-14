@@ -1,6 +1,9 @@
 app.estadoMante = kendo.observable({
     onShow: function () {
-        $("#NumeroChasisEM").text(datos_Cliente.chasis);
+        //$("#NumeroChasisEM").text(datos_Cliente.chasis);
+        // RRP: alias - estadomantenimiento
+        $("#NumeroChasisEM").text(datos_Cliente.nombre_alias);
+        
         document.getElementById("verde").style.display = "none";
         document.getElementById("rojo").style.display = "none";
         borrar();

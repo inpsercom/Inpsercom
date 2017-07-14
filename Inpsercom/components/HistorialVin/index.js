@@ -2,7 +2,10 @@
 var if1;
 app.mntHistorialVin = kendo.observable({
     onShow: function () {
-        $("#NumeroChasisOTC").text(datos_Cliente.chasis);
+        //$("#NumeroChasisOTC").text(datos_Cliente.chasis);
+        // RRP: alias - historialvin
+        $("#NumeroChasisOTC").text(datos_Cliente.nombre_alias);
+
         document.getElementById("logo").style.display = "none";
         document.getElementById("gridMC").style.display = "none";
         document.getElementById("gridCL").style.display = "none";
