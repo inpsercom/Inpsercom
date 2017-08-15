@@ -1,7 +1,7 @@
 app.menuAlertas = kendo.observable({
     init: function () { },
     onShow: function () {
-        $("#NoOrdenAL").text(datos_Vehiculo.numeroorden);
+        $("#NoOrdenAL").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
     },
     afterShow: function () { }
 });

@@ -1,7 +1,7 @@
 
 app.reporteExcesos = kendo.observable({
     onShow: function () {
-        $("#NoOrdenEX1").text(datos_Vehiculo.numeroorden);
+        $("#NoOrdenEX1").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
         initMapE();
     },
     afterShow: function () { },

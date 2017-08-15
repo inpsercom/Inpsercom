@@ -1,7 +1,7 @@
 
 app.termcon2 = kendo.observable({
     onShow: function () {                     
-        $("#NumeroChasisTC").text(datos_Vehiculo.numeroorden);        
+        $("#NumeroChasisTC").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);        
         },
     afterShow: function () { },
     inicializa: function () { },

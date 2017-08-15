@@ -1,5 +1,5 @@
 app.reporteParada = kendo.observable({
-    onShow: function () {$("#NoOrdenPA1").text(datos_Vehiculo.numeroorden);
+    onShow: function () {$("#NoOrdenPA1").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
         initMapP();
     },
     afterShow: function () { },

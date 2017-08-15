@@ -2,7 +2,7 @@ var registroAE;
 app.reporteApaEnces = kendo.observable({
     onShow: function () {
         try {
-            $("#NoOrdenAE").text(datos_Vehiculo.numeroorden);
+            $("#NoOrdenAE").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             document.getElementById("btnConsultarAE").style.borderColor = "#bb162b";
             registroAE = "";
             var wd = (screen.width / 2) - 30;

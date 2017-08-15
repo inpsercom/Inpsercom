@@ -3,7 +3,7 @@ var map, marker, color, icon;
 app.miKia3 = kendo.observable({
     onShow: function () {
         try {
-            $("#NoOrdenUB").text(datos_Vehiculo.numeroorden);
+            $("#NoOrdenUB").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             var cords = traeCordenadasUbica();
             if (cords.Latitud == null) { mens("No existe datos", ""); return; }
             var PosVehi = { lat: parseFloat(cords.Latitud), lng: parseFloat(cords.Longitud) };

@@ -1,7 +1,7 @@
-<div data-role="view" data-title="View" data-layout="main" data-model="app.miKia2" data-show="app.miKia2.onShow" data-after-show="app.miKia2.afterShow"
+<div data-role="view" data-title="Menú Kia Satelital" data-layout="main" data-model="app.miKia2" data-show="app.miKia2.onShow" data-after-show="app.miKia2.afterShow"
     id="miKia2Screen" class="screen" data-before-show="app.miKia2.inicializa" data-stretch="true">
     <header data-role="header">
-        <div data-role="navbar" class="header-text"> <span data-bind="text: strings.miKia2.title"></span>
+        <div data-role="navbar" class="header-text"> <span data-role="view-title"></span>
         <h1><b><span id="NoOrden" class="km-view-subtitle"></span></b></h1>
             <a data-role="button"
                 href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
@@ -21,7 +21,7 @@
                 <a onclick="recorrerAuto()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
               <i class="mi-icon fa-stack-2x "></i>
               <i class="fa fa-retweet fa-stack-1x fa-inverse"></i>
-            </span> </a> <span class="icon-text clearfix ">Recorrido del Auto</span> </div>
+            </span> </a> <span class="icon-text clearfix ">Recorrido del Vehículo</span> </div>
             <div class="col-xs-6 text-center">
                 <a onclick="controlVehiculo()" class="icon-wrapper"> <span class="fa-stack fa-lg ">
               <i class="mi-icon fa-stack-2x "></i>

@@ -2,7 +2,7 @@ var registroPA;
 app.reporteParadas = kendo.observable({
     onShow: function () {
         try {
-            $("#NoOrdenPA").text(datos_Vehiculo.numeroorden);
+            $("#NoOrdenPA").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             registro = "";
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;

@@ -4,7 +4,7 @@ var registroAEaux;
 app.detalleTR = kendo.observable({
     onShow: function () {
         try {
-            $("#NoOrdenTR").text(datos_Vehiculo.numeroorden);
+            $("#NoOrdenTR").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             registroAEaux = JSON.parse(localStorage.getItem("registro_AE"));
             for (var t = 0; t < registroAEaux.length; t++){
                 registroAEaux[t].FechaInicial = registroAEaux[t].FechaInicial.substr(11, (registroAEaux[t].FechaInicial.length - 11));

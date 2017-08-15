@@ -2,11 +2,11 @@
   "ProjectName": "Inpsercom",
   "ProjectGuid": "b0ff3202-5463-437b-b3df-a39a2c066b89",
   "projectVersion": 1,
-  "AppIdentifier": "com.Aekia",
+  "AppIdentifier": "com.Aekia.com",
   "DisplayName": "Aekia",
   "Author": "Aekia",
   "Description": "Aekia",
-  "BundleVersion": "1.0",
+  "BundleVersion": "2.1",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
     "1",
@@ -14,14 +14,14 @@
   ],
   "iOSBackgroundMode": [],
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
-  "FrameworkVersion": "4.0.0",
+  "FrameworkVersion": "6.4.0",
   "AndroidPermissions": [
     "android.permission.INTERNET"
   ],
   "DeviceOrientations": [
     "Portrait"
   ],
-  "AndroidHardwareAcceleration": "False",
+  "AndroidHardwareAcceleration": "True",
   "iOSStatusBarStyle": "Default",
   "Framework": "Cordova",
   "WP8TileTitle": "",
@@ -41,5 +41,31 @@
     "ID_RESOLUTION_WXGA",
     "ID_RESOLUTION_HD720P"
   ],
-  "CordovaPluginVariables": {}
+  "CordovaPluginVariables": {
+    "cordova-plugin-camera": {
+      "PHOTOLIBRARY_USAGE_DESCRIPTION": "para registrarse en la aplicacion como un medio de seguridad de uso de la app"
+    }
+  },
+  "CorePlugins": [
+    "com.telerik.LivePatch",
+    "cordova-plugin-battery-status",
+    "cordova-plugin-console",
+    "cordova-plugin-contacts",
+    "cordova-plugin-device",
+    "cordova-plugin-device-motion",
+    "cordova-plugin-device-orientation",
+    "cordova-plugin-dialogs",
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-globalization",
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-media",
+    "cordova-plugin-network-information",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-vibration",
+    "cordova-plugin-whitelist",
+    "org.apache.cordova.labs.keyboard"
+  ]
 }

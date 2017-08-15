@@ -4,8 +4,7 @@ app.mntAgendarCita = kendo.observable({
     onShow: function () {
         //$("#NumeroChasisCA").text(datos_Cliente.chasis);
         // RRP: alias - agendar cita
-        $("#NumeroChasisCA").text(datos_Cliente.nombre_alias);
-      
+        $("#NumeroChasisCA").text(datos_Cliente.nombre_alias); 
         var anch = screen.width;
         var height1 = (anch / 2) - 30;
         document.getElementById("autokia1").style.width  = height1 + "px";

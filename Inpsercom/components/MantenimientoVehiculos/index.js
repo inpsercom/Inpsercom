@@ -1,14 +1,15 @@
 //'use strict';
 var acepta;
-
+var ind = 0;
 app.mntVehiculos = kendo.observable({
     onShow: function () {
         try {
             acepta = "no"; // RRP: confirmar
 
-         //   $("#NumeroChasisRV").text(datos_Cliente.chasis);
-        // RRP: alias
-        $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
+            //   $("#NumeroChasisRV").text(datos_Cliente.chasis);
+            // RRP: alias
+            kendo.ui.progress($("#miKiaScreen"), true);
+            $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
 
             var email = datos_Cliente.mail;
             if ((email != "") && (email)) {
@@ -41,10 +42,30 @@ app.mntVehiculos = kendo.observable({
                 columns: [
                     { field: "nombre_alias", title: "Alias", width: alias },
                     { field: "chasis", title: "Vehículo", width: vin },
-                    { command: { name: "destroy", template: "<div><span><i onclick='grid_remove(this)' class='fa fa-trash' style='width: 25%;color:red;'></i></span></div>",
-                            width: obs}
-                        }]
-                    });
+                    {
+                        width: obs,
+                        command: [{ name: "destroy",template: "<div><span><i onclick='grid_remove(this)' class='fa fa-trash' style='width: 100%;color:red;'></i></span></div>",
+                    width: obs}] 
+                        //text: ".", className: "btnRojoDelete" }]
+                    }],
+                editable: {
+                    confirmation: function (e) {
+                        if (ind = 1) {
+                            grid_remove(e);
+                            //mensajePrmOpc("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                            //    "AVISO", "Quieres borrar el registro<br><br>" , true);  fa fa-trash
+                        }
+                        e.preventDefault();
+                    }
+                }
+            });
+            grid = $("#chasisview").data("kendoGrid");
+            grid.bind("remove", grid_remove);
+            /*{ command: { name: "destroy", template: "<div><span><i onclick='grid_remove(this)' class='fa fa-trash' style='width: 25%;color:red;'></i></span></div>",
+                    width: obs}
+                }]
+            });*/
+            ind = 1;
         } catch (e) { mens("actualizar vehículo", "mens"); return; }
     }
 });
@@ -61,17 +82,14 @@ function grid_Change(e) {
         datos_Cliente.chasis = registro.chasis;
 
         datos_Cliente.nombre_alias = registro.nombre_alias; //RRP
-      //  alert(inspeccionar(datos_Cliente));
-        //alert(inspeccionar(registro));
-
         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
-        //datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
         datos_Vehiculo.chasis = registro.chasis;
         datos_Vehiculo.nombre_alias = registro.nombre_alias;
         datos_Vehiculo.numeroorden = registro.numeroorden;
         localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
+        $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
         //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
-        kendo.mobile.application.navigate("components/miKia/view.html");
+        //kendo.mobile.application.navigate("components/miKia/view.html");
     } catch (f) { mens("Error servicio actualizar vehículo", "mens"); return; }
 }
 
@@ -177,12 +195,8 @@ function validavehiculo(email) {
 function grid_remove(e) {
     try {
         acepta = e;
-
-          mensajePrmOpc("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-          "AVISO", "Escoja una opción<br><br>", true); 
-
-
-
+        mensajePrmOpc("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+           "AVISO", "Esta seguro de borrar el registro<br><br>", true);
         /*var sino = confirm("Quieres borrar este registro?");
         
         if (sino == true) {
@@ -195,7 +209,7 @@ function grid_remove(e) {
                 localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
             }
         }*/
-    } catch (s) { alert(e); mens("Error al eliminar vehículo", "mens"); return; }
+    } catch (s) { mens("Error al eliminar vehículo", "mens"); return; }
 }
 
 function actualiza(chasisemail) {
@@ -216,20 +230,20 @@ function actualiza(chasisemail) {
     } catch (e) { mens("Error servicio eliminar vehículo", "mens"); return; }
 }
 function onSI(e) {
-
-
-var grid = $(acepta).closest('.k-grid').data('kendoGrid'); //get the grid
-            var dataItem = grid.dataItem($(acepta).closest('tr'));
-            actualiza("4;" + dataItem.mail + ";" + dataItem.chasis);
-            if (dataItem.chasis == datos_Cliente.chasis) {
-                datos_Cliente.chasis = "";
-                datos_Cliente.alias = "";
-                localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
-            }
-
-
+    try {
+        var grid = $(acepta).closest('.k-grid').data('kendoGrid'); //get the grid
+        var dataItem = grid.dataItem($(acepta).closest('tr'));
+        //alert(inspeccionar(dataItem));
+        actualiza("4;" + dataItem.mail + ";" + dataItem.chasis);
+        if (dataItem.chasis == datos_Cliente.chasis) {
+            datos_Cliente.chasis = "";
+            datos_Cliente.alias = "";
+            localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
         }
+    }catch(e1){ mens("error al borrar registro","mens");}
+}
 
-  function onNO(e) {
-           
-        }
+function onNO(e) {
+    sino="NO";
+    return;
+}

@@ -40,16 +40,19 @@ function enviarMailPR() {
         try {
             if (document.getElementById("recuperar_emailPR").value != "") {
                 var result = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(document.getElementById("recuperar_emailPR").value);
+                alert(result);
                 if (result == false) {
                     document.getElementById("recuperar_emailPR").focus();
                     document.getElementById("recuperar_emailPR").style.borderColor = "red";
                 } else {
                     var diips = datos_Cliente.path.toString();
+                    alert(diips);
                     for(var i = 0; i < diips.length; i++){
                         diips = diips.replace(':','!');
                         diips = diips.replace('/','-');
                     }
                     documento = "7;" + datos_Cliente.mail + ";;" + diips + ";" + _mail;
+                    alert(documento);
                     var envio = EnvioMailPRE(documento);
                     //alert(envio);
                     if(envio.substring(0,1)=="0"){ mens(envio.substring(2, envio.length - 2),"mens");return;}
@@ -66,7 +69,7 @@ function EnvioMailPRE(documento) {
         if ((documento !== "") && (documento)) {
             var resultado = "";
             var Url = urlService + "EnvioMail/" + documento;
-            //alert(Url);
+            alert(Url);
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -84,7 +87,7 @@ function EnvioMailPRE(documento) {
                     }
                 },
                 error: function (err) {
-                    //alert(inspeccionar(err));
+                    alert(inspeccionar(err));
                     mens("Error conexión servicio Vehículo", "mens");
                     return;
                 }

@@ -5,7 +5,7 @@ app.terminoscon = kendo.observable({
        
 
 // RRP: alias - terminos condio
-        $("#NumeroChasisTC").text(datos_Cliente.nombre_alias);  
+        //$("#NumeroChasisTC").text(datos_Cliente.nombre_alias);  
  },
     afterShow: function () { },
     inicializa: function () { },

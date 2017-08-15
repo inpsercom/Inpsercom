@@ -5,10 +5,10 @@ app.mntOTs = kendo.observable({
     onShow: function () {
         try {
             registro = "";
-          //  $("#NumeroChasisOT").text(datos_Cliente.chasis);
-        // RRP: alias - ordenestrabajo
-        $("#NumeroChasisOT").text(datos_Cliente.nombre_alias);
-            
+            //  $("#NumeroChasisOT").text(datos_Cliente.chasis);
+            // RRP: alias - ordenestrabajo
+            $("#NumeroChasisOT").text(datos_Cliente.nombre_alias);
+
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;
             document.getElementById("FechaInicio").style.width = wd + "px";
@@ -21,7 +21,7 @@ app.mntOTs = kendo.observable({
             var fechaI = consultar();
             if (fechaI == "?") { fechaI = new Date(); } else { fechaI = new Date(fechaI); }
             var yearI = fechaI.getFullYear();
-            var mesI = fechaI.getMonth();
+            var mesI = fechaI.getMonth() + 1;
             var diaI = fechaI.getDate();
             document.getElementById("FechaInicio").value = diaI + "-" + mesI + "-" + yearI;
             if (document.getElementById("FechaInicio").value == "") {
@@ -44,7 +44,7 @@ app.mntOTs = kendo.observable({
             });
             //alert(document.getElementById("cboxOT").cheked);
             //document.getElementById("FechaInicio").value = "01-01-1910";
-
+            ConsultarOT();
             //document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;
         } catch (e) { mens("Error en fechas", "mens"); return; }
     },
@@ -52,10 +52,10 @@ app.mntOTs = kendo.observable({
     inicializa: function () {
         try {
             app.mntOTs.onShow();
-            var obs = (screen.width * 15) / 100;
-            var fecha = (screen.width * 17) / 100;
-            var ot = (screen.width * 25) / 100;
-            var taller = (screen.width * 15) / 100;
+            var obs = (screen.width * 9) / 100;
+            var fecha = (screen.width * 14) / 100;
+            var ot = (screen.width * 17) / 100;
+            var taller = (screen.width * 12) / 100;
             $("#listView").kendoGrid({
                 allowCopy: true,
                 columns: [
@@ -63,10 +63,22 @@ app.mntOTs = kendo.observable({
                     { field: "numero_ot", title: "No. OT", width: ot },
                     { field: "nombre_taller", title: "Taller", width: fecha },
                     { field: "kilometraje", title: "Km.", width: taller },
-                    { field: "observacion", title: "OBS",width: obs,
-                    template: "#if (observacion != '0,' || observacion != '') { #<div><span><i onclick='showDetails(this)' class='fa fa-eercast' style='width: 25%;color:red;'></i></span></div># } #"
+                    {title: "OBS",width: obs,
+                        command: [{className: "btnRojo",name: "o",
+                            visible: function (dataItem) { return dataItem.observacion != "0," },
+                            click: function (e) {
+                                try {
+                                    e.preventDefault();
+                                    banderaOT = 1;
+                                    var tr = $(e.target).closest('tr');
+                                    var dataItem = this.dataItem(tr);
+                                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                                        "OBSERVACION", "<span align='justify'>" + dataItem.observacion.substring(2, dataItem.observacion.length) + "</b></span>", true, true);
+                                } catch (f) {mens(f,"mens");}
+                            }
+                        }], 
                     }
-                    ],
+                ],
                 selectable: "row",
                 change: function (e) {
                     if (banderaOT == 1) { banderaOT = 0; return; }
@@ -82,13 +94,13 @@ app.mntOTs = kendo.observable({
                     kendo.mobile.application.navigate("components/DetalleOT/view.html");
                 }
             });
-            ConsultarOT();
-        } catch (e) { alert(e); }
+            //ConsultarOT();
+        } catch (e) { mens(e,"mens"); }
     },
     datos: [],
     listViewClick: function (e) {
         try {
-            if (banderaOT == 1) {banderaOT=0; return; }
+            if (banderaOT == 1) { banderaOT = 0; return; }
             var servicioOT = JSON.stringify(e.dataItem);
             sessionStorage.setItem("servicio", servicioOT);
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
@@ -99,17 +111,7 @@ app.mntOTs = kendo.observable({
     }
 });
 app.localization.registerView('mntOTs');
-function showDetails(e) {
-    try {
-        banderaOT = 1;
-        var grid = $(e).closest('.k-grid').data('kendoGrid'); //get the grid
-        var dataItem = grid.dataItem($(e).closest('tr'));
-        alert(inspeccionar(dataItem));
-        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-            "OBSERVACION", "<span align='justify'>"+ dataItem.observacion.substring(2, dataItem.observacion.length) +"</b></span>" , true,true);
-         
-    } catch (f) { alert(f); }
-}
+
 function regresaOT() {
     document.getElementById("FechaInicio").value = "";
     document.getElementById("listView").value = "";
@@ -119,6 +121,7 @@ function consultar() {
     var infor;
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
+        // RRP: 18072017
         var Url = urlService + "Ordenes/" + "1,2," + datos_Cliente.chasis + ",01-01-1900," + document.getElementById("FechaFin").value;
         $.ajax({
             url: Url,
@@ -137,7 +140,7 @@ function consultar() {
             }
         });
     } catch (e) {
-        mens("Error de conexión a la base", "mens"); return;
+        mens("Error de conexión a base", "mens"); return;
     }
     return infor[0].fecha_retail;
 }
@@ -175,20 +178,8 @@ function ConsultarOT() {
         var dataSource = new kendo.data.DataSource({ data: infor });
         var grid = $("#listView").data("kendoGrid");
         grid.setDataSource(dataSource);
-
-        /*
-        codigo_empresa
-        numero_ot
-        nombre_taller
-        estado_interno
-        fecha_recepcion
-        anio_ga35
-        secuencia_orden
-        kilometraje  sortable:{ initialDirection: "desc"},
-        */
-
-    } catch (e) {
-        mens("Error de conexión a la base", "mens"); return;
+    } catch (e) {return;
+        //mens("Error de conexión a la base", "mens"); return;
     }
     /*if(document.getElementById("cboxOT").checked == false){
              document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;

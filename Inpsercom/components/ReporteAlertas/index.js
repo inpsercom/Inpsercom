@@ -2,7 +2,7 @@ var registro;
 app.reporteAlertas = kendo.observable({
     onShow: function () {
         try {
-            $("#NoOrdenEX").text(datos_Vehiculo.numeroorden);
+            $("#NoOrdenEX").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             registro = "";
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;

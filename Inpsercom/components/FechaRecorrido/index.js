@@ -3,7 +3,7 @@ var FechaRec;
 app.fechaReco = kendo.observable({
     onShow: function () {
         try {
-            $("#NoOrdenRA").text(datos_Vehiculo.numeroorden);
+            $("#NoOrdenRA").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             document.getElementById("FechaRecor").style.fontSize = "large";
             document.getElementById("myLabel").style.fontSize = "large";
             document.getElementById("myLabel").style.color = "black";

@@ -1,6 +1,6 @@
 app.reporteApaEnce = kendo.observable({
     onShow: function () {
-        $("#NoOrdenAE1").text(datos_Vehiculo.numeroorden);
+        $("#NoOrdenAE1").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
         colorAE.push(["#c0392b"]);
         colorAE.push(["#1f618d"]);
         colorAE.push(["#f1c40f"]);

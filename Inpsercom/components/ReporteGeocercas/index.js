@@ -3,7 +3,7 @@ var registroGC1;
 app.reporteGeocercas = kendo.observable({
     onShow: function () {
         try {
-            $("#NoOrdenGC").text(datos_Vehiculo.numeroorden);
+            $("#NoOrdenGC").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             registroGC = "";
             var wd = (screen.width / 2) - 30;
             var wx = wd - 15;

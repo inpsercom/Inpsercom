@@ -1,7 +1,7 @@
 //'use strict';
 
 app.miKia4 = kendo.observable({
-    onShow: function() {$("#NoOrdenDB").text(datos_Vehiculo.numeroorden);},
+    onShow: function() {$("#NoOrdenDB").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);},
     afterShow: function() {},
 });
 app.localization.registerView('miKia4');

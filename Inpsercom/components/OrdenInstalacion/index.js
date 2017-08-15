@@ -5,7 +5,7 @@ app.miKia2 = kendo.observable({
     onShow: function () {
         try {
             //document.getElementById("NoOrdenn").value = "";
-            $("#NoOrden").text(datos_Vehiculo.numeroorden);
+            $("#NoOrden").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             NoOrden = datos_Vehiculo.numeroorden;
             if (NoOrden == "") {
                 kendo.ui.progress($("#btnHabilita"), true);

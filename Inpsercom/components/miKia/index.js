@@ -5,6 +5,7 @@ app.miKia = kendo.observable({
     onShow: function () {
         //$("#NumeroChasis").text(datos_Cliente.chasis);
         // RRP: alias - mikia
+        kendo.ui.progress($("#miKiaScreen"), false);
         $("#NumeroChasis").text(datos_Cliente.nombre_alias);
         
 // alert(inspeccionar(datos_Cliente)); //RRP
@@ -20,6 +21,8 @@ function logout() {
 }
 
 function AdmVehiculos() {
+    //kendo.ui.progress($("#miKiaScreen"), true);
+    
     kendo.mobile.application.navigate("components/MantenimientoVehiculos/view.html");
 }
 

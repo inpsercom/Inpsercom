@@ -17,6 +17,7 @@ app.mntRegistroVin = kendo.observable({
         document.getElementById("ifmPrefactura").style.width = ancho + "px";
         document.getElementById("ifmPrefactura").style.height = alto + "px";
         var diip = TraerDireccion();
+        alert(diip);
         datos_Cliente.path = diip;
         if (diip == null || diip == "") {
             document.getElementById("pdfPRE").setAttribute('style', 'display: none');
@@ -93,6 +94,7 @@ function TraerDireccion() {
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
         var Url = urlService + "Ordenes/" + "5,2," + datos_Cliente.chasis;
+        alert(Url);
         var infor;
         $.ajax({
             url: Url,
@@ -101,7 +103,9 @@ function TraerDireccion() {
             dataType: "json",
             success: function (data) {
                 try {
+                    //alert(inspeccionar(data));
                     infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
+                    //alert(infor);
                 } catch (e) {
                     mens("No existe datos para esta cosnulta", "mens");return;
                 }

@@ -1,7 +1,7 @@
 app.reporteGeocerca = kendo.observable({
     onShow: function () {
         //alert(datos_Vehiculo.numeroorden);
-        $("#NoOrdenGC1").text(datos_Vehiculo.numeroorden);
+        $("#NoOrdenGC1").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
         //initialize();
         initMapGC();
     },
