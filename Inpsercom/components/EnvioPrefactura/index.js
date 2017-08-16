@@ -40,21 +40,17 @@ function enviarMailPR() {
         try {
             if (document.getElementById("recuperar_emailPR").value != "") {
                 var result = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(document.getElementById("recuperar_emailPR").value);
-                alert(result);
                 if (result == false) {
                     document.getElementById("recuperar_emailPR").focus();
                     document.getElementById("recuperar_emailPR").style.borderColor = "red";
                 } else {
                     var diips = datos_Cliente.path.toString();
-                    alert(diips);
                     for(var i = 0; i < diips.length; i++){
                         diips = diips.replace(':','!');
                         diips = diips.replace('/','-');
                     }
                     documento = "7;" + datos_Cliente.mail + ";;" + diips + ";" + _mail;
-                    alert(documento);
                     var envio = EnvioMailPRE(documento);
-                    //alert(envio);
                     if(envio.substring(0,1)=="0"){ mens(envio.substring(2, envio.length - 2),"mens");return;}
                     mens("Prefactura enviada al correo especificado", "mens");
                     kendo.mobile.application.navigate("components/AgregarVin/view.html");
@@ -69,7 +65,6 @@ function EnvioMailPRE(documento) {
         if ((documento !== "") && (documento)) {
             var resultado = "";
             var Url = urlService + "EnvioMail/" + documento;
-            alert(Url);
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -77,17 +72,13 @@ function EnvioMailPRE(documento) {
                 async: false,
                 success: function (data) {
                     try {
-                        //alert(inspeccionar(data));
                         resultado = data.EnvioMailGetResult;
-                        //alert(inspeccionar(resultado));
-                    } catch (e) {
-                        //alert(inspeccionar(e));
+                        } catch (e) {
                         mens(data, "mens");
                         borraCampos();return;
                     }
                 },
                 error: function (err) {
-                    alert(inspeccionar(err));
                     mens("Error conexión servicio Vehículo", "mens");
                     return;
                 }
@@ -95,7 +86,6 @@ function EnvioMailPRE(documento) {
             return resultado;
         }
     } catch (f) {
-        //alert(inspeccionar(f));
         mens("Error conexión servicio Vehículo", "mens");return;
     }
 }
@@ -140,12 +130,12 @@ function registrar() {
                 if (data == "Success") {
                     try {
                         mens("Su contraseña fue enviada al su correo", "mens");
-                    } catch (s) { mens("Error servicio login", "mens"); return; } //alert (s); 
+                    } catch (s) { mens("Error servicio login", "mens"); return; }  
                 }
                 else { mens(data, "mens"); return;}
             },
-            error: function (err) { mens("Error en servicio cliente", "mens");  return;} //alert(err);
+            error: function (err) { mens("Error en servicio cliente", "mens");  return;} 
         });
-    } catch (e) { mens("Error en el servicio clientess", "mens"); return; } //aler(e);
+    } catch (e) { mens("Error en el servicio clientess", "mens"); return; } 
     return data;
 }
