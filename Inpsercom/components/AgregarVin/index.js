@@ -6,7 +6,7 @@ app.mntRegistroVin = kendo.observable({
         var dp = "";
         diip = "";
         //kendo.ui.progress($("#btnPDF"), true);
-      //  $("#NumeroChasisPF").text(datos_Cliente.chasis);
+        //  $("#NumeroChasisPF").text(datos_Cliente.chasis);
         // RRP: alias - agregarvin
         $("#NumeroChasisPF").text(datos_Cliente.nombre_alias);
 
@@ -17,7 +17,6 @@ app.mntRegistroVin = kendo.observable({
         document.getElementById("ifmPrefactura").style.width = ancho + "px";
         document.getElementById("ifmPrefactura").style.height = alto + "px";
         var diip = TraerDireccion();
-        alert(diip);
         datos_Cliente.path = diip;
         if (diip == null || diip == "") {
             document.getElementById("pdfPRE").setAttribute('style', 'display: none');
@@ -28,10 +27,8 @@ app.mntRegistroVin = kendo.observable({
         }
         //var diip = "http://186.71.68.154:8090/prefactura_taller/DEBITOCONFIAMED2015.pdf";
         dp = "http://docs.google.com/gview?url=" + diip + "&embedded=true";
-        //alert(dp);
-        document.getElementById("ifmPrefactura").src =  dp;
+        document.getElementById("ifmPrefactura").src = dp;
         document.getElementById("pdfPRE").setAttribute('style', 'display: block');
-        //alert (inspeccionar(todo));
     },
     afterShow: function () {
         //kendo.ui.progress($("#btnPDF"), false); 
@@ -49,14 +46,13 @@ function prefacEn() {
     //var envio = AceptaMailPRE(documento);
     //alert(envio);  
     //if (envio.substring(0, 1) == "0") { mens(envio.substring(2, envio.length - 2)); return; }
-    mens("La Prefactura fue aceptada con exito", "mens");return;
+    mens("La Prefactura fue aceptada con exito", "mens"); return;
 }
 function AceptaMailPRE(documento) {
     try {
         if ((documento !== "") && (documento)) {
             var resultado = "";
             var Url = urlService + "EnvioMail/" + documento;
-            //alert(Url);
             $.ajax({
                 url: Url,
                 type: "GET",
@@ -64,26 +60,21 @@ function AceptaMailPRE(documento) {
                 async: false,
                 success: function (data) {
                     try {
-                        //alert(inspeccionar(data));
                         resultado = data.EnvioMailGetResult;
-                        //alert(inspeccionar(resultado));
                     } catch (e) {
-                        //alert(inspeccionar(e));
                         mens(data, "mens");
-                        borraCampos();return;
+                        borraCampos(); return;
                     }
                 },
                 error: function (err) {
-                    //alert(inspeccionar(err));
-                    mens("Error conexión servicio Vehículo", "mens");return;
+                    mens("Error conexión servicio Vehículo", "mens"); return;
 
                 }
             });
             return resultado;
         }
     } catch (f) {
-        //alert(inspeccionar(f));
-        mens("Error conexión servicio Vehículo", "mens");return;
+        mens("Error conexión servicio Vehículo", "mens"); return;
     }
 }
 
@@ -94,7 +85,6 @@ function TraerDireccion() {
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
         var Url = urlService + "Ordenes/" + "5,2," + datos_Cliente.chasis;
-        alert(Url);
         var infor;
         $.ajax({
             url: Url,
@@ -103,17 +93,15 @@ function TraerDireccion() {
             dataType: "json",
             success: function (data) {
                 try {
-                    //alert(inspeccionar(data));
                     infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
-                    //alert(infor);
                 } catch (e) {
-                    mens("No existe datos para esta cosnulta", "mens");return;
+                    mens("No existe datos para esta cosnulta", "mens"); return;
                 }
             },
             error: function (err) {
-                mens("Error en consulta", "mens");return;
+                mens("Error en consulta", "mens"); return;
             }
         });
         return infor[0].path_prefactura;
-    } catch (e) { mens("Error en conexión con servicio", "mens");return; }
+    } catch (e) { mens("Error en conexión con servicio", "mens"); return; }
 }
