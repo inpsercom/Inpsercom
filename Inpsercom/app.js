@@ -364,7 +364,7 @@ function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar, Cerrar1) {
             n.show({ myMessage: Mensaje });
         }
     } catch (j) {
-        alert(j);
+        mens("error en mensaje","mens");
     }
 }
 

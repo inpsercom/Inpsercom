@@ -156,7 +156,7 @@ function setMarkersAE(mapAE) {
                 }
             })(markerAEF, i));
         }
-    } catch (e) { alert(e); }
+    } catch (e) { mens("error al cargar marcas en el mapa","mens"); }
 }
 
 function rutasFR(mapAE) {

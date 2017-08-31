@@ -7,7 +7,7 @@ app.miKia = kendo.observable({
         // RRP: alias - mikia
         kendo.ui.progress($("#miKiaScreen"), false);
         $("#NumeroChasis").text(datos_Cliente.nombre_alias);
-        
+       
 // alert(inspeccionar(datos_Cliente)); //RRP
 
         var Registro = sessionStorage.getItem("Registro");

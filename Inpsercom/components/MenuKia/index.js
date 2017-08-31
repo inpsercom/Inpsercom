@@ -10,7 +10,7 @@ app.menuKia = kendo.observable({
 
             // alert(inspeccionar(datos_Cliente)); //RRP
 
-        } catch (e) { alert(e); }
+        } catch (e) {mens("variable session","mens"); }
     },
     afterShow: function () { }
 });

@@ -20,7 +20,7 @@ app.home = kendo.observable({
                 datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
                 //kendo.mobile.application.navigate("components/MenuKia/view.html");
             }
-        } catch (f) { alert(f); mens("Error en conexión a la base", "mens"); return;}
+        } catch (f) { mens("Error en conexión a la base", "mens"); return;}
     },
     init: function () {if (localStorage.getItem("Inp_DatosUsuario")) {
                 datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
@@ -39,14 +39,14 @@ function RegistroVehiculo(){
 function regresaHME(){
     try{
     kendo.mobile.application.navigate("components/MenuKia/view.html");
-    }catch(e){alert(e);}
+    }catch(e){mens("error al cargar menu","mens");}
 }
 
 //190.108.66.10
 function validaLoginPrueba() {
     try{
     var Url = urlExterno + "Login/vinicio.ortega@inpsercom.com.com;a;3314"; 
-    //"http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a;3314";
+    
     $.ajax({
         url: Url,
         type: "GET",
@@ -62,6 +62,6 @@ function validaLoginPrueba() {
             }
         }
     });
-    }catch(e){alert(e);}
+    } catch (e) { mens("error conexion login", "mens"); return;}
     return resultado;
 }
