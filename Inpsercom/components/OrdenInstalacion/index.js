@@ -79,7 +79,9 @@ function habilitarOpciones() {
                                                 $("#NoOrden").text(datos_Vehiculo.numeroorden);
                                                 mens("Orden Guardada", "success");
                                             } catch (s) { mens("Error consulta sherloc","mens");return; }
-                                        } else { mens(data,"mens");return; }//kendo.ui.progress($("#miKia2Screen"), false);  }
+                                        } else {mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                                            "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                                        }//kendo.ui.progress($("#miKia2Screen"), false);  }
                                     } catch (e) { mens("Error servicio sherloc","mens");return; }
                                 },
                                 error: function (err) {
@@ -126,7 +128,9 @@ function registra(chasisemail) {
                             mens("Orden Guardada", "success");
                             return data;
                         } catch (s) { mens("Error al grabar orden","mens");return; }
-                    } else { mens(data,"mens"); return;}
+                } else { mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                }
             },
             error: function (err) {
                 mens("Error servicio grabar orden","mens");return;

@@ -107,10 +107,14 @@ function actualizaAsignar() {
             async: false,
             success: function (data) {
                 try {
-                    resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
-                    var dataSource = new kendo.data.DataSource({ data: resultado });
+                    var dataSource = "";
+                    if (data.VehiculoGetResult != null) {
+                        resultado = JSON.parse(data.VehiculoGetResult).Vehiculo;
+                    }
+                    dataSource = new kendo.data.DataSource({ data: resultado });
                     grid.setDataSource(dataSource);
                     grid1.setDataSource(dataSource);
+                    
                 } catch (e) {
                     mens("Error servicio actualizar vehículo", "mens"); return;
                 }
@@ -129,7 +133,7 @@ function grabar() {
         var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 5,
-            "identificacion_cliente": "",
+            "identificacion_cliente": datos_Cliente.identificacion_cliente,
             "persona_nombre": "",
             "persona_apellido": "",
             "mail": datos_Cliente.mail,
@@ -143,7 +147,6 @@ function grabar() {
             "alta_movil_imei": ""
             //output: "json"
         };
-
         $.ajax({
             url: Url, type: "POST", data: JSON.stringify(params), dataType: "json", //Content-Type: application/json
             headers: { 'Content-Type': 'application/json;charset=UTF-8' },
@@ -155,9 +158,10 @@ function grabar() {
                         document.getElementById("Alias").value = "";
                         actualizaAsignar();
                         validavehiculo(params.mail);
-                    } catch (s) { mens("Error serrvicio actualizar vehículo", "mens"); return; }
+                    } catch (s) { mens("Error servicio actualizar vehículo", "mens"); return; }
                 } else {
-                    mens(data, "mens"); return;
+                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
                 }
             },
             error: function (err) {
@@ -223,7 +227,10 @@ function actualiza(chasisemail) {
                 if (data == "Success") {
                     mens("Se elimino el registro", "mens");
                     actualizaAsignar();
-                } else { mens(data, "mens"); return; }
+                } else {
+                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                }
             },
             error: function (err) { mens("Error servicio actualizar vehículo", "mens"); return; }
         });
@@ -233,7 +240,6 @@ function onSI(e) {
     try {
         var grid = $(acepta).closest('.k-grid').data('kendoGrid'); //get the grid
         var dataItem = grid.dataItem($(acepta).closest('tr'));
-        //alert(inspeccionar(dataItem));
         actualiza("4;" + dataItem.mail + ";" + dataItem.chasis);
         if (dataItem.chasis == datos_Cliente.chasis) {
             datos_Cliente.chasis = "";

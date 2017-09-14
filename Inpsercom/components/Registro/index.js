@@ -13,7 +13,7 @@ app.miKia6 = kendo.observable({
                 max: new Date(year, mes, dia),
                 format: "yyyy-MM-dd"
             });
-            document.getElementById("btnRegistrar").disabled = true;
+            document.getElementById("btnRegistrar").disabled = false;
             //document.getElementById("FechaNacimiento").value = (year + "-" + (mes + 1) + "-" + dia);
         } catch (e) { mens("Error en formato fecha", "mens"); return; }
     },
@@ -46,7 +46,9 @@ function validacedula(cedula) {
                 if (digito == digi) { verificado = "true"; }
             }
         }
-    } catch (e) { mens(e, "mens"); }
+    } catch (e) {mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+            "ERROR", "<span align='justify'>" + e + "</b></span>", true, true);
+    }
     return verificado;
 }
 function personaGetReg() {
@@ -67,7 +69,7 @@ function personaGetReg() {
                         if (data.persona_nombre) {
                             document.getElementById("Nombres").value = data.persona_nombre;
                             document.getElementById("Apellidos").value = data.persona_apellido;
-                            document.getElementById("email").value = data.mail;
+                            document.getElementById("email").value = "";//data.mail;
                             document.getElementById("FechaNacimiento").value = data.fecha_nacimiento;
                             document.getElementById("celular").value = data.telefono_celular;
                             persona_numero = data.persona_numero;
@@ -144,7 +146,7 @@ function registrarRN() {
         if (indicador == 1) {
             mens("Verificar datos en blanco", "mens"); return;
         }
-        //if(document.getElementById("cbkterminos").checked == false){mens("Debe aceptar términos y condiciones","mens");return;}
+        if(document.getElementById("cbkterminos").checked == false){mens("Debe aceptar términos y condiciones","mens");return;}
         $.ajax({
             url: Url,
             type: "POST",
@@ -207,7 +209,11 @@ function registrarRN() {
                         return;
                     } catch (s) { mens("Error servicio cliente", "mens"); return; } //alert (s); 
                 }
-                else { mens(data, "mens"); return; }
+                else {
+                    if (data.substring(0, 1) == "0") { data = data.substring(2, data.length);}
+                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                    "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                }
             },
             error: function (err) { mens("Error en servicio clientes", "mens"); return; } //alert(err);
         });

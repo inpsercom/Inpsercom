@@ -51,7 +51,10 @@ function enviarMailPR() {
                     }
                     documento = "7;" + datos_Cliente.mail + ";;" + diips + ";" + _mail;
                     var envio = EnvioMailPRE(documento);
-                    if(envio.substring(0,1)=="0"){ mens(envio.substring(2, envio.length - 2),"mens");return;}
+                    if (envio.substring(0, 1) == "0") {
+                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                         "ERROR", "<span align='justify'>" + envio.substring(2, envio.length - 2) + "</b></span>", true, true);
+                    }
                     mens("Prefactura enviada al correo especificado", "mens");
                     kendo.mobile.application.navigate("components/AgregarVin/view.html");
                 }
@@ -73,8 +76,9 @@ function EnvioMailPRE(documento) {
                 success: function (data) {
                     try {
                         resultado = data.EnvioMailGetResult;
-                        } catch (e) {
-                        mens(data, "mens");
+                    } catch (e) {
+                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
                         borraCampos();return;
                     }
                 },
@@ -132,7 +136,10 @@ function registrar() {
                         mens("Su contraseña fue enviada al su correo", "mens");
                     } catch (s) { mens("Error servicio login", "mens"); return; }  
                 }
-                else { mens(data, "mens"); return;}
+                else {
+                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                }
             },
             error: function (err) { mens("Error en servicio cliente", "mens");  return;} 
         });

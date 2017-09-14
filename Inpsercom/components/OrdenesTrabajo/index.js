@@ -74,7 +74,11 @@ app.mntOTs = kendo.observable({
                                     var dataItem = this.dataItem(tr);
                                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
                                         "OBSERVACION", "<span align='justify'>" + dataItem.observacion.substring(2, dataItem.observacion.length) + "</b></span>", true, true);
-                                } catch (f) {mens(f,"mens");}
+                                } catch (f) {
+                                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                                       "OBSERVACION", "<span align='justify'>" + f + "</b></span>", true, true);
+
+                                }
                             }
                         }], 
                     }
@@ -95,7 +99,9 @@ app.mntOTs = kendo.observable({
                 }
             });
             //ConsultarOT();
-        } catch (e) { mens(e,"mens"); }
+        } catch (e) {mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + e + "</b></span>", true, true);
+        }
     },
     datos: [],
     listViewClick: function (e) {
@@ -168,7 +174,7 @@ function ConsultarOT() {
                 try {
                     infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
                 } catch (e) {
-                    mens("No existe datos para esta cosnulta", "mens"); return;
+                    mens("No existe datos para esta consulta", "mens"); return;
                 }
             },
             error: function (err) {

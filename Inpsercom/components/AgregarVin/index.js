@@ -62,7 +62,8 @@ function AceptaMailPRE(documento) {
                     try {
                         resultado = data.EnvioMailGetResult;
                     } catch (e) {
-                        mens(data, "mens");
+                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
                         borraCampos(); return;
                     }
                 },

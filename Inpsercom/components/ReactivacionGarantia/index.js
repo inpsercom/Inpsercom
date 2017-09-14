@@ -81,7 +81,9 @@ function registrar() {
                         mens("Su contraseña fue enviada al su correo", "success");
                     } catch (s) { mens("Error servicio login", "mens"); return; } //alert (s); 
                 }
-                else { mens(data, "mens");return; }
+                else {mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                         "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                }
             },
             error: function (err) { mens("Error en servicio cliente", "mens"); return; } //alert(err);
         });

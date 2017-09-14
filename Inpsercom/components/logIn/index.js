@@ -93,7 +93,8 @@ function validaLogin(email, password, codigo) {
                         resultado = data.LoginGetResult;
                     } catch (e) {
                         //alert(e);
-                        mens(data,"mens");
+                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
                         borraCamposLogin();return;
                     }
                 },
@@ -122,7 +123,8 @@ function validausuario(email) {
                     try {
                         resultado = JSON.parse(data.UsuarioGetResult);
                     } catch (e) {
-                        mens(data,"mens");
+                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                      "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
                         borraCamposLogin();return;
                     }
                 },
@@ -151,7 +153,8 @@ function validavehicu(emailp) {
                     try {
                         resultado = JSON.parse(data.VehiculoGetResult);
                     } catch (e) {
-                        mens(data,"mens");
+                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
                         borraCamposLogin();return;
                     }
                 },

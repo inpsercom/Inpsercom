@@ -8,7 +8,7 @@ app.localization.registerView('miKia5');
 
 function enviarMail() {
     var _mail = document.getElementById("recuperar_email").value;
-
+    var data = "";
     if ((_mail) && (_mail != "")) {
         try {
             if (document.getElementById("recuperar_email").value != "") {
@@ -19,17 +19,18 @@ function enviarMail() {
                     document.getElementById("recuperar_email").style.borderColor = "red";
                 } else {
                     document.getElementById("recuperar_email").style.borderColor = "";
-                    var d = registrar();
+                    var d = registrarMail();
                     document.getElementById("recuperar_email").value = "";
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 }
             }
-        } catch (f) { mens("Error validacion mail", "mens"); return;}
+        } catch (f) { alert(f); mens("Error validacion mail", "mens"); return;}
     }
 }
 
-function registrar() {
+function registrarMail() {
     try {
+        var data = "";
         var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 6,
@@ -70,10 +71,15 @@ function registrar() {
                         mens("Su contraseña fue enviada al su correo", "success");
                     } catch (s) { mens("Error servicio login", "mens");return;  } //alert (s); 
                 }
-                else { mens(data, "mens"); return;}
+                else {
+                    
+                    if(data.substring(0,1) == "0") {data = data.substring(2, data.length);}
+                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                         "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                }
             },
             error: function (err) { mens("Error en servicio cliente", "mens"); return; } //alert(err);
         });
-    } catch (e) { mens("Error en el servicio clientess", "mens"); return; } //aler(e);
+    } catch (e) { mens("Error en el servicio clientes", "mens"); return; } //aler(e);
     return data;
 }

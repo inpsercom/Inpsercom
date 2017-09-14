@@ -38,6 +38,7 @@ app.mntControlVehiculo = kendo.observable({
                     location: parseFloat(cords[n].Latitud) + "," + parseFloat(cords[n].Longitud),
                     stopover: true
                 })*/
+            alert(factor + "   " + len);
             for (var n = factor; n < len; n++ ) {
                latlng.push({
                     location: parseFloat(cords[n].Latitud) + "," + parseFloat(cords[n].Longitud),
@@ -45,7 +46,7 @@ app.mntControlVehiculo = kendo.observable({
                 })
                 n = n + factor;
             }
-            
+            alert(latlng.length);
             calculateAndDisplayRoute2(directionsService, directionsDisplay, latuno, lnguno, latlng, latfin, lngfin);
         } catch (f) {
             mens("Error en servicio Sherloc", "mens");return;
@@ -87,6 +88,9 @@ function traeCordenadas() {
 
 function calculateAndDisplayRoute2(directionsService, directionsDisplay, lat1, long1, puntosInt, lat2, long2) {
     try {
+        alert(inspeccionar(puntosInt));
+        var ppp = puntosInt.length;
+        alert(ppp);
         var selectedMode = "DRIVING";
         var request = {
             origin: { lat: lat1, lng: long1 },
@@ -98,7 +102,9 @@ function calculateAndDisplayRoute2(directionsService, directionsDisplay, lat1, l
             if (status == google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(result);
             } else {
-                mens('Se ha producido un error en la solicitud de' + status,"mens");return;
+                mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "ERROR", "<span align='justify'>" + 'Se ha producido un error en la solicitud de: ' + status + "</b></span>", true, true);
+                return;
             }
         });
     } catch (k) {
