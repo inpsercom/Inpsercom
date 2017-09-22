@@ -3,7 +3,7 @@ app.estadoMante = kendo.observable({
         //$("#NumeroChasisEM").text(datos_Cliente.chasis);
         // RRP: alias - estadomantenimiento
         $("#NumeroChasisEM").text(datos_Cliente.nombre_alias);
-        
+
         document.getElementById("verde").style.display = "none";
         document.getElementById("rojo").style.display = "none";
         borrar();
@@ -16,7 +16,7 @@ app.estadoMante = kendo.observable({
 });
 app.localization.registerView('estadoMante');
 
-function estadoMA(){
+function estadoMA() {
     kendo.mobile.application.navigate("components/ReactivacionGarantia/view.html");
 }
 function cargar() {
@@ -33,7 +33,7 @@ function cargar() {
                 try {
                     inforEM = (JSON.parse(data.MantenimientoGetResult)).KilometrajeOT;
                 } catch (e) {
-                    mens("No existe datos para esta cosnulta", "mens");
+                    mens("No existe datos para esta consulta", "mens");
                     return;
                 }
             },
@@ -43,6 +43,7 @@ function cargar() {
             }
         });
         var bandera = "verde";
+        var ultimo = "0";
         for (var i = 0; i < 30; i++) {
             if (inforEM[i].validacion == true) {
                 document.getElementById("cl" + inforEM[i].codigo).style.background = "green";
@@ -54,8 +55,7 @@ function cargar() {
                 bandera = "rojo";
             }
             if (inforEM[i].ultimo == true) {
-                //alert(inforEM[i].fecha_kilometraje);
-                //alert(inforEM[i].kilometraje);
+                ultimo = "1";
                 document.getElementById(bandera).style.display = "block";
                 document.getElementById("fec").value = inforEM[i].fecha_kilometraje;
                 document.getElementById("KM").value = inforEM[i].kilometraje;
@@ -63,8 +63,19 @@ function cargar() {
                 i = 30;
             }
         }
+        if (ultimo == "0") {
+            for (var j = 0; j < inforEM.length; j++) {
+                if (inforEM[i].ultimo == true) {
+                    document.getElementById(bandera).style.display = "block";
+                    document.getElementById("fec").value = inforEM[i].fecha_kilometraje;
+                    document.getElementById("KM").value = inforEM[i].kilometraje;
+                    document.getElementById("KM").style.fontZise = "100px";
+                    j = inforEM.length;
+                }
+            }
+        }
     } catch (e) {
-        mens("Error de conexión a la base","mens");
+        mens("Error de conexion a la base", "mens");
         return;
     }
 }
@@ -190,5 +201,5 @@ function borrar() {
 
     document.getElementById("cl150000").style.background = "";
     document.getElementById("cx150000v").style.display = 'none';
-    document.getElementById("cx150000x").style.display = 'none';    
+    document.getElementById("cx150000x").style.display = 'none';
 }
