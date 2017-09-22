@@ -10,7 +10,7 @@ app.miKia2 = kendo.observable({
             if (NoOrden == "") {
                 kendo.ui.progress($("#btnHabilita"), true);
             }
-        } catch (f) { mens("Error número de orden","mens"); return;}
+        } catch (f) { mens("Error numero de orden","mens"); return;}
     },
     afterShow: function () { },
     inicializa: function () {
@@ -80,12 +80,12 @@ function habilitarOpciones() {
                                                 mens("Orden Guardada", "success");
                                             } catch (s) { mens("Error consulta sherloc","mens");return; }
                                         } else {mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                                            "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                                            "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
                                         }//kendo.ui.progress($("#miKia2Screen"), false);  }
                                     } catch (e) { mens("Error servicio sherloc","mens");return; }
                                 },
                                 error: function (err) {
-                                    mens("Error conexión Sherloc","mens");return;
+                                    mens("Error conexion Sherloc","mens");return;
                                 }
                             });
                         } else {
@@ -129,7 +129,7 @@ function registra(chasisemail) {
                             return data;
                         } catch (s) { mens("Error al grabar orden","mens");return; }
                 } else { mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                     "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
                 }
             },
             error: function (err) {

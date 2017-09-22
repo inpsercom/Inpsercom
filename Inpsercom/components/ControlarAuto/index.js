@@ -13,7 +13,7 @@ app.mntControlVehiculo = kendo.observable({
             document.getElementById("mapA").style.height = height1 + "px";
             var cords = traeCordenadas();
             var len = cords.length - 1;
-            if (!cords || len == -1) { mens("No existe datos"); return; }
+            if (!cords || len == -1) { mens("No existe datos","mens"); return; }
             var latuno = parseFloat(cords[0].Latitud);
             var lnguno = parseFloat(cords[0].Longitud);
             var latfin = parseFloat(cords[len].Latitud);
@@ -38,7 +38,7 @@ app.mntControlVehiculo = kendo.observable({
                     location: parseFloat(cords[n].Latitud) + "," + parseFloat(cords[n].Longitud),
                     stopover: true
                 })*/
-            alert(factor + "   " + len);
+            //alert(factor + "   " + len);
             for (var n = factor; n < len; n++ ) {
                latlng.push({
                     location: parseFloat(cords[n].Latitud) + "," + parseFloat(cords[n].Longitud),
@@ -46,7 +46,7 @@ app.mntControlVehiculo = kendo.observable({
                 })
                 n = n + factor;
             }
-            alert(latlng.length);
+            //alert(latlng.length);
             calculateAndDisplayRoute2(directionsService, directionsDisplay, latuno, lnguno, latlng, latfin, lngfin);
         } catch (f) {
             mens("Error en servicio Sherloc", "mens");return;
@@ -88,9 +88,9 @@ function traeCordenadas() {
 
 function calculateAndDisplayRoute2(directionsService, directionsDisplay, lat1, long1, puntosInt, lat2, long2) {
     try {
-        alert(inspeccionar(puntosInt));
+        //alert(inspeccionar(puntosInt));
         var ppp = puntosInt.length;
-        alert(ppp);
+        //alert(ppp);
         var selectedMode = "DRIVING";
         var request = {
             origin: { lat: lat1, lng: long1 },
@@ -108,6 +108,6 @@ function calculateAndDisplayRoute2(directionsService, directionsDisplay, lat1, l
             }
         });
     } catch (k) {
-        mens("Error al depliegue del mapa","mens" );return;
+        mens("Error al cargar el mapa","mens" );return;
     }
 }

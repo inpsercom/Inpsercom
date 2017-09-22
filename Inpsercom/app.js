@@ -337,7 +337,7 @@ function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar, Cerrar1) {
         Mensaje = Logo + Titulo + Mensaje;
 
         // Si envia "1" presenta el boton CERRAR
-        var botCerrar = "<table width='100%' border='0'><tr><td align='center'><input name='cmdCerrar' type='button' class='k-button fondoRojoLogin' value='CERRAR' id='cmdCerrar'/></td></tr></table>";
+        var botCerrar = "<table width='100%' border='0'><tr><td align='center'><input name='cmdCerrar' type='button' class='k-button fondoRojoLogin' value='Cerrar' id='cmdCerrar'/></td></tr></table>";
         //var botCerrar1 = "<table width='100%' border='0'><tr><td align='center'><input name='cmdCerrar1' type='button' class='k-button fondoRojoLogin' value='CERRAR1' id='cmdCerrar1'/></td></tr></table>";
         //if (Cerrar1==true){return true;}
         if (Tiempo == 0 || Cerrar == true)

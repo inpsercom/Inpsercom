@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:versionCode= "5"
+<manifest android:versionCode= "10"
           android:versionName="AeKia"
           package="$AppIdentifier$"
           android:windowSoftInputMode="adjustPan"
@@ -28,5 +28,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21"/>
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="22"/>
 </manifest>

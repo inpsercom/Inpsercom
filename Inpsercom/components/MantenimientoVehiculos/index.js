@@ -10,7 +10,7 @@ app.mntVehiculos = kendo.observable({
             // RRP: alias
             kendo.ui.progress($("#miKiaScreen"), true);
             $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
-
+            borraVH();
             var email = datos_Cliente.mail;
             if ((email != "") && (email)) {
                 actualizaAsignar();
@@ -66,7 +66,7 @@ app.mntVehiculos = kendo.observable({
                 }]
             });*/
             ind = 1;
-        } catch (e) { mens("actualizar vehículo", "mens"); return; }
+        } catch (e) { mens("actualizar vehiculo", "mens"); return; }
     }
 });
 app.localization.registerView('mntVehiculos');
@@ -90,7 +90,7 @@ function grid_Change(e) {
         $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
         //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
         //kendo.mobile.application.navigate("components/miKia/view.html");
-    } catch (f) { mens("Error servicio actualizar vehículo", "mens"); return; }
+    } catch (f) { mens("Error servicio actualizar vehiculo", "mens"); return; }
 }
 
 function actualizaAsignar() {
@@ -116,20 +116,20 @@ function actualizaAsignar() {
                     grid1.setDataSource(dataSource);
                     
                 } catch (e) {
-                    mens("Error servicio actualizar vehículo", "mens"); return;
+                    mens("Error servicio actualizar vehiculo", "mens"); return;
                 }
             },
             error: function (err) {
-                mens("Error conexión al servicio vehículo", "mens"); return; //alert(JSON.stringify(err));
+                mens("Error conexion al servicio vehiculo", "mens"); return; //alert(JSON.stringify(err));
             }
         });
     } catch (d) {
-        mens("Error servicio actualizar vehículo", "mens"); return;
+        mens("Error servicio actualizar vehiculo", "mens"); return;
     }
 }
-function grabar() {
+function grabarVH() {
     try {
-        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("Vehículo esta vacio", "mens"); return; }
+        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("Vehiculo esta vacio", "mens"); return; }
         var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 5,
@@ -154,22 +154,27 @@ function grabar() {
                 if (data == "Success") {
                     try {
                         mens("Registro Exitoso", "mens");
-                        document.getElementById("VIN").value = "";
-                        document.getElementById("Alias").value = "";
+                        borraVH();
                         actualizaAsignar();
                         validavehiculo(params.mail);
-                    } catch (s) { mens("Error servicio actualizar vehículo", "mens"); return; }
+                    } catch (s) { mens("Error servicio actualizar vehiculo", "mens"); return; }
                 } else {
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                     "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true);
                 }
             },
             error: function (err) {
-                mens("Error conexión servicio vehículo", "mens"); return;
+                mens("Error conexion servicio vehiculo", "mens"); return;
             }
         });
-    } catch (e) { mens("Error servicio grabar vehículo", "mens"); return; }
+    } catch (e) { mens("Error servicio grabar vehiculo", "mens"); return; }
 }
+
+function borraVH() {
+    document.getElementById("VIN").value = "";
+    document.getElementById("Alias").value = "";
+}
+
 var grid;
 function validavehiculo(email) {
     try {
@@ -186,15 +191,15 @@ function validavehiculo(email) {
                             data: resultado
                         });
                         grid.setDataSource(dataSource);
-                    } catch (e) { mens("Error servicio vehículo", "mens"); return; }
+                    } catch (e) { mens("Error servicio vehiculo", "mens"); return; }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio vehículo", "mens"); return;
+                    mens("Error conexion servicio vehiculo", "mens"); return;
                 }
             });
             return resultado;
         }
-    } catch (e) { mens("Error servicio vehículo", "mens"); return; }
+    } catch (e) { mens("Error servicio vehiculo", "mens"); return; }
 }
 function grid_remove(e) {
     try {
@@ -213,7 +218,7 @@ function grid_remove(e) {
                 localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
             }
         }*/
-    } catch (s) { mens("Error al eliminar vehículo", "mens"); return; }
+    } catch (s) { mens("Error al eliminar vehiculo", "mens"); return; }
 }
 
 function actualiza(chasisemail) {
@@ -229,12 +234,12 @@ function actualiza(chasisemail) {
                     actualizaAsignar();
                 } else {
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                     "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true);
                 }
             },
-            error: function (err) { mens("Error servicio actualizar vehículo", "mens"); return; }
+            error: function (err) { mens("Error servicio actualizar vehiculo", "mens"); return; }
         });
-    } catch (e) { mens("Error servicio eliminar vehículo", "mens"); return; }
+    } catch (e) { mens("Error servicio eliminar vehiculo", "mens"); return; }
 }
 function onSI(e) {
     try {
@@ -243,7 +248,11 @@ function onSI(e) {
         actualiza("4;" + dataItem.mail + ";" + dataItem.chasis);
         if (dataItem.chasis == datos_Cliente.chasis) {
             datos_Cliente.chasis = "";
-            datos_Cliente.alias = "";
+            datos_Cliente.alias = "";       
+            if (datos_Cliente.nombre_alias == document.getElementById("NumeroChasisRV").innerText) {
+                datos_Cliente.nombre_alias = "";
+                $("#NumeroChasisRV").text("");
+            }
             localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
         }
     }catch(e1){ mens("error al borrar registro","mens");}

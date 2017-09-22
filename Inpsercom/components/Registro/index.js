@@ -4,6 +4,8 @@ app.miKia6 = kendo.observable({
     onShow: function () {
         try {
             var fecha = new Date();
+            //borraCamposRE();
+            //document.getElementById("identificacion").value = "";
             var year = fecha.getFullYear() - 18;
             var mes = fecha.getMonth();
             var dia = fecha.getDate();
@@ -86,7 +88,7 @@ function personaGetReg() {
                     }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio clientes", "mens"); return;
+                    mens("Error conexion servicio clientes", "mens"); return;
                 }
             });
         }
@@ -104,6 +106,7 @@ function registrarRN() {
         var email = document.getElementById("email").value;
         var chasis = document.getElementById("Chasis").value;
         var alias = document.getElementById("Alias").value;
+        var alias1 = document.getElementById("Alias").value;
         var FechaNacimiento = document.getElementById("FechaNacimiento").value;
         var celular = document.getElementById("celular").value;
         var password = document.getElementById("password").value;
@@ -126,7 +129,6 @@ function registrarRN() {
             //"alta_movil_imei": Device_identifier
             //output: "json"
         };
-
         var indicador = 0;
         $.each(params, function (k, v) {
             //display the key and value pair
@@ -146,7 +148,7 @@ function registrarRN() {
         if (indicador == 1) {
             mens("Verificar datos en blanco", "mens"); return;
         }
-        if(document.getElementById("cbkterminos").checked == false){mens("Debe aceptar términos y condiciones","mens");return;}
+        if(document.getElementById("cbkterminos").checked == false){mens("Debe aceptar terminos y condiciones","mens");return;}
         $.ajax({
             url: Url,
             type: "POST",
@@ -158,7 +160,7 @@ function registrarRN() {
                 'Content-Type': 'application/json;charset=UTF-8'
             },
             success: function (data) {
-                if (data == "Success") {
+                if (data == "1,Succes") {
                     try {
                         mens("Registro Exitoso", "success");
                         sessionStorage.setItem("Registro", params);
@@ -205,14 +207,15 @@ function registrarRN() {
                             datos_Vehiculo = Vehiculo;
                         }
                         //kendo.mobile.application.navigate("components/miKia/view.html");
+                        borraCamposRE();
                         kendo.mobile.application.navigate("components/logIn/view.html");
                         return;
                     } catch (s) { mens("Error servicio cliente", "mens"); return; } //alert (s); 
                 }
                 else {
-                    if (data.substring(0, 1) == "0") { data = data.substring(2, data.length);}
+                    if (data.substring(0, 1) == "0" || data.substring(0, 1) == "1") { data = data.substring(2, data.length); }
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                    "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                    "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
                 }
             },
             error: function (err) { mens("Error en servicio clientes", "mens"); return; } //alert(err);
@@ -232,7 +235,7 @@ function ValidaMailRegistro() {
                 document.getElementById("email").style.borderColor = "";
             }
         }
-    } catch (f) { mens("Error validación mail", "mens"); return; }
+    } catch (f) { mens("Error validacion mail", "mens"); return; }
 }
 function ValidaCelular() {
     try {
@@ -246,7 +249,7 @@ function ValidaCelular() {
             }
         }
     }
-    catch (f) { mens("Error validación celular", "mens"); return; }
+    catch (f) { mens("Error validacion celular", "mens"); return; }
 }
 function ValidaPassword() {
     var pass = document.getElementById("password").value;
@@ -265,6 +268,11 @@ function borraCamposRE() {
     document.getElementById("Nombres").value = "";
     document.getElementById("Apellidos").value = "";
     document.getElementById("email").value = "";
+    document.getElementById("Chasis").value = "";
+    document.getElementById("Alias").value = "";
     document.getElementById("FechaNacimiento").value = "";
     document.getElementById("celular").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("repassword").value = "";
+    document.getElementById("terminos").checked = false;
 }

@@ -24,7 +24,7 @@ function enviarMail() {
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 }
             }
-        } catch (f) { alert(f); mens("Error validacion mail", "mens"); return;}
+        } catch (f) { mens("Error validacion mail", "mens"); return;}
     }
 }
 
@@ -68,14 +68,14 @@ function registrarMail() {
             success: function (data) {
                 if (data == "Success") {
                     try {
-                        mens("Su contraseña fue enviada al su correo", "success");
+                        mens("Su clave fue enviada a su correo", "success");
                     } catch (s) { mens("Error servicio login", "mens");return;  } //alert (s); 
                 }
                 else {
                     
                     if(data.substring(0,1) == "0") {data = data.substring(2, data.length);}
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                         "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                         "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
                 }
             },
             error: function (err) { mens("Error en servicio cliente", "mens"); return; } //alert(err);

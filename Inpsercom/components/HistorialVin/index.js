@@ -74,7 +74,7 @@ function ConsultarHV() {
                         }
                     }
                 } catch (e) {
-                    mens("No existe datos para esta cosnulta", "mens");
+                    mens("No existe datos para esta consulta", "mens");
                     return;
                 }
             },
@@ -153,7 +153,7 @@ function ConsultarHV() {
         }
     } catch (e) {
         //alert(e);
-        mens("Error de conexión a la base", "mens"); return;
+        mens("Error de conexion a la base", "mens"); return;
     }
 }
 function observacion() {

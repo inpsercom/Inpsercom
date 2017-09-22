@@ -5,7 +5,7 @@ app.miKia3 = kendo.observable({
         try {
             $("#NoOrdenUB").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             var cords = traeCordenadasUbica();
-            if (cords.Latitud == null) { mens("No existe datos", ""); return; }
+            if (cords.Latitud == null) { mens("No existe datos", "mens"); return; }
             var PosVehi = { lat: parseFloat(cords.Latitud), lng: parseFloat(cords.Longitud) };
             //Calculo el % a restar al alto total de la pantalla para que el mapa se ajuste correctamente al 100%
             var height = (screen.height * 27.46875) / 100;

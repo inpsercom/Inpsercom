@@ -49,19 +49,10 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         if (status == 'OK') {
             directionsDisplay.setDirections(response);
         } else {
-            mens('Directions request failed due to ' + status,"mens");return;
+            mens('Respuesta a direcciones fallo ' + status,"mens");return;
         }
     });
 }
-
-
-
-
-
-
-
-
-
 
 var infoWindow;
 var mapAE;

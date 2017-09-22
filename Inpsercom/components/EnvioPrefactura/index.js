@@ -83,14 +83,14 @@ function EnvioMailPRE(documento) {
                     }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio Vehículo", "mens");
+                    mens("Error conexion servicio Vehiculo", "mens");
                     return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexión servicio Vehículo", "mens");return;
+        mens("Error conexion servicio Vehiculo", "mens");return;
     }
 }
 
@@ -133,16 +133,16 @@ function registrar() {
             success: function (data) {
                 if (data == "Success") {
                     try {
-                        mens("Su contraseña fue enviada al su correo", "mens");
+                        mens("Su clave fue enviada al su correo", "mens");
                     } catch (s) { mens("Error servicio login", "mens"); return; }  
                 }
                 else {
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                     "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true);
                 }
             },
             error: function (err) { mens("Error en servicio cliente", "mens");  return;} 
         });
-    } catch (e) { mens("Error en el servicio clientess", "mens"); return; } 
+    } catch (e) { mens("Error en el servicio clientes", "mens"); return; } 
     return data;
 }

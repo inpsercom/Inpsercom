@@ -68,14 +68,14 @@ function AceptaMailPRE(documento) {
                     }
                 },
                 error: function (err) {
-                    mens("Error conexión servicio Vehículo", "mens"); return;
+                    mens("Error conexion servicio Vehiculo", "mens"); return;
 
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexión servicio Vehículo", "mens"); return;
+        mens("Error conexion servicio Vehiculo", "mens"); return;
     }
 }
 
@@ -104,5 +104,5 @@ function TraerDireccion() {
             }
         });
         return infor[0].path_prefactura;
-    } catch (e) { mens("Error en conexión con servicio", "mens"); return; }
+    } catch (e) { mens("Error en conexion con servicio", "mens"); return; }
 }

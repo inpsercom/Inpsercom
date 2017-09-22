@@ -2,11 +2,11 @@
   "ProjectName": "Inpsercom",
   "ProjectGuid": "b0ff3202-5463-437b-b3df-a39a2c066b89",
   "projectVersion": 1,
-  "AppIdentifier": "com.Aekia.com",
+  "AppIdentifier": "com.Aekia",
   "DisplayName": "Aekia",
   "Author": "Aekia",
   "Description": "Aekia",
-  "BundleVersion": "2.1",
+  "BundleVersion": "2.5",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
     "1",

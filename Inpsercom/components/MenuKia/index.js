@@ -10,7 +10,7 @@ app.menuKia = kendo.observable({
 
             // alert(inspeccionar(datos_Cliente)); //RRP
 
-        } catch (e) {mens("variable session","mens"); }
+        } catch (e) {mens("variable sesion no existe","mens"); }
     },
     afterShow: function () { }
 });
@@ -33,8 +33,6 @@ function ConfigurarSherlock() {
             }
         });
     } catch (e) { mens("Error servicio Sherloc", "mens"); return; }
-
-   // alert(inspeccionar(data1));
 
     if (data1.orden == 0) {
         datos_Vehiculo.terminos = "no";

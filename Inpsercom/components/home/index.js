@@ -11,7 +11,7 @@ app.home = kendo.observable({
                     urlService = urlInterno;
                 } else { urlService = urlExterno; }
                 localStorage.setItem("urlService", urlService);
-            } catch (e) { mens("No existe conexión con el servidor ","mens"); return;}
+            } catch (e) { mens("No existe conexion con el servidor ","mens"); return;}
 
         } catch (e) { mens("Error lectura ip", "mens"); return;}
         try {
@@ -20,12 +20,13 @@ app.home = kendo.observable({
                 datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
                 //kendo.mobile.application.navigate("components/MenuKia/view.html");
             }
-        } catch (f) { mens("Error en conexión a la base", "mens"); return;}
+        } catch (f) { mens("Error en conexion a la base", "mens"); return;}
     },
-    init: function () {if (localStorage.getItem("Inp_DatosUsuario")) {
-                datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
-                datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
-                kendo.mobile.application.navigate("components/MenuKia/view.html");
+    init: function () {
+        if (localStorage.getItem("Inp_DatosUsuario")) {
+            datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
+            datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
+            kendo.mobile.application.navigate("components/MenuKia/view.html");
             } },
     beforeShow: function () { }
 });
@@ -39,7 +40,7 @@ function RegistroVehiculo(){
 function regresaHME(){
     try{
     kendo.mobile.application.navigate("components/MenuKia/view.html");
-    }catch(e){mens("error al cargar menu","mens");}
+    } catch (e) { mens("error al cargar menu", "mens"); return;}
 }
 
 //190.108.66.10

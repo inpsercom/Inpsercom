@@ -50,7 +50,7 @@ app.detalleTR = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteApaEncendido/view.html");
         } catch (s) {
-            mens("Error selección de registroAE","mens");return;
+            mens("Error selección de registro T. R.","mens");return;
         }
     }
 });

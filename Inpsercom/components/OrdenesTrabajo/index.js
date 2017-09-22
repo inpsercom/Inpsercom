@@ -112,7 +112,7 @@ app.mntOTs = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/DetalleOT/view.html");
         } catch (s) {
-            mens("Error selección de registro", "mens"); return;
+            mens("Error seleccion de registro", "mens"); return;
         }
     }
 });
@@ -146,7 +146,7 @@ function consultar() {
             }
         });
     } catch (e) {
-        mens("Error de conexión a base", "mens"); return;
+        mens("Error de conexion a base", "mens"); return;
     }
     return infor[0].fecha_retail;
 }

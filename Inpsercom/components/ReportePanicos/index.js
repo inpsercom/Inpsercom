@@ -46,7 +46,7 @@ app.reportePanicos = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReportePanico/view.html");
         } catch (s) {
-            mens("Error selección de registroPN","mens");
+            mens("Error seleccion de registro P.","mens");
             return;
         }
     }

@@ -18,7 +18,7 @@
  under the License.
 -->
 <widget xmlns = "http://www.w3.org/ns/widgets"
-        version = "2.1.1">
+        version = "2.1.2">
 
     <content src="index.html" />
 
