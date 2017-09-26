@@ -1,6 +1,14 @@
 //'use strict';
 app.logIn = kendo.observable({
-    onShow: function () {  document.getElementById("passwordLogin").value = "";},
+    onShow: function () {
+        //document.getElementById("passwordLogin").value = "";
+        datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
+        //alert(inspeccionar(datos_Cliente));
+        //document.getElementById("emailLogin").value = datos_Cliente.mail;
+        //document.getElementById("passwordLogin").value = datos_Cliente.pas;
+        //document.getElementById("codigoLogin").value = "";
+        //document.getElementById("codigoLogin").focus();
+    },
     afterShow: function () { }
 });
 app.localization.registerView('logIn');
@@ -38,7 +46,8 @@ function signin() {
             //numeroorden: "72363",
             secuencia_mv01: usu.Cliente[0].secuencia_mv01,
             mail: usu.Cliente[0].mail,
-            nombre_alias: usu.Cliente[0].nombre_alias
+            nombre_alias: usu.Cliente[0].nombre_alias,
+            pas: usu.Cliente[0].password
         };
         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
         datos_Cliente = Usuario;

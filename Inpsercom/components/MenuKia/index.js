@@ -6,11 +6,8 @@ app.menuKia = kendo.observable({
             // RRP: alias
             $("#NumeroChasisMenu").text(datos_Cliente.nombre_alias);
             var Registro = sessionStorage.getItem("Registro");
-
-
-            // alert(inspeccionar(datos_Cliente)); //RRP
-
-        } catch (e) {mens("variable sesion no existe","mens"); }
+            
+        } catch (e) {mens("variable sesión no existe","mens"); }
     },
     afterShow: function () { }
 });

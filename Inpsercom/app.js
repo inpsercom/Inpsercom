@@ -230,6 +230,7 @@ function beforeDrawerShow(e) {
 }
 
 function mens(Mensaje, Tipo) {
+
     var valorIzq = (Mensaje.length) * 4;
     notificationWidget.setOptions({
         position: {
@@ -243,6 +244,7 @@ function mens(Mensaje, Tipo) {
             bold: true
         }
     });
+    
     notificationWidget.showText(Mensaje, Tipo);
 }
 

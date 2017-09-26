@@ -37,15 +37,19 @@ app.mntRegistroVin = kendo.observable({
 });
 app.localization.registerView('mntRegistroVin');
 function prefacEn() {
-    //var diips = datos_Cliente.path.toString();
-    //for (var i = 0; i < diips.length; i++) {
-    //    diips = diips.replace(':', '!');
-    //    diips = diips.replace('/', '-');
-    //}
-    //documento = "7;" + datos_Cliente.mail + ";;" + diips + ";" + _mail;
-    //var envio = AceptaMailPRE(documento);
-    //alert(envio);  
-    //if (envio.substring(0, 1) == "0") { mens(envio.substring(2, envio.length - 2)); return; }
+    var diips = datos_Cliente.path.toString();
+    for (var i = 0; i < diips.length; i++) {
+        diips = diips.replace(':', '!');
+        diips = diips.replace('/', '-');
+    }
+    documento = "9;" + datos_Cliente.mail + ";;" + diips + ";" + "vinicio.ortega@inpsercom.com";
+
+    var envio = AceptaMailPRE(documento);
+    if (envio.substring(0, 1) == "0") {
+        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+         "ERROR", "<span align='justify'>" + envio.substring(2, envio.length - 2) + "</b></span>", true, true);
+        return;
+    }
     mens("La Prefactura fue aceptada con exito", "mens"); return;
 }
 function AceptaMailPRE(documento) {

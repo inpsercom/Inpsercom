@@ -165,7 +165,7 @@ function registrarRN() {
                         mens("Registro Exitoso", "success");
                         sessionStorage.setItem("Registro", params);
                         var em = params.mail;
-                        var usu = validausuario(em); //resultado.Cliente[0].persona_nombre
+                        var usu = validausuarioREG(em); //resultado.Cliente[0].persona_nombre
                         var tipo = "";
                         if (usu.Cliente[0].identificacion_cliente.length == 10) { tipo = "C"; }
                         else {
@@ -181,7 +181,8 @@ function registrarRN() {
                             telefono_celular: usu.Cliente[0].telefono_celular, //"0995545554",
                             //numeroorden: "72363",
                             secuencia_mv01: usu.Cliente[0].secuencia_mv01,
-                            mail: usu.Cliente[0].mail
+                            mail: usu.Cliente[0].mail,
+                            pass: usu.Cliente[0].password
                         };
                         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
                         datos_Cliente = Usuario;
@@ -275,4 +276,34 @@ function borraCamposRE() {
     document.getElementById("password").value = "";
     document.getElementById("repassword").value = "";
     document.getElementById("terminos").checked = false;
+}
+
+function validausuarioREG(email) {
+    try {
+        if ((email != "") && (email)) {
+            var resultado = "";
+            var Url = urlService + "Usuario/" + email;
+            $.ajax({
+                url: Url,
+                type: "GET",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    try {
+                        resultado = JSON.parse(data.UsuarioGetResult);
+                    } catch (e) {
+                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                      "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                        return;
+                    }
+                },
+                error: function (err) {
+                    mens("Error conexion servicio Usuario","mens");return;
+                }
+            });
+            return resultado;
+        }
+    } catch (f) {
+        mens("Error conexion servicio Usuario","mens");return;
+    }
 }

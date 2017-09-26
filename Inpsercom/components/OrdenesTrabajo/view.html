@@ -11,50 +11,42 @@
     <div data-role="content">
         <div class="container">
             <form class="form-horizontal" id="ots">
-                <table style="text-align: center;">
-                    <tr>
-                        <td>
-                            <div class="form-group"><b>Fecha Inicio</b>
-                                <div class="col-xs-12"><input id="FechaInicio" class="Fields" style="width: 75%;" align="center" placeholder="Fecha Inicio" onkeyup="javascript:this.value='';"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group"><b>Fecha Fin</b>
-                                <div class="col-xs-12"><input id="FechaFin" class="Fields" style="width: 75%;" align="center" placeholder="Fecha Fin" onkeyup="javascript:this.value='';"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <!--<td colspan=1>
-                            <div class="form-group"> <input type="checkbox" id="cboxOT" name="cboxOT" value="first_checkbox"></div>
-                        </td>-->
-                        <td colspan=2>
-                            <div class="form-group"> <button id="btnConsultarOT" class="btn btn-danger fondoRojo" data-role="button" onclick="ConsultarOT()">Consultar</button>                                </div>
-                        </td>
-                    </tr>
-                </table>
+            <table style="text-align: center;">
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <b>Fecha Inicio</b>
+                            <div class="col-xs-12"><input id="FechaInicio" class="Fields" style="width: 75%;" align="center" placeholder="Fecha Inicio" onkeyup="javascript:this.value='';"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <b>Fecha Fin</b>
+                            <div class="col-xs-12"><input id="FechaFin" class="Fields" style="width: 75%;" align="center" placeholder="Fecha Fin" onkeyup="javascript:this.value='';"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <!--<td colspan=1>
+                    <div class="form-group"> <input type="checkbox" id="cboxOT" name="cboxOT" value="first_checkbox"></div>
+                </td>-->
+                    <td colspan=2>
+                        <div class="form-group"> <button id="btnConsultarOT" class="btn btn-danger fondoRojo" data-role="button" onclick="ConsultarOT()">Consultar</button>                                </div>
+                    </td>
+                </tr>
+            </table>
+            </form>
+
+            <div id="listView"></div>
         </div>
-        </form>
-        <div id="listView"></div>
     </div>
 </div>
 <style>
 .btnRojo {
     background: url("resources/observa3.png");
     background-repeat: no-repeat;
-    	background-color: white; 
-	border-radius: 5px;
-	border: none;
-    color: #FFFFFF !important;
-	cursor: pointer;
-	font-size: 7px;
-	padding: 7px;
-	text-align: center;
-	text-transform: uppercase;
-	width: auto;
-  position: relative; 
- box-sizing: border-box; 
-  
+     
+
 }
 .boton_personalizado{
     text-decoration: none;

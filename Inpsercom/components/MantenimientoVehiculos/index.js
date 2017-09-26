@@ -138,7 +138,7 @@ function grabarVH() {
             "persona_apellido": "",
             "mail": datos_Cliente.mail,
             "chasis": document.getElementById("VIN").value,
-            "nombre_alias": document.getElementById("Alias").value,
+            "nombre_alias": document.getElementById("AliasAD").value,
             "fecha_nacimiento": "",
             "telefono_celular": "",
             "numeroorden": "",
@@ -172,7 +172,7 @@ function grabarVH() {
 
 function borraVH() {
     document.getElementById("VIN").value = "";
-    document.getElementById("Alias").value = "";
+    document.getElementById("AliasAD").value = "";
 }
 
 var grid;
