@@ -88,7 +88,7 @@ function personaGetReg() {
                     }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio clientes", "mens"); return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio clientes", "mens"); return;
                 }
             });
         }
@@ -160,7 +160,11 @@ function registrarRN() {
                 'Content-Type': 'application/json;charset=UTF-8'
             },
             success: function (data) {
-                if (data == "1,Succes") {
+                if (data.substring(0, 1) == "0") {
+                    if (data.substring(0, 1) == "0" || data.substring(0, 1) == "1") { data = data.substring(2, data.length); }
+                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                    "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                }else {
                     try {
                         mens("Registro Exitoso", "success");
                         sessionStorage.setItem("Registro", params);
@@ -182,7 +186,7 @@ function registrarRN() {
                             //numeroorden: "72363",
                             secuencia_mv01: usu.Cliente[0].secuencia_mv01,
                             mail: usu.Cliente[0].mail,
-                            pass: usu.Cliente[0].password
+                            pas: usu.Cliente[0].password
                         };
                         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
                         datos_Cliente = Usuario;
@@ -213,11 +217,6 @@ function registrarRN() {
                         return;
                     } catch (s) { mens("Error servicio cliente", "mens"); return; } //alert (s); 
                 }
-                else {
-                    if (data.substring(0, 1) == "0" || data.substring(0, 1) == "1") { data = data.substring(2, data.length); }
-                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                    "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
-                }
             },
             error: function (err) { mens("Error en servicio clientes", "mens"); return; } //alert(err);
         });
@@ -236,7 +235,7 @@ function ValidaMailRegistro() {
                 document.getElementById("email").style.borderColor = "";
             }
         }
-    } catch (f) { mens("Error validacion mail", "mens"); return; }
+    } catch (f) { mens("Error validaci" + String.fromCharCode(243) + "n mail", "mens"); return; }
 }
 function ValidaCelular() {
     try {
@@ -250,7 +249,7 @@ function ValidaCelular() {
             }
         }
     }
-    catch (f) { mens("Error validacion celular", "mens"); return; }
+    catch (f) { mens("Error validaci" + String.fromCharCode(243) + "n celular", "mens"); return; }
 }
 function ValidaPassword() {
     var pass = document.getElementById("password").value;
@@ -298,12 +297,12 @@ function validausuarioREG(email) {
                     }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio Usuario","mens");return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexion servicio Usuario","mens");return;
+        mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); return;
     }
 }
