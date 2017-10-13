@@ -112,7 +112,7 @@ app.mntOTs = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/DetalleOT/view.html");
         } catch (s) {
-            mens("Error seleccion de registro", "mens"); return;
+            mens("Error selecci" + String.fromCharCode(243) + "n de registro", "mens"); return;
         }
     }
 });
@@ -146,7 +146,7 @@ function consultar() {
             }
         });
     } catch (e) {
-        mens("Error de conexion a base", "mens"); return;
+        mens("Error de conexi" + String.fromCharCode(243) + "n a base", "mens"); return;
     }
     return infor[0].fecha_retail;
 }
@@ -163,7 +163,7 @@ function ConsultarOT() {
     } catch (f) { mens("Error en fechas", "mens"); return; }
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
-        var Url = urlService + "Ordenes/" + "1,2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value;
+        var Url = urlService + "Ordenes/" + "1,2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value + ",500";
         var infor;
         $.ajax({
             url: Url,
