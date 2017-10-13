@@ -66,7 +66,7 @@ app.mntVehiculos = kendo.observable({
                 }]
             });*/
             ind = 1;
-        } catch (e) { mens("actualizar vehiculo", "mens"); return; }
+        } catch (e) { mens("actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
     }
 });
 app.localization.registerView('mntVehiculos');
@@ -90,7 +90,7 @@ function grid_Change(e) {
         $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
         //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
         //kendo.mobile.application.navigate("components/miKia/view.html");
-    } catch (f) { mens("Error servicio actualizar vehiculo", "mens"); return; }
+    } catch (f) { mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
 }
 
 function actualizaAsignar() {
@@ -116,20 +116,20 @@ function actualizaAsignar() {
                     grid1.setDataSource(dataSource);
                     
                 } catch (e) {
-                    mens("Error servicio actualizar vehiculo", "mens"); return;
+                    mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return;
                 }
             },
             error: function (err) {
-                mens("Error conexion al servicio vehiculo", "mens"); return; //alert(JSON.stringify(err));
+                mens("Error conexi" + String.fromCharCode(243) + "n al servicio veh" + String.fromCharCode(237) + "culo", "mens"); return; //alert(JSON.stringify(err));
             }
         });
     } catch (d) {
-        mens("Error servicio actualizar vehiculo", "mens"); return;
+        mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return;
     }
 }
 function grabarVH() {
     try {
-        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("Vehiculo esta vacio", "mens"); return; }
+        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("Veh" + String.fromCharCode(237) + "culo esta vacio", "mens"); return; }
         var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 5,
@@ -151,23 +151,24 @@ function grabarVH() {
             url: Url, type: "POST", data: JSON.stringify(params), dataType: "json", //Content-Type: application/json
             headers: { 'Content-Type': 'application/json;charset=UTF-8' },
             success: function (data) {
-                if (data == "Success") {
+                if (data.substring(0, 1) == "0") {
+                    if (data.substring(0, 1) == "0" || data.substring(0, 1) == "1") { data = data.substring(2, data.length); }
+                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                     "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true);  
+                } else {
                     try {
                         mens("Registro Exitoso", "mens");
                         borraVH();
                         actualizaAsignar();
                         validavehiculo(params.mail);
-                    } catch (s) { mens("Error servicio actualizar vehiculo", "mens"); return; }
-                } else {
-                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true);
+                    } catch (s) { mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
                 }
             },
             error: function (err) {
-                mens("Error conexion servicio vehiculo", "mens"); return;
+                mens("Error conexi" + String.fromCharCode(243) + "n servicio veh" + String.fromCharCode(237) + "culo", "mens"); return;
             }
         });
-    } catch (e) { mens("Error servicio grabar vehiculo", "mens"); return; }
+    } catch (e) { mens("Error servicio grabar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
 }
 
 function borraVH() {
@@ -191,15 +192,15 @@ function validavehiculo(email) {
                             data: resultado
                         });
                         grid.setDataSource(dataSource);
-                    } catch (e) { mens("Error servicio vehiculo", "mens"); return; }
+                    } catch (e) { mens("Error servicio veh" + String.fromCharCode(237) + "culo", "mens"); return; }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio vehiculo", "mens"); return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio veh" + String.fromCharCode(237) + "culo", "mens"); return;
                 }
             });
             return resultado;
         }
-    } catch (e) { mens("Error servicio vehiculo", "mens"); return; }
+    } catch (e) { mens("Error servicio veh" + String.fromCharCode(237) + "culo", "mens"); return; }
 }
 function grid_remove(e) {
     try {
@@ -218,7 +219,7 @@ function grid_remove(e) {
                 localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
             }
         }*/
-    } catch (s) { mens("Error al eliminar vehiculo", "mens"); return; }
+    } catch (s) { mens("Error al eliminar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
 }
 
 function actualiza(chasisemail) {
@@ -229,17 +230,18 @@ function actualiza(chasisemail) {
             url: Url, type: "POST", data: JSON.stringify(params), dataType: "json",//Content-Type: application/json
             headers: { 'Content-Type': 'application/json;charset=UTF-8' },
             success: function (data) {
-                if (data == "Success") {
-                    mens("Se elimino el registro", "mens");
-                    actualizaAsignar();
-                } else {
+                if (data.substring(0, 1) == "0") {
+                    if (data.substring(0, 1) == "0" || data.substring(0, 1) == "1") { data = data.substring(2, data.length); }
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true);
+                    "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                } else {
+                    mens("Se elimin" + String.fromCharCode(243) + " el registro", "mens");
+                    actualizaAsignar();
                 }
             },
-            error: function (err) { mens("Error servicio actualizar vehiculo", "mens"); return; }
+            error: function (err) { mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
         });
-    } catch (e) { mens("Error servicio eliminar vehiculo", "mens"); return; }
+    } catch (e) { mens("Error servicio eliminar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
 }
 function onSI(e) {
     try {
