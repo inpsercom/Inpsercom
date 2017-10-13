@@ -19,7 +19,7 @@ function enviarMail() {
                     document.getElementById("recuperar_email").style.borderColor = "red";
                 } else {
                     document.getElementById("recuperar_email").style.borderColor = "";
-                    var d = registrarMail();
+                    var d = registrarMailRC();
                     document.getElementById("recuperar_email").value = "";
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 }
@@ -28,7 +28,7 @@ function enviarMail() {
     }
 }
 
-function registrarMail() {
+function registrarMailRC() {
     try {
         var data = "";
         var Url = urlService + "ClienteSet";
@@ -66,7 +66,7 @@ function registrarMail() {
                 'Content-Type': 'application/json;charset=UTF-8'
             },
             success: function (data) {
-                if (data == "Success") {
+                if (data == "1,Succes") {
                     try {
                         mens("Su clave fue enviada a su correo", "success");
                     } catch (s) { mens("Error servicio login", "mens");return;  } //alert (s); 
