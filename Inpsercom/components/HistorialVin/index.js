@@ -153,7 +153,7 @@ function ConsultarHV() {
         }
     } catch (e) {
         //alert(e);
-        mens("Error de conexion a la base", "mens"); return;
+        mens("Error de conexi" + String.fromCharCode(243) + "n a la base", "mens"); return;
     }
 }
 function observacion() {
