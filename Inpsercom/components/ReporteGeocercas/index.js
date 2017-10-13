@@ -47,7 +47,7 @@ app.reporteGeocercas = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteGeocerca/view.html");
         } catch (s) {
-            mens("Error seleccion de registro C. V.","mens");return;
+            mens("Error selecci" + String.fromCharCode(243) + "n de registro C. V.", "mens"); return;
         }
     }
 });
