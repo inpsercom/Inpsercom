@@ -94,7 +94,6 @@ function traeCordenadasUbica() {
         var cords;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
         var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/U?" + ordenUsuario;
-
         var params = {
             orden: ordenUsuario,
             output: "json"
