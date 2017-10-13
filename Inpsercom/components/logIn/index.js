@@ -1,13 +1,19 @@
 //'use strict';
 app.logIn = kendo.observable({
     onShow: function () {
-        //document.getElementById("passwordLogin").value = "";
-        datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
-        //alert(inspeccionar(datos_Cliente));
-        //document.getElementById("emailLogin").value = datos_Cliente.mail;
-        //document.getElementById("passwordLogin").value = datos_Cliente.pas;
-        //document.getElementById("codigoLogin").value = "";
-        //document.getElementById("codigoLogin").focus();
+        try {
+            document.getElementById("emailLogin").value = "";
+            document.getElementById("passwordLogin").value = "";
+            document.getElementById("codigoLogin").value = "";
+            if (localStorage.getItem("Inp_DatosUsuario") == "" || localStorage.getItem("Inp_DatosUsuario") == null) {
+                document.getElementById("passwordLogin").value = "";
+            } else {
+                datos_Cliente = JSON.parse(localStorage.getItem("Inp_DatosUsuario"));
+                document.getElementById("emailLogin").value = datos_Cliente.mail;
+                //document.getElementById("passwordLogin").value = datos_Cliente.pas;
+                document.getElementById("passwordLogin").focus();
+            }
+        } catch (e) { mens("error en datos usuario registrese","mens"); }
     },
     afterShow: function () { }
 });
@@ -17,20 +23,22 @@ function signin() {
     try {
         var em = document.getElementById("emailLogin").value;
         var pa = document.getElementById("passwordLogin").value;
-        var co = document.getElementById("codigoLogin").value; 
-        if (em == "" || !em) { mens("El Email no tiene datos","mens"); return; }
-        if (pa == "" || !pa) { mens("El Password no tiene datos","mens"); document.getElementById("passwordLogin").focus(); return; }
-        if (co == "" || !co) { mens("El Codigo no tiene datos","mens"); document.getElementById("codigoLogin").focus(); return; }
+        var co = document.getElementById("codigoLogin").value;
+        if (em == "" || !em) { mens("El Email no tiene datos", "mens"); return; }
+        if (pa == "" || !pa) { mens("El Password no tiene datos", "mens"); document.getElementById("passwordLogin").focus(); return; }
+        if (co == "" || !co) { mens("El C" + String.fromCharCode(243) + "digo no tiene datos", "mens"); document.getElementById("codigoLogin").focus(); return; }
         var resul = validaLogin(document.getElementById("emailLogin").value, document.getElementById("passwordLogin").value, document.getElementById("codigoLogin").value);
         if (resul == "false" || resul == "" || !resul) {
-            mens("Datos incorrectos por favor verifique",mens);
-            document.getElementById("emailLogin").value="";
-            document.getElementById("passwordLogin").value="";
-            document.getElementById("codigoLogin").value="";
-            document.getElementById("emailLogin").focus();
+            mens("Datos incorrectos por favor verifique", mens);
+            borraCamposLogin();
             return;
         }
         var usu = validausuario(em); //resultado.Cliente[0].persona_nombre
+        if (usu.Cliente[0].cerror == "0,Cambio de clave") {
+            mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                "ERROR", "<span align='justify'>El password es provicional, por favor realizar cambio de clave</b></span>", true, true);
+            borraCamposLogin(); return;
+        }
         var tipo = "";
         if (usu.Cliente[0].identificacion_cliente.length == 10) { tipo = "C"; }
         else {
@@ -47,14 +55,15 @@ function signin() {
             secuencia_mv01: usu.Cliente[0].secuencia_mv01,
             mail: usu.Cliente[0].mail,
             nombre_alias: usu.Cliente[0].nombre_alias,
-            pas: usu.Cliente[0].password
+            pas: usu.Cliente[0].password,
+            mail_cajero: usu.Cliente[0].mail_cajero
         };
         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
         datos_Cliente = Usuario;
         var veh = validavehicu(em);
         if (veh == "" || veh == null || !(veh)) { mens("Registre autos", "warning"); }
         else {
-            veh=veh.Vehiculo[0];
+            veh = veh.Vehiculo[0];
             var Vehiculo = {
                 secuencia_mv01: veh.secuencia_mv01, //6,
                 mail: veh.mail, //"nerycarmela@hotmail.com",
@@ -77,7 +86,7 @@ function signin() {
         kendo.mobile.application.navigate("components/MenuKia/view.html");
     } catch (s) {
         //alert(s);
-        mens("Error conexion a la base de datos ","mens");return;
+        mens("Error conexi" + String.fromCharCode(243) + "n a la base de datos ", "mens"); return;
     }
 }
 
@@ -103,18 +112,18 @@ function validaLogin(email, password, codigo) {
                     } catch (e) {
                         //alert(e);
                         mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
-                        borraCamposLogin();return;
+                            "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                        borraCamposLogin(); return;
                     }
                 },
                 error: function (err) {
-                    mens("Error en conexion al servicio login","mens");return;
+                    mens("Error en conexi" + String.fromCharCode(243) + "n al servicio login", "mens"); return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error cenexion servicio login","mens");return;
+        mens("Error cenexi" + String.fromCharCode(243) + "n servicio login", "mens"); return;
     }
 }
 
@@ -133,18 +142,18 @@ function validausuario(email) {
                         resultado = JSON.parse(data.UsuarioGetResult);
                     } catch (e) {
                         mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                      "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
-                        borraCamposLogin();return;
+                            "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                        borraCamposLogin(); return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio Usuario","mens");return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexion servicio Usuario","mens");return;
+        mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); return;
     }
 }
 
@@ -163,25 +172,27 @@ function validavehicu(emailp) {
                         resultado = JSON.parse(data.VehiculoGetResult);
                     } catch (e) {
                         mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                     "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
-                        borraCamposLogin();return;
+                            "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                        borraCamposLogin(); return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio Vehiculo","mens");return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens"); return;
 
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexion servicio Vehiculo","mens");return;
+        mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens"); return;
     }
 }
 
 function borraCamposLogin() {
     document.getElementById("emailLogin").value = "";
     document.getElementById("passwordLogin").value = "";
+    document.getElementById("codigoLogin").value = "";
+    document.getElementById("emailLogin").focus();
 }
 
 function ValidaMailLogin() {
@@ -196,6 +207,6 @@ function ValidaMailLogin() {
             }
         }
     } catch (f) {
-        mens("Error validacion del mail","mens");return;
+        mens("Error validaci" + String.fromCharCode(243) + "n del mail", "mens"); return;
     }
 }
