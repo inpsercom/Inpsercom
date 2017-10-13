@@ -5,8 +5,6 @@ app.detalleOT = kendo.observable({
             //$("#NumeroChasisDOT").text(datos_Cliente.chasis);
             // RRP: alias - detalleot
              $("#NumeroChasisDOT").text(datos_Cliente.nombre_alias);
-
-
             var Url = urlService + "Detalle/" + registro.codigo_empresa + "," + registro.anio_ga35 + "," + registro.secuencia_orden;
             var infordet;
             $.ajax({
