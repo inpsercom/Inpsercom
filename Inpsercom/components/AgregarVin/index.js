@@ -16,19 +16,21 @@ app.mntRegistroVin = kendo.observable({
         var todo = document.getElementById("ifmPrefactura");
         document.getElementById("ifmPrefactura").style.width = ancho + "px";
         document.getElementById("ifmPrefactura").style.height = alto + "px";
-        var diip = TraerDireccion();
-        datos_Cliente.path = diip;
+        var dips = TraerDireccion();
+        diip = dips[0].path_prefactura;
         if (diip == null || diip == "") {
             document.getElementById("pdfPRE").setAttribute('style', 'display: none');
             mens("No existe prefactura", "mens")
             document.getElementById("ifmPrefactura").src = dp;
             document.getElementById("logoPR").setAttribute('style', 'display: block');
-            return;
+            return;   
         }
         //var diip = "http://186.71.68.154:8090/prefactura_taller/DEBITOCONFIAMED2015.pdf";
         dp = "http://docs.google.com/gview?url=" + diip + "&embedded=true";
         document.getElementById("ifmPrefactura").src = dp;
         document.getElementById("pdfPRE").setAttribute('style', 'display: block');
+        datos_Cliente.path_prefactura = diip;
+        datos_Cliente.mail_cajero = dips[0].mail_cajero;
     },
     afterShow: function () {
         //kendo.ui.progress($("#btnPDF"), false); 
@@ -37,12 +39,12 @@ app.mntRegistroVin = kendo.observable({
 });
 app.localization.registerView('mntRegistroVin');
 function prefacEn() {
-    var diips = datos_Cliente.path.toString();
+    var diips = datos_Cliente.path_prefactura.toString();
     for (var i = 0; i < diips.length; i++) {
         diips = diips.replace(':', '!');
         diips = diips.replace('/', '-');
     }
-    documento = "9;" + datos_Cliente.mail + ";;" + diips + ";" + "vinicio.ortega@inpsercom.com";
+    documento = "9;" + datos_Cliente.mail + ";;" + diips + ";" + datos_Cliente.mail_cajero;
 
     var envio = AceptaMailPRE(documento);
     if (envio.substring(0, 1) == "0") {
@@ -72,14 +74,14 @@ function AceptaMailPRE(documento) {
                     }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio Vehiculo", "mens"); return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens"); return;
 
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexion servicio Vehiculo", "mens"); return;
+        mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens"); return;
     }
 }
 
@@ -107,6 +109,7 @@ function TraerDireccion() {
                 mens("Error en consulta", "mens"); return;
             }
         });
-        return infor[0].path_prefactura;
-    } catch (e) { mens("Error en conexion con servicio", "mens"); return; }
+        
+        return infor;
+    } catch (e) { mens("Error en conexi" + String.fromCharCode(243) + "n con servicio", "mens"); return; }
 }
