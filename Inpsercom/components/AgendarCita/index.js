@@ -4,26 +4,26 @@ app.mntAgendarCita = kendo.observable({
     onShow: function () {
         //$("#NumeroChasisCA").text(datos_Cliente.chasis);
         // RRP: alias - agendar cita
-        $("#NumeroChasisCA").text(datos_Cliente.nombre_alias); 
+        $("#NumeroChasisCA").text(datos_Cliente.nombre_alias);
         var anch = screen.width;
         var height1 = (anch / 2) - 30;
-        document.getElementById("autokia1").style.width  = height1 + "px";
-        document.getElementById("autokia2").style.width  = height1 + "px";
-        document.getElementById("autokia3").style.width  = height1 + "px";
-        document.getElementById("autokia4").style.width  = height1 + "px";
-        document.getElementById("autokia5").style.width  = height1 + "px";
-        document.getElementById("autokia6").style.width  = height1 + "px";
-        document.getElementById("autokia7").style.width  = height1 + "px";
-        document.getElementById("autokia8").style.width  = height1 + "px";
-        document.getElementById("autokia9").style.width  = height1 + "px";
-        document.getElementById("autokia10").style.width  = height1 + "px";
-        document.getElementById("autokia11").style.width  = height1 + "px";
-        document.getElementById("autokia12").style.width  = height1 + "px";
-        document.getElementById("autokia13").style.width  = height1 + "px";
-        document.getElementById("autokia14").style.width  = height1 + "px";
-        document.getElementById("autokia15").style.width  = height1 + "px";
-        document.getElementById("autokia16").style.width  = height1 + "px";
-        document.getElementById("autokia17").style.width  = height1 + "px";
+        var url = ["http://www.kia.com/ec/showroom/picanto-r.html", "http://www.kia.com/ec/showroom/nuevo-rio-sedan.html",
+            "http://www.kia.com/ec/showroom/nuevo-rio-hatchback/features.html", "http://www.kia.com/ec/showroom/nuevo-cerato.html", "http://www.kia.com/ec/showroom/cerato-forte.html",
+            "http://www.kia.com/ec/showroom/cerato-koup.html"]; //, "http://www.kia.com/ec/showroom/kia-quoris.html"];
+        var imagenes = ["picantoxline.png", "riosedanxline.png", "riohatchbackline.png", "ceratoline.png", "ceratoForte.png", "ceratoKoup.png", "kiaQuoris.png"];
+        var container = document.getElementById("contenedor");
+        var tama = height1 + "px;";
+        for (var i = 0; i < url.length; i = i + 2) {
+            var j = i + 1;
+            var auto = "autokia" + i;
+            var auto1 = "autokia" + j;
+            if (j == url.length) {
+                $(container).append('</br><div>&emsp;<a href="' + url[i] + '" target="_blank"> <img id="' + auto + '" src="' + urlImagen + imagenes[i] + '" style="border:3px solid white;" width="' + tama + '"> </a> &emsp;</div>');
+            } else {
+                $(container).append('</br><div>&emsp;<a href="' + url[i] + '" target="_blank"> <img id="' + auto + '" src="' + urlImagen + imagenes[i] + '" style="border:3px solid white;" width="' + tama + '"> </a>' +
+                    '<a href="' + url[j] + '" target="_blank"> <img id="' + auto1 + '" src="' + urlImagen + imagenes[j] + '" style="border:3px solid white;" width="' + tama + '" > </a> &emsp;</div>');
+            }
+        }
     },
     afterShow: function () { },
     inicializa: function () {
