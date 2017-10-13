@@ -10,7 +10,7 @@ app.ordenBasico = kendo.observable({
             if (NoOrden == "") {
                 kendo.ui.progress($("#btnHabilita"), true);
             }
-        } catch (f) { mens("Error numero de orden","mens");return; }
+        } catch (f) { mens("Error n" + String.fromCharCode(250) + "mero de orden", "mens"); return; }
     },
     afterShow: function () { },
     inicializa: function () {
@@ -27,7 +27,7 @@ app.ordenBasico = kendo.observable({
 });
 app.localization.registerView('ordenBasico');
 
-function ubicarVehiculo() {
+function ubicarVehiculoB() {
         kendo.mobile.application.navigate("components/Ubicacion/view.html");
         //kendo.mobile.application.navigate("components/ReporteExceso/view.html");
 }
@@ -72,7 +72,7 @@ function habilitarOpciones() {
                                     } catch (e) { mens("Error servicio sherloc","mens");return; }
                                 },
                                 error: function (err) {
-                                    mens("Error conexion Sherloc","mens");return;
+                                    mens("Error conexi" + String.fromCharCode(243) + "n Sherloc", "mens"); return;
                                 }
                             });
                         } else {
