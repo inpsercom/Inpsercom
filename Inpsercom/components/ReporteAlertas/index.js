@@ -46,7 +46,7 @@ app.reporteAlertas = kendo.observable({
             //window.location = "index.html#components/DetalleServicio/detalleservicio.html";
             kendo.mobile.application.navigate("components/ReporteExceso/view.html");
         } catch (s) {
-            mens("Error seleccion de registro","mens");return;
+            mens("Error selecci" + String.fromCharCode(243) + "n de registro", "mens"); return;
         }
     }
 });
