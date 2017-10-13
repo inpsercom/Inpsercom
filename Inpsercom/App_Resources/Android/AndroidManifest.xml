@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:versionCode= "10"
+<manifest android:versionCode= "12"
           android:versionName="AeKia"
           package="$AppIdentifier$"
           android:windowSoftInputMode="adjustPan"
