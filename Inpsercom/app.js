@@ -3,6 +3,7 @@ var datos_Cliente, Device_identifier, datos_Vehiculo, urlService, observa, obser
 var VersionHM = "ver 1.0";
 var urlInterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';//'http://192.168.1.3:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089';http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a 
 var urlExterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';// 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';
+var urlImagen = 'http://200.31.10.92:8092/appk_aekia/imagenes/'
 //var urlsherloc = 'http://190.110.193.131/ReportService.svc/';http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/
 var notificationWidget;
 (function () {
