@@ -44,7 +44,7 @@ function enviarMailPR() {
                     document.getElementById("recuperar_emailPR").focus();
                     document.getElementById("recuperar_emailPR").style.borderColor = "red";
                 } else {
-                    var diips = datos_Cliente.path.toString();
+                    var diips = datos_Cliente.path_prefactura.toString();
                     for(var i = 0; i < diips.length; i++){
                         diips = diips.replace(':','!');
                         diips = diips.replace('/','-');
@@ -59,7 +59,7 @@ function enviarMailPR() {
                     kendo.mobile.application.navigate("components/AgregarVin/view.html");
                 }
             }
-        } catch (f) { mens("Error validacion mail", "mens");return; }
+        } catch (f) { mens("Error validaci" + String.fromCharCode(243) + "n mail", "mens"); return; }
     }
 }
 
@@ -83,14 +83,14 @@ function EnvioMailPRE(documento) {
                     }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio Vehiculo", "mens");
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens");
                     return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexion servicio Vehiculo", "mens");return;
+        mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens"); return;
     }
 }
 
