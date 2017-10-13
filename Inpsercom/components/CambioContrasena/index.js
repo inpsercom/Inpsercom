@@ -32,11 +32,11 @@ function grabar() {
                                 //kendo.mobile.application.navigate("components/logIn/view.html");
                             }
                         } else {
-                            mens("Password nuevo y confirmacion password","mens");
+                            mens("Password nuevo y confirmaci" + String.fromCharCode(243) + "n password", "mens");
                             mens("son diferentes","mens");
                         }
                     } else {
-                        mens("Confirmacion password esta en blanco", "mens");
+                        mens("Confirmaci" + String.fromCharCode(243) + "n password esta en blanco", "mens");
                     }
                 } else {
                     mens("Nuevo password esta en blanco", "mens");
@@ -88,6 +88,6 @@ function ValidaMailCambio() {
             }
         }
     } catch (f) {
-        mens("Error validacion del mail", "mens"); return;
+        mens("Error validaci" + String.fromCharCode(243) + "n del mail", "mens"); return;
     }
 }
