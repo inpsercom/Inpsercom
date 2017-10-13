@@ -15,30 +15,18 @@ app.localization.registerView('reactivacionG');
 
 function enviarMailG() {
     var documento;
-    var _mail = "garantias@kia.com.ec";
-    if ((_mail) && (_mail != "")) {
-        try {
-            if ("garantias@kia.com.ec" != "") {
-                var diips = ""; // datos_Cliente.path.toString();
-                    for (var i = 0; i < diips.length; i++) {
-                        diips = diips.replace(':', '!');
-                        diips = diips.replace('/', '-');
-                    }
-                    documento = "10;" + datos_Cliente.mail + ";;" + diips + ";" + _mail;
-                    
-                    var envio = EnvioMailGA(documento);
-                    if (envio.substring(0, 1) == "0") {
-                        mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                         "ERROR", "<span align='justify'>" + envio.substring(2, envio.length - 2) + "</b></span>", true, true);
-                    }
-                    mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                    "AVISO", "<span align='justify'>Muchas gracias por contactarse con nosotros, una persona del Departamento de Servicio a Cliente se comunicará con ud. Para generar la renovación de su garantía.</b></span>" , true);
-
-                    kendo.mobile.application.navigate("components/EstadoMantenimiento/view.html");
-                }
-            
+    try {
+            documento = "10;" + datos_Cliente.mail + ";;;;;;" + datos_Cliente.chasis;
+            var envio = EnvioMailGA(documento);
+            if (envio.substring(0, 1) == "0") {
+                mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                "ERROR", "<span align='justify'>" + envio.substring(2, envio.length - 2) + "</b></span>", true, true);
+            }else{
+                mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                "AVISO", "<span align='justify'>Muchas gracias por contactarse con nosotros, una persona del Departamento de Servicio a Cliente se comunicará con ud. Para generar la renovación de su garantía.</b></span>" , true);
+            }
+            kendo.mobile.application.navigate("components/EstadoMantenimiento/view.html");
         } catch (f) { mens("Error validacion mail", "mens"); return; }
-    }
 }
 
 function EnvioMailGA(documento) {
@@ -46,6 +34,7 @@ function EnvioMailGA(documento) {
         if ((documento !== "") && (documento)) {
             var resultado = "";
             var Url = urlService + "EnvioMail/" + documento;
+            //alert(Url);
             $.ajax({
                 url: Url,
                 type: "GET",
