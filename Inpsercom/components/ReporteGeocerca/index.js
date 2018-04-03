@@ -3,12 +3,19 @@ app.reporteGeocerca = kendo.observable({
         //alert(datos_Vehiculo.numeroorden);
         $("#NoOrdenGC1").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
         //initialize();
-        initMapGC();
+        llamarMapGC();
     },
     afterShow: function () { },
     inicializa: function () { }
 });
 app.localization.registerView('reporteGeocerca');
+function llamarMapGC() {
+    kendo.ui.progress($("#reporteGeocercaScreen"), true);
+    setTimeout(function () {
+        initMapGC();
+    }, 2000);
+}
+
 function rutasFR() {
     /*var myOptions = {
         center: new google.maps.LatLng(-0.202408333333333, -78.4929966666667),
@@ -35,6 +42,7 @@ function rutasFR() {
         strokeOpacity: 0.6,
         clickable: false
     });
+    kendo.ui.progress($("#reporteGeocercaScreen"), false);
 }
 
 var infoWindow;
@@ -46,7 +54,7 @@ function initMapGC() {
     document.getElementById("mapgeo").style.height = height1 + "px";
     mapGC = new google.maps.Map(document.getElementById('mapgeo'), {
         zoom: 16,
-        center: { lat: -0.202408333333333, lng: -78.4929966666667 },
+        center: { lat: parseFloat(registroGC1[0].lstCoordenadas[0].Latitud), lng: parseFloat(registroGC1[0].lstCoordenadas[0].Longitud) },
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -55,6 +63,7 @@ function initMapGC() {
     });
     setMarkersGC(mapGC);
     setpoliGC(mapGC);
+    kendo.ui.progress($("#reporteGeocercaScreen"), false);
 }
 
 var beachesGC = [];
@@ -85,7 +94,7 @@ function setMarkersGC(mapGC) {
         //contruccion marcas
         beachesGC = [];
         var tama = registroGC.lstCoordGeo.length;
-        if (tama > 15) { registroGC.lstCoordGeo.length = 15; }
+        //if (tama > 15) { registroGC.lstCoordGeo.length = 15; }
         for (var i = 0; i < registroGC.lstCoordGeo.length; i++) {
             beachesGC.push([parseFloat(registroGC.lstCoordGeo[i].Latitud), parseFloat(registroGC.lstCoordGeo[i].Longitud), registroGC.lstCoordGeo[i].Kilometraje, registroGC.lstCoordGeo[i].Fecha, registroGC.lstCoordGeo[i].Estado]);
         }

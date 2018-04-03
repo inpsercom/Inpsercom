@@ -31,7 +31,12 @@ app.localization.registerView('envioPrefactura');
    }
 
 }*/
-
+function llamarmailPR() {
+    kendo.ui.progress($("#envioPrefacturaScreen"), true);
+    setTimeout(function () {
+        enviarMailPR();
+    }, 2000);
+}
 
 function enviarMailPR() {
     var documento;
@@ -59,8 +64,9 @@ function enviarMailPR() {
                     kendo.mobile.application.navigate("components/AgregarVin/view.html");
                 }
             }
-        } catch (f) { mens("Error validaci" + String.fromCharCode(243) + "n mail", "mens"); return; }
+        } catch (f) { mens("Error validaci" + String.fromCharCode(243) + "n mail", "mens"); kendo.ui.progress($("#envioPrefacturaScreen"), false); return; }
     }
+    kendo.ui.progress($("#envioPrefacturaScreen"), false);
 }
 
 function EnvioMailPRE(documento) {
@@ -79,19 +85,21 @@ function EnvioMailPRE(documento) {
                     } catch (e) {
                         mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
                         "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
-                        borraCampos();return;
+                        borraCampos(); kendo.ui.progress($("#envioPrefacturaScreen"), false); return;
                     }
                 },
                 error: function (err) {
                     mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens");
+                    kendo.ui.progress($("#envioPrefacturaScreen"), false);
                     return;
                 }
             });
             return resultado;
         }
     } catch (f) {
-        mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens"); return;
+        mens("Error conexi" + String.fromCharCode(243) + "n servicio Veh" + String.fromCharCode(237) + "culo", "mens"); kendo.ui.progress($("#envioPrefacturaScreen"), false); return;
     }
+    kendo.ui.progress($("#envioPrefacturaScreen"), false);
 }
 
 

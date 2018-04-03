@@ -69,13 +69,22 @@ function regresaAE() {
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
 
+function llamarcoordenadasAE() {
+    kendo.ui.progress($("#reporteApaEncesScreen"), true);
+    setTimeout(function () {
+        traeCordenadasUbicaAE();
+    }, 2000);
+}
+
 function traeCordenadasUbicaAE() {
     try {
+        document.getElementById("listViewAE").innerHTML = "";
         var cords = [];
+        var mensaje;
         var FechaRecAE = document.getElementById("FechaInicioAE").value;
         var FechaRecAE1 = document.getElementById("FechaFinAE").value;;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-        var Url = "http://190.110.193.131/ReportService.svc/ReporteApagadoEncendido/" + FechaRecAE + "/" + FechaRecAE1 + "?" + ordenUsuario;
+        var Url = urlsherlocReport + "ReporteApagadoEncendido/" + FechaRecAE + "/" + FechaRecAE1;// + "?orden=" + ordenUsuario;
         var params = {
             orden: ordenUsuario,
             output: "json"
@@ -88,9 +97,14 @@ function traeCordenadasUbicaAE() {
             async: false,
             success: function (data) {
                 try {
+                    if (data.ReporteApagadoEncendidoResult.message != null) {
+                        mensaje = data.ReporteApagadoEncendidoResult.message;
+                        mens(data.ReporteApagadoEncendidoResult.message, "mens");
+                        kendo.ui.progress($("#reporteApaEncesScreen"), false); return;
+                    }
                     var data1 = data.ReporteApagadoEncendidoResult.lstReporteAlarmas;
                     for (var i = 0; i < data1.length; i++) {
-                        if (data1[i].TotalRecorrido != "0") {
+                       if (data1[i].TotalRecorrido != "0") {
                             cords.push({
                                 Fecha: data1[i].Fecha,
                                 TotalRecorrido: data1[i].TotalRecorrido,
@@ -100,44 +114,42 @@ function traeCordenadasUbicaAE() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "mens");return;
+                    mens("Error coordenadas servicio sherloc", "mens"); kendo.ui.progress($("#reporteApaEncesScreen"), false); return;
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc", "mens");return;
+                mens("Error servicio sherloc", "mens"); kendo.ui.progress($("#reporteApaEncesScreen"), false); return;
             }
         });
-        /*FechaUbicacion
-            Latitud
-            Longitud
-            Kilometraje*/
-        var fechaU = (screen.width * 27) / 100;
-        var Lati = (screen.width * 33) / 100;
-        var Kilo = (screen.width * 40) / 100;
-        $("#listViewAE").kendoGrid({
-            allowCopy: true,
-            columns: [
-                { field: "Fecha", title: "Fecha", width: fechaU },
-                { field: "TotalRecorrido", title: "Km Recorrido", width: Lati },
-                { field: "TotalTiempoEncendido", title: "Min Encendido", width: Kilo }
-                //{ field: "Velocidad", title: "Velocidad", width: Kilo }
-            ],
-            dataSource: cords,
-            selectable: "row",
-            change: function (e) {
-                var selectedRows = this.select();
-                var selectedDataItems = [];
-                for (var i = 0; i < selectedRows.length; i++) {
-                    var dataItem = this.dataItem(selectedRows[i]);
-                    selectedDataItems.push(dataItem);
+        if (mensaje == null) {
+            var fechaU = (screen.width * 27) / 100;
+            var Lati = (screen.width * 33) / 100;
+            var Kilo = (screen.width * 40) / 100;
+            $("#listViewAE").kendoGrid({
+                allowCopy: true,
+                columns: [
+                    { field: "Fecha", title: "Fecha", width: fechaU },
+                    { field: "TotalRecorrido", title: "Km Recorrido", width: Lati },
+                    { field: "TotalTiempoEncendido", title: "Min Encendido", width: Kilo }
+                    //{ field: "Velocidad", title: "Velocidad", width: Kilo }
+                ],
+                dataSource: cords,
+                selectable: "row",
+                change: function (e) {
+                    var selectedRows = this.select();
+                    var selectedDataItems = [];
+                    for (var i = 0; i < selectedRows.length; i++) {
+                        var dataItem = this.dataItem(selectedRows[i]);
+                        selectedDataItems.push(dataItem);
+                    }
+                    registroAE = selectedDataItems[0].lstRecorridos;
+                    localStorage.setItem("registro_AE", JSON.stringify(registroAE));
+                    kendo.mobile.application.navigate("components/ReporteApaEncendidoPuntos/view.html");
                 }
-                registroAE = selectedDataItems[0].lstRecorridos;
-                localStorage.setItem("registro_AE", JSON.stringify(registroAE));
-                //alert(inspeccionar(registroPA.lstAlarmas));
-                kendo.mobile.application.navigate("components/ReporteApaEncendidoPuntos/view.html");
-            }
-        });
+            });
+        }  
     } catch (d) {
-        mens("Error en servicio sherloc", "mens");return;
+        mens("Error en servicio sherloc", "mens"); kendo.ui.progress($("#reporteApaEncesScreen"), false); return;
     }
+    kendo.ui.progress($("#reporteApaEncesScreen"), false);
 }

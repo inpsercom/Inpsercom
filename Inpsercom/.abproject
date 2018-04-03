@@ -6,7 +6,7 @@
   "DisplayName": "Kia Ecuador",
   "Author": "Aekia",
   "Description": "Aekia",
-  "BundleVersion": "2.7",
+  "BundleVersion": "2.39",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
     "1",
@@ -21,7 +21,7 @@
   "DeviceOrientations": [
     "Portrait"
   ],
-  "AndroidHardwareAcceleration": "True",
+  "AndroidHardwareAcceleration": "true",
   "iOSStatusBarStyle": "Default",
   "Framework": "Cordova",
   "WP8TileTitle": "",
@@ -65,7 +65,6 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "cordova-plugin-vibration",
-    "cordova-plugin-whitelist",
-    "org.apache.cordova.labs.keyboard"
+    "cordova-plugin-whitelist"
   ]
 }

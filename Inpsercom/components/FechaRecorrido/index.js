@@ -34,8 +34,16 @@ function regresaREC(){
     document.getElementById("FechaRecor").value = "";
     kendo.mobile.application.navigate("components/OrdenInstalacion/view.html");
 }
+
+function llamarconsultarRC() {
+    kendo.ui.progress($("#fechaRecoScreen"), true);
+    setTimeout(function () {
+        Consultar();
+    }, 2000);
+}
 function Consultar() {
-    if (document.getElementById("FechaRecor").value == "" || !document.getElementById("FechaRecor").value) { mens("Fecha inicio no ha sido seleccionada","mens"); return; }
+    if (document.getElementById("FechaRecor").value == "" || !document.getElementById("FechaRecor").value) { mens("Fecha inicio no ha sido seleccionada", "mens"); kendo.ui.progress($("#fechaRecoScreen"), false); return; }
     FechaRec = document.getElementById("FechaRecor").value;
     kendo.mobile.application.navigate("components/ControlarAuto/view.html");
+    kendo.ui.progress($("#fechaRecoScreen"), false);
 }

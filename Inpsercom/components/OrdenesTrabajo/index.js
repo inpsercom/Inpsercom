@@ -55,7 +55,8 @@ app.mntOTs = kendo.observable({
             var obs = (screen.width * 9) / 100;
             var fecha = (screen.width * 14) / 100;
             var ot = (screen.width * 17) / 100;
-            var taller = (screen.width * 12) / 100;
+            var taller = (screen.width * 12) / 100
+            var alto = screen.height - 150;;
             $("#listView").kendoGrid({
                 allowCopy: true,
                 columns: [
@@ -123,6 +124,14 @@ function regresaOT() {
     document.getElementById("listView").value = "";
     kendo.mobile.application.navigate("components/miKia/view.html");
 }
+
+function llamarconsultarOT() {
+    kendo.ui.progress($("#mntOTsScreen"), true);
+    setTimeout(function () {
+        ConsultarOT();
+    }, 2000);
+}
+
 function consultar() {
     var infor;
     try {
@@ -138,16 +147,17 @@ function consultar() {
                 try {
                     infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
                 } catch (e) {
-                    mens("No existe datos para esta cosnulta", "mens"); return;
+                    mens("No existe datos para esta cosnulta", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return;
                 }
             },
             error: function (err) {
-                mens("Error en consulta OT", "mens"); return;
+                mens("Error en consulta OT", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return;
             }
         });
     } catch (e) {
-        mens("Error de conexi" + String.fromCharCode(243) + "n a base", "mens"); return;
+        mens("Error de conexi" + String.fromCharCode(243) + "n a base", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return;
     }
+    kendo.ui.progress($("#mntOTsScreen"), false);
     return infor[0].fecha_retail;
 }
 function ConsultarOT() {
@@ -155,12 +165,12 @@ function ConsultarOT() {
         /*if(document.getElementById("cboxOT").checked == false){
             document.getElementById("FechaInicio").value = "01-01-1910";
         }*/
-        if (document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value) { mens("Fecha inicio no ha sido seleccionada", "mens"); return; }
-        if (document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value) { mens("Fecha fin no ha sido seleccionada", "mens"); return; }
+        if (document.getElementById("FechaInicio").value == "" || !document.getElementById("FechaInicio").value) { mens("Fecha inicio no ha sido seleccionada", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return; }
+        if (document.getElementById("FechaFin").value == "" || !document.getElementById("FechaFin").value) { mens("Fecha fin no ha sido seleccionada", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return; }
         var fechaI = new Date(document.getElementById("FechaInicio").value);
         var fechaF = new Date(document.getElementById("FechaFin").value);
-        if (fechaI > fechaF) { mens("Error fecha inicio mayor a la final", "mens"); return; }
-    } catch (f) { mens("Error en fechas", "mens"); return; }
+        if (fechaI > fechaF) { mens("Error fecha inicio mayor a la final", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return; }
+    } catch (f) { mens("Error en fechas", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return; }
     try {
         var usu = localStorage.getItem("Inp_DatosUsuario");
         var Url = urlService + "Ordenes/" + "1,2," + datos_Cliente.chasis + "," + document.getElementById("FechaInicio").value + "," + document.getElementById("FechaFin").value + ",500";
@@ -174,21 +184,23 @@ function ConsultarOT() {
                 try {
                     infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
                 } catch (e) {
-                    mens("No existe datos para esta consulta", "mens"); return;
+                    mens("No existe datos para esta consulta", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return;
                 }
             },
             error: function (err) {
-                mens("Error en consulta OT", "mens"); return;
+                mens("Error en consulta OT", "mens"); kendo.ui.progress($("#mntOTsScreen"), false); return;
             }
         });
         var dataSource = new kendo.data.DataSource({ data: infor });
         var grid = $("#listView").data("kendoGrid");
         grid.setDataSource(dataSource);
-    } catch (e) {return;
+    } catch (e) {
+        kendo.ui.progress($("#mntOTsScreen"), false); return;
         //mens("Error de conexión a la base", "mens"); return;
     }
     /*if(document.getElementById("cboxOT").checked == false){
              document.getElementById("FechaInicio").value = document.getElementById("FechaFin").value;
          }*/
+    kendo.ui.progress($("#mntOTsScreen"), false);
 }
 

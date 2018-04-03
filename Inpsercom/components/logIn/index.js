@@ -2,9 +2,18 @@
 app.logIn = kendo.observable({
     onShow: function () {
         try {
+
             document.getElementById("emailLogin").value = "";
             document.getElementById("passwordLogin").value = "";
-            document.getElementById("codigoLogin").value = "";
+            //alert(registrado);
+            if (registrado == "true") {
+                document.getElementById("codigoLogin").style.display = "none";
+                document.getElementById("codigoLogin").value = "0";
+            } else {
+                document.getElementById("codigoLogin").style.display = "block";
+                document.getElementById("codigoLogin").value = "";
+            }
+            
             if (localStorage.getItem("Inp_DatosUsuario") == "" || localStorage.getItem("Inp_DatosUsuario") == null) {
                 document.getElementById("passwordLogin").value = "";
             } else {
@@ -13,31 +22,47 @@ app.logIn = kendo.observable({
                 //document.getElementById("passwordLogin").value = datos_Cliente.pas;
                 document.getElementById("passwordLogin").focus();
             }
-        } catch (e) { mens("error en datos usuario registrese","mens"); }
+        } catch (e) { mens("Error en datos usuario registrese","mens"); }
     },
     afterShow: function () { }
 });
 app.localization.registerView('logIn');
+function llamarmailCT() {
+    kendo.ui.progress($("#logInScreen"), true);
+    setTimeout(function () {
+        signin();
+    }, 2000);
+}
 
 function signin() {
     try {
         var em = document.getElementById("emailLogin").value;
         var pa = document.getElementById("passwordLogin").value;
         var co = document.getElementById("codigoLogin").value;
-        if (em == "" || !em) { mens("El Email no tiene datos", "mens"); return; }
-        if (pa == "" || !pa) { mens("El Password no tiene datos", "mens"); document.getElementById("passwordLogin").focus(); return; }
-        if (co == "" || !co) { mens("El C" + String.fromCharCode(243) + "digo no tiene datos", "mens"); document.getElementById("codigoLogin").focus(); return; }
+        if (em == "" || !em) { mens("El Email no tiene datos", "mens"); kendo.ui.progress($("#logInScreen"), false); return; }
+        if (pa == "" || !pa) { mens("El Password no tiene datos", "mens"); document.getElementById("passwordLogin").focus(); kendo.ui.progress($("#logInScreen"), false); return; }
+        if (co == "" || !co) { mens("El C" + String.fromCharCode(243) + "digo no tiene datos", "mens"); document.getElementById("codigoLogin").focus(); kendo.ui.progress($("#logInScreen"), false); return; }
         var resul = validaLogin(document.getElementById("emailLogin").value, document.getElementById("passwordLogin").value, document.getElementById("codigoLogin").value);
         if (resul == "false" || resul == "" || !resul) {
             mens("Datos incorrectos por favor verifique", mens);
             borraCamposLogin();
+            kendo.ui.progress($("#logInScreen"), false);
             return;
+        } else {
+            if (resul == "code") {
+                mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
+                "ERROR", "<span align='justify'>Por favor ingresar el codigo de verificacion que le llego a su correo registrado</b></span>", true, true);
+                document.getElementById("codigoLogin").style.display = "block";
+                document.getElementById("codigoLogin").value = "";
+                kendo.ui.progress($("#logInScreen"), false);
+                return;
+            }
         }
         var usu = validausuario(em); //resultado.Cliente[0].persona_nombre
         if (usu.Cliente[0].cerror == "0,Cambio de clave") {
             mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
                 "ERROR", "<span align='justify'>El password es provicional, por favor realizar cambio de clave</b></span>", true, true);
-            borraCamposLogin(); return;
+            borraCamposLogin(); kendo.ui.progress($("#logInScreen"), false); return;
         }
         var tipo = "";
         if (usu.Cliente[0].identificacion_cliente.length == 10) { tipo = "C"; }
@@ -48,6 +73,7 @@ function signin() {
         var Usuario = {
             chasis: usu.Cliente[0].chasis,//"8LGJE5520CE010039",
             identificacion_cliente: usu.Cliente[0].identificacion_cliente,  //"0992327685001",
+            identificacion_flota: usu.Cliente[0].identificacion_flota,
             tipodocumento: tipo, //"R",
             uid: "1234567890", // usu.Cliente[0].alta_movil_imei,
             telefono_celular: usu.Cliente[0].telefono_celular, //"0995545554",
@@ -55,9 +81,12 @@ function signin() {
             secuencia_mv01: usu.Cliente[0].secuencia_mv01,
             mail: usu.Cliente[0].mail,
             nombre_alias: usu.Cliente[0].nombre_alias,
-            pas: usu.Cliente[0].password,
-            mail_cajero: usu.Cliente[0].mail_cajero
+            pas: pa, //usu.Cliente[0].password,
+            mail_cajero: usu.Cliente[0].mail_cajero,
+            codigo: usu.Cliente[0].codigo_temporal,
+            codigo_consecionario:""
         };
+        
         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
         datos_Cliente = Usuario;
         var veh = validavehicu(em);
@@ -77,17 +106,21 @@ function signin() {
                 alta_movil_imei: veh.alta_movil_imei, // "",
                 alta_movil_ip: veh.alta_movil_ip, // ""
                 nombre_alias: veh.nombre_alias,
+                placa: veh.placa,
+                identificacion_cliente: veh.identificacion_cliente,
+                identificacion_flota: veh.identificacion_flota,
                 terminos: "no" //acepta terminos
             }
             localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(Vehiculo));
             datos_Vehiculo = Vehiculo;
         }
+        kendo.ui.progress($("#logInScreen"), false);
         //kendo.mobile.application.navigate("components/miKia/view.html");
         kendo.mobile.application.navigate("components/MenuKia/view.html");
     } catch (s) {
-        //alert(s);
-        mens("Error conexi" + String.fromCharCode(243) + "n a la base de datos ", "mens"); return;
+        mens("Error conexi" + String.fromCharCode(243) + "n a la base de datos ", "mens"); kendo.ui.progress($("#logInScreen"), false); return;
     }
+    kendo.ui.progress($("#logInScreen"), false);
 }
 
 //190.108.66.10  urlService
@@ -191,7 +224,12 @@ function validavehicu(emailp) {
 function borraCamposLogin() {
     document.getElementById("emailLogin").value = "";
     document.getElementById("passwordLogin").value = "";
-    document.getElementById("codigoLogin").value = "";
+    if (registrado == "true") {
+        document.getElementById("codigoLogin").value = "0";
+    } else {
+        document.getElementById("codigoLogin").value = "";
+    }
+    
     document.getElementById("emailLogin").focus();
 }
 

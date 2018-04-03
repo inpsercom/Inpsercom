@@ -5,7 +5,8 @@ app.ordenBasico = kendo.observable({
     onShow: function () {
         try {
             //document.getElementById("NoOrdenn").value = "";
-            $("#NoOrdenBA").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
+            $("#NoOrdenBA").text(datos_Cliente.nombre_alias + ": " + datos_Vehiculo.numeroorden);
+            kendo.ui.progress($("#ordenBasicoScreen"), false);
             NoOrden = datos_Vehiculo.numeroorden;
             if (NoOrden == "") {
                 kendo.ui.progress($("#btnHabilita"), true);
@@ -26,21 +27,34 @@ app.ordenBasico = kendo.observable({
     }
 });
 app.localization.registerView('ordenBasico');
-
+function terminaBC() {
+    kendo.ui.progress($("#ordenBasicoScreen"), false);
+}
 function ubicarVehiculoB() {
-        kendo.mobile.application.navigate("components/Ubicacion/view.html");
-        //kendo.mobile.application.navigate("components/ReporteExceso/view.html");
+    kendo.ui.progress($("#ordenBasicoScreen"), true);
+    setTimeout(function () {
+        if (datos_sherloc.desbloqueo == "SI") {
+            kendo.mobile.application.navigate("components/Ubicacion/view.html");
+        } else {
+            mens("Cliente no tiene activo el servicio", "mens");
+            terminaBC();
+        }
+        
+    }, 2000);
 }
 
-function controlVehiculo() {
-    kendo.mobile.application.navigate("components/ControlVehiculo/view.html");
+function controlVehiculoB() {
+    kendo.ui.progress($("#ordenBasicoScreen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/ControlVehiculo/view.html");
+    }, 2000);
 }
 
 function habilitarOpciones() {
     try { 
         var NoOrden1 = datos_Vehiculo.numeroorden; //document.getElementById("NoOrdenn").value;
         if (NoOrden1 != "") {
-            var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
+            var Url = urlsherlocMenu + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
             //var params = { orden: NoOrden1, output: "json" }; data: params,
             $.ajax({
                 url: Url, type: "GET",  dataType: "json",async: false,

@@ -1,12 +1,17 @@
 app.reporteParada = kendo.observable({
     onShow: function () {$("#NoOrdenPA1").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
-        initMapP();
+        llamarMapP();
     },
     afterShow: function () { },
     inicializa: function () { }
 });
 app.localization.registerView('reporteParada');
-
+function llamarMapP() {
+    kendo.ui.progress($("#reporteParadaScreen"), true);
+    setTimeout(function () {
+        initMapP();
+    }, 2000);
+}
 // The following example creates complex markers to indicate beaches near
 // Sydney, NSW, Australia. Note that the anchor is set to (0,32) to correspond
 // to the base of the flagpole.
@@ -27,6 +32,7 @@ function initMapP() {
         closeInfoWindow();
     });
     setMarkersP(mapP);
+    kendo.ui.progress($("#reporteParadaScreen"), false);
 }
 /*function openInfoWindow(marker) {
     try {
@@ -58,7 +64,7 @@ function setMarkersP(mapP) {
     try {
         beachesP = [];
         var tama = registroPA.lstAlarmas.length;
-        if (tama > 15) { registroPA.lstAlarmas.length = 15; }
+       // if (tama > 15) { registroPA.lstAlarmas.length = 15; }
         for (var i = 0; i < registroPA.lstAlarmas.length; i++) {
             beachesP.push([parseFloat(registroPA.lstAlarmas[i].Latitud), parseFloat(registroPA.lstAlarmas[i].Longitud), registroPA.lstAlarmas[i].Velocidad, registroPA.lstAlarmas[i].Fecha]);
         }

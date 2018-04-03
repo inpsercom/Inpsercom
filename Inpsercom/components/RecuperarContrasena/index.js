@@ -1,19 +1,25 @@
 'use strict';
 
 app.miKia5 = kendo.observable({
-    onShow: function () { document.getElementById("recuperar_email").focus(); },
+    onShow: function () { document.getElementById("recuperar_email").focus(); llamarmailCTR(); },
     afterShow: function () { }
 });
 app.localization.registerView('miKia5');
+function llamarmailCTR() 
+{
+    kendo.ui.progress($("#miKia5Screen"), true);
+    setTimeout(function () {
+        enviarMailCT();
+    }, 2000);
+}
 
-function enviarMail() {
+function enviarMailCT() {
     var _mail = document.getElementById("recuperar_email").value;
     var data = "";
     if ((_mail) && (_mail != "")) {
         try {
             if (document.getElementById("recuperar_email").value != "") {
                 var result = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(document.getElementById("recuperar_email").value);
-
                 if (result == false) {
                     document.getElementById("recuperar_email").focus();
                     document.getElementById("recuperar_email").style.borderColor = "red";
@@ -24,8 +30,9 @@ function enviarMail() {
                     kendo.mobile.application.navigate("components/logIn/view.html");
                 }
             }
-        } catch (f) { mens("Error validacion mail", "mens"); return;}
+        } catch (f) { mens("Error validacion mail", "mens"); kendo.ui.progress($("#miKia5Screen"), false); return; }
     }
+    kendo.ui.progress($("#miKia5Screen"), false);
 }
 
 function registrarMailRC() {
@@ -69,17 +76,18 @@ function registrarMailRC() {
                 if (data == "1,Succes") {
                     try {
                         mens("Su clave fue enviada a su correo", "success");
-                    } catch (s) { mens("Error servicio login", "mens");return;  } //alert (s); 
+                    } catch (s) { mens("Error servicio login", "mens"); kendo.ui.progress($("#miKia5Screen"), false); return; } //alert (s); 
                 }
                 else {
                     
                     if(data.substring(0,1) == "0") {data = data.substring(2, data.length);}
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                         "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                         "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); kendo.ui.progress($("#miKia5Screen"), false); return;
                 }
             },
-            error: function (err) { mens("Error en servicio cliente", "mens"); return; } //alert(err);
+            error: function (err) { mens("Error en servicio cliente", "mens"); kendo.ui.progress($("#miKia5Screen"), false); return; } //alert(err);
         });
-    } catch (e) { mens("Error en el servicio clientes", "mens"); return; } //aler(e);
+    } catch (e) { mens("Error en el servicio clientes", "mens"); kendo.ui.progress($("#miKia5Screen"), false); return; } //aler(e);
+    kendo.ui.progress($("#miKia5Screen"), false);
     return data;
 }

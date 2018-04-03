@@ -2,13 +2,18 @@
 app.reporteExcesos = kendo.observable({
     onShow: function () {
         $("#NoOrdenEX1").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
-        initMapE();
+        llamarMapE();
     },
     afterShow: function () { },
     inicializa: function () { }
 });
 app.localization.registerView('reporteExcesos');
-
+function llamarMapE() {
+    kendo.ui.progress($("#reporteExcesosScreen"), true);
+    setTimeout(function () {
+        initMapE();
+    }, 2000);
+}
 // The following example creates complex markers to indicate beaches near
 // Sydney, NSW, Australia. Note that the anchor is set to (0,32) to correspond
 // to the base of the flagpole.
@@ -24,11 +29,11 @@ function initMapE() {
         center: { lat: -0.1808764, lng: -78.48463070000002 }
     });
     //infoWindow = new google.maps.InfoWindow();
-
     google.maps.event.addListener(mapE, 'click', function () {
         closeInfoWindow();
     });
     setMarkersE(mapE);
+    kendo.ui.progress($("#reporteExcesosScreen"), false);
 }
 /*function openInfoWindow(marker) {
     try {
@@ -64,7 +69,7 @@ function setMarkersE(mapE) {
             if (tama > 15) { factor = Math.trunc((tama-2) / 15); }
         for (var i = 0; i < registro.lstAlarmas.length; i++) {
             beachesE.push([parseFloat(registro.lstAlarmas[i].Latitud), parseFloat(registro.lstAlarmas[i].Longitud), registro.lstAlarmas[i].Velocidad,registro.lstAlarmas[i].Fecha]);
-            i = i + factor;
+            //i = i + factor;
         }
         
         // Adds markers to the map.

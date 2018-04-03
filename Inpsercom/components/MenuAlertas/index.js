@@ -1,6 +1,7 @@
 app.menuAlertas = kendo.observable({
     init: function () { },
     onShow: function () {
+        kendo.ui.progress($("#menuAlertasScreen"), false);
         $("#NoOrdenAL").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
     },
     afterShow: function () { }
@@ -9,7 +10,10 @@ app.menuAlertas = kendo.observable({
 app.localization.registerView('menuAlertas');
 
 function excesos() {
-    kendo.mobile.application.navigate("components/ReporteAlertas/view.html");
+    kendo.ui.progress($("#menuAlertasScreen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/ReporteAlertas/view.html");
+    }, 2000);
 }
 
 /*function panico() {
@@ -17,13 +21,22 @@ function excesos() {
 }*/
 
 function geocercas() {
-    kendo.mobile.application.navigate("components/ReporteGeocercas/view.html");
+    kendo.ui.progress($("#menuAlertasScreen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/ReporteGeocercas/view.html");
+    }, 2000);
 }
 
 function apaencendido() {
-    kendo.mobile.application.navigate("components/ReporteApaEncendidos/view.html");
+    kendo.ui.progress($("#menuAlertasScreen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/ReporteApaEncendidos/view.html");
+    }, 2000);
 }
 
 function paradas() {
-    kendo.mobile.application.navigate("components/ReporteParadas/view.html");
+    kendo.ui.progress($("#menuAlertasScreen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/ReporteParadas/view.html");
+    }, 2000);
 }

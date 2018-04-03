@@ -5,6 +5,7 @@ app.miKia2 = kendo.observable({
     onShow: function () {
         try {
             //document.getElementById("NoOrdenn").value = "";
+            kendo.ui.progress($("#miKia2Screen"), false);
             $("#NoOrden").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             NoOrden = datos_Vehiculo.numeroorden;
             if (NoOrden == "") {
@@ -34,26 +35,48 @@ app.miKia2 = kendo.observable({
 app.localization.registerView('miKia2');
 
 function ubicarVehiculo() {
-        kendo.mobile.application.navigate("components/Ubicacion/view.html");
+    kendo.ui.progress($("#miKia2Screen"), true);
+    setTimeout(function () {
+        //alert(inspeccionar(datos_sherloc));
+        if (datos_sherloc.ubicacion == "SI") {
+            kendo.mobile.application.navigate("components/Ubicacion/view.html");
+        } else {
+            mens("Cliente no tiene activo el servicio", "mens");
+            terminaU();
+        }
+        
+    }, 2000);
         //kendo.mobile.application.navigate("components/ReporteExceso/view.html");
 }
-function reporteAlertas(){
-    kendo.mobile.application.navigate("components/MenuAlertas/view.html");
+function terminaU() {
+    kendo.ui.progress($("#miKia2Screen"), false);
+}
+function reporteAlertas() {
+    kendo.ui.progress($("#miKia2Screen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/MenuAlertas/view.html");
+    }, 2000);  
 }
 function recorrerAuto() {
+    kendo.ui.progress($("#miKia2Screen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/FechaRecorrido/view.html");
+    }, 2000);
     //kendo.mobile.application.navigate("components/ControlarAuto/view.html");
-    kendo.mobile.application.navigate("components/FechaRecorrido/view.html");
 }
 
 function controlVehiculo() {
-    kendo.mobile.application.navigate("components/ControlVehiculo/view.html");
+    kendo.ui.progress($("#miKia2Screen"), true);
+    setTimeout(function () {
+        kendo.mobile.application.navigate("components/ControlVehiculo/view.html");
+    }, 2000);
 }
 
 function habilitarOpciones() {
     try { 
         var NoOrden1 = datos_Vehiculo.numeroorden; //document.getElementById("NoOrdenn").value;
         if (NoOrden1 != "") {
-            var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
+            var Url = urlsherlocMenu + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
             //var params = { orden: NoOrden1, output: "json" }; data: params,
             $.ajax({
                 url: Url, type: "GET",  dataType: "json",async: false,

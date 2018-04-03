@@ -1,10 +1,29 @@
 //'use strict';
-var datos_Cliente, Device_identifier, datos_Vehiculo, urlService, observa, observa1;
-var VersionHM = "ver 1.0";
+var datos_Cliente, Device_identifier, datos_Vehiculo, urlService, observa, observa1, registrado;
+var datos_sherloc = '';
+
+var VersionHM = "";
 var urlInterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';//'http://192.168.1.3:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';  // 'http://192.168.1.3:8089';http://186.71.21.170:8089" + "/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/Login/s@s.com;a 
 var urlExterno = 'http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/';// 'http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';http://186.71.21.170:8089/biss.sherloc/Services/SL/Sherloc/Sherloc.svc/';
-var urlImagen = 'http://200.31.10.92:8092/appk_aekia/imagenes/'
-//var urlsherloc = 'http://190.110.193.131/ReportService.svc/';http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/
+var urlImagen = '';// 'http://200.31.10.92:8092/appk_aekia/imagenes/';
+var urlCitas = ''; // 'http://citatallerkia.com.ec/cliente/reservar-cita';
+var urlColisiones = '';   // 'http://citatallerkia.com.ec/cliente/reservar-cita';
+var urlsherlocMenu = ''; // 'http://190.110.193.131/ClienteService.svc/ClientProfile/';
+var urlsherlocControl = ''; // 'http://190.110.193.131/ServiceERM.svc/EnviarMensaje/';
+var urlsherlocH = ''; // 'http://190.110.193.131/ServiceERM.svc/Historico/';
+var urlsherlocReport = ''; // 'http://190.110.193.131/ReportService.svc/';
+var urlPdfInterno = '';
+var urlPdfExterno = '';
+var urlMenuAsistencia = ''; //'http://www.kia.com/ec/service/';
+var urlMenuConcesionarios = '';
+var urlCotizaRep = '';
+var urlGarantiaKia = '';
+var urlMantenimiento = '';
+var urlSeminuevos = ''; //'https://www.seminuevos.com.ec/';
+var varPuntosMapa = 0; //23;
+
+
+//http://200.31.10.92:8092/appk_aekia/Services/SL/Sherloc/Sherloc.svc/
 var notificationWidget;
 (function () {
     var app = {
@@ -245,7 +264,7 @@ function mens(Mensaje, Tipo) {
             bold: true
         }
     });
-    
+
     notificationWidget.showText(Mensaje, Tipo);
 }
 
@@ -367,7 +386,7 @@ function mensajePrm(Tipo, Tiempo, Logo, Titulo, Mensaje, Cerrar, Cerrar1) {
             n.show({ myMessage: Mensaje });
         }
     } catch (j) {
-        mens("error en mensaje","mens");
+        mens("Error en mensaje", "mens");
     }
 }
 

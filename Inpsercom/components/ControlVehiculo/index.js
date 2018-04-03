@@ -12,15 +12,53 @@ function regresar(){
     } else { kendo.mobile.application.navigate("components/OrdenInstalacionBasico/view.html"); }
 }
 
+function llamarapertura() {
+    kendo.ui.progress($("#miKia4Screen"), true);
+    setTimeout(function () {
+        if (datos_sherloc.apertura == "SI") {
+            aperturaRemota();
+        } else {
+            mens("Cliente no tiene activo el servicio", "mens");
+            terminaC();
+        }
+    }, 2000);
+}
+function terminaC() {
+    kendo.ui.progress($("#miKia4Screen"), false);
+}
+function llamardesbloqueo() {
+    kendo.ui.progress($("#miKia4Screen"), true);
+    setTimeout(function () {
+        if (datos_sherloc.desbloqueo == "SI") {
+            desbloqueAuto();
+        } else {
+            mens("Cliente no tiene activo el servicio", "mens");
+            terminaC();
+        }
+    }, 2000);
+}
+
+function llamarbloqueo() {
+    kendo.ui.progress($("#miKia4Screen"), true);
+    setTimeout(function () {
+        if (datos_sherloc.bloqueo == "SI") {
+            bloqueAuto();
+        } else {
+            mens("Cliente no tiene activo el servicio", "mens");
+            terminaC();
+        }
+    }, 2000);
+}
+
 function aperturaRemota(){
     try {
         //NoOrden = 72353;
         if (NoOrden != "") {
-            mens("AUTO ABIERTO LAS PUERTAS","mens");
-            /*kendo.ui.progress($("#miKia2Screen"), true);
+            //mens("AUTO ABIERTO LAS PUERTAS","mens");
+            //kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             //var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
-            var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/A?" + NoOrden; 
+            var Url = urlsherlocControl + "A?"; // + NoOrden;
             var params = {
                 orden: NoOrden,
                 output: "json"
@@ -33,32 +71,35 @@ function aperturaRemota(){
                 async: false,
                 success: function (data) {
                     try {
-                        //alert(inspeccionar(data));
+                        mens("AUTO ABIERTO LAS PUERTAS","mens");
                     } catch (e) {
-                        alert(e);
-                        kendo.ui.progress($("#miKia2Screen"), false);
+                        mens("ERROR APERTURA DE PUERTAS INTENTELO NUEVAMENTE");
+                        //alert(e);
+                        //kendo.ui.progress($("#miKia2Screen"), false);
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
-                    kendo.ui.progress($("#miKia2Screen"), false);
+                    mens("ERROR DE CONEXION A SHERLOC INTENTELO NUEVAMENTE");
+                    //alert(JSON.stringify(err));
+                    //kendo.ui.progress($("#miKia2Screen"), false);  para poner protector pantalla
                 }
-            });*/
+            });
         }
     } catch (e) {
-        mens("Error de servicios Sherloc", "mens");return;
+        mens("Error de servicios Sherloc", "mens"); kendo.ui.progress($("#miKia4Screen"), false); return;
     }
+    kendo.ui.progress($("#miKia4Screen"), false);
 }
 
 function desbloqueAuto(){
     try {
         //NoOrden = 72353;
         if (NoOrden != "") {
-            mens("AUTO DESBLOQUEADO","mens");
-            /*kendo.ui.progress($("#miKia2Screen"), true);
+            //mens("AUTO DESBLOQUEADO","mens");
+            //kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             //var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
-            var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/D?" + NoOrden; 
+            var Url = urlsherlocControl + "D?"; // + NoOrden;
             var params = {
                 orden: NoOrden,
                 output: "json"
@@ -71,32 +112,35 @@ function desbloqueAuto(){
                 async: false,
                 success: function (data) {
                     try {
-                        //alert(inspeccionar(data));
+                        mens("AUTO DESBLOQUEADO","mens");
                     } catch (e) {
-                        alert(e);
-                        kendo.ui.progress($("#miKia2Screen"), false);
+                        mens("ERROR AL DESBLOQUEADO INTENTELO NUEVAMENTE");
+                        //alert(e);
+                        //kendo.ui.progress($("#miKia2Screen"), false);
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
-                    kendo.ui.progress($("#miKia2Screen"), false);
+                    mens("ERROR DE CONEXION A SHERLOC INTENTELO NUEVAMENTE");
+                    //alert(JSON.stringify(err));
+                    //kendo.ui.progress($("#miKia2Screen"), false);
                 }
-            });*/
+            });
         }
     } catch (e) {
-        mens("Error de servicios Sherloc", "mens");return;
+        mens("Error de servicios Sherloc", "mens"); kendo.ui.progress($("#miKia4Screen"), false); return;
     }
+    kendo.ui.progress($("#miKia4Screen"), false);
 }
 
 function bloqueAuto() {
     try {
         //NoOrden = 72353;
         if (NoOrden != "") {
-            mens("AUTO BLOQUEADO", "mens");
-            /*kendo.ui.progress($("#miKia2Screen"), true);
+           // mens("AUTO BLOQUEADO", "mens");
+           //kendo.ui.progress($("#miKia2Screen"), true);
             //http://190.110.193.131/ClienteService.svc/ClientProfile/8LGJE5520CE010039/R/0992327685001/1234567890/0995545554?orden=72363
             //var Url = "http://190.110.193.131/ClienteService.svc/ClientProfile/" + datos_Cliente.chasis + "/R/" + datos_Cliente.identificacion_cliente + "/1234567890/" + datos_Cliente.telefono_celular;
-            var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/B?" + NoOrden; 
+            var Url = urlsherlocControl + "B?"; // + NoOrden;
             var params = {
                 orden: NoOrden,
                 output: "json"
@@ -109,19 +153,22 @@ function bloqueAuto() {
                 async: false,
                 success: function (data) {
                     try {
-                        
+                        mens("AUTO BLOQUEADO", "mens");
                     } catch (e) {
-                        alert(e);
-                        kendo.ui.progress($("#miKia2Screen"), false);
+                        mens("ERROR AL BLOQUEAR INTENTELO NUEVAMENTE");
+                        //alert(e);
+                        //kendo.ui.progress($("#miKia2Screen"), false);
                     }
                 },
                 error: function (err) {
-                    alert(JSON.stringify(err));
-                    kendo.ui.progress($("#miKia2Screen"), false);
+                    mens("ERROR DE COMUNICACION CON SHERLOC, INTENTELO NUEVAMENTE");
+                    //alert(JSON.stringify(err));
+                    //kendo.ui.progress($("#miKia2Screen"), false);
                 }
-            });*/
+            });
         }
     } catch (e) {
-        mens("Error de servicios Sherloc", "mens");return;
+        mens("Error de servicios Sherloc", "mens"); kendo.ui.progress($("#miKia4Screen"), false); return;
     }
+    kendo.ui.progress($("#miKia4Screen"), false);
 }

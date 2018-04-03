@@ -65,7 +65,7 @@ function traeCordenadasUbicaPN() {
         var FechaRecEX = document.getElementById("FechaInicioPN").value;
         var FechaRecEX1 = document.getElementById("FechaFinPN").value;;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-        var Url = "http://190.110.193.131/ReportService.svc/ReporteEventoPanico/" + FechaRecEX + "/" + FechaRecEX1;
+        var Url = urlsherlocReport + "ReporteEventoPanico/" + FechaRecEX + "/" + FechaRecEX1;
         var params = {
             orden: ordenUsuario,
             output: "json"

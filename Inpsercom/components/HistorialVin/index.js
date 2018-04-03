@@ -45,7 +45,7 @@ function ConsultarHV() {
                 try {
                     if (data.OrdenesGetResult == null) {
                         document.getElementById("logo").setAttribute('style', 'display: block');
-                        mens("No existe datos", "mens"); return;
+                        mens("No existe órdenes de trabajo en curso", "mens"); return;
                     } else {
                         infor = (JSON.parse(data.OrdenesGetResult)).CabeceraOT01;
                         document.getElementById("gridMC").setAttribute('style', 'display: block');

@@ -59,6 +59,13 @@ function regresaPA() {
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
 
+function llamarcoordenadasPA() {
+    kendo.ui.progress($("#reporteParadasScreen"), true);
+    setTimeout(function () {
+        traeCordenadasUbicaPA();
+    }, 2000);
+}
+
 function traeCordenadasUbicaPA() {
     var reporte;
     try {
@@ -66,7 +73,7 @@ function traeCordenadasUbicaPA() {
         var FechaRecEX = document.getElementById("FechaInicioPA").value;
         var FechaRecEX1 = document.getElementById("FechaFinPA").value;;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-        var Url = "http://190.110.193.131/ReportService.svc/ReporteParadas/" + FechaRecEX + "/" + FechaRecEX1;
+        var Url = urlsherlocReport + "ReporteParadas/" + FechaRecEX + "/" + FechaRecEX1;
         var params = {
             orden: ordenUsuario,
             output: "json"
@@ -79,6 +86,10 @@ function traeCordenadasUbicaPA() {
             async: false,
             success: function (data) {
                 try {
+                    if (data.ReporteParadasResult.message != null) {
+                        mens(data.ReporteParadasResult.message, "mens");
+                        return;
+                    }
                     data = data.ReporteParadasResult.lstReporteAlarmas;
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].totalRegistros != "0") {
@@ -92,12 +103,14 @@ function traeCordenadasUbicaPA() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "mens");
+                    mens(data.ReporteParadasResult.message, "mens");
+                    kendo.ui.progress($("#reporteParadasScreen"), false);
                     return;
                 }
             },
             error: function (err) {
                 mens("Error servicio sherloc", "mens");
+                kendo.ui.progress($("#reporteParadasScreen"), false);
                 return;
             }
         });
@@ -128,6 +141,8 @@ function traeCordenadasUbicaPA() {
         });
     } catch (d) {
         mens("Error en servicio sherloc", "mens");
+        kendo.ui.progress($("#reporteParadasScreen"), false);
         return;
     }
+    kendo.ui.progress($("#reporteParadasScreen"), false);
 }

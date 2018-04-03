@@ -12,7 +12,12 @@ app.reactivacionG = kendo.observable({
     afterShow: function () { }
 });
 app.localization.registerView('reactivacionG');
-
+function llamarmailG() {
+    kendo.ui.progress($("#reactivacionGScreen"), true);
+    setTimeout(function () {
+        enviarMailG();
+    }, 2000);
+}
 function enviarMailG() {
     var documento;
     try {
@@ -26,7 +31,8 @@ function enviarMailG() {
                 "AVISO", "<span align='justify'>Muchas gracias por contactarse con nosotros, una persona del Departamento de Servicio a Cliente se comunicará con ud. Para generar la renovación de su garantía.</b></span>" , true);
             }
             kendo.mobile.application.navigate("components/EstadoMantenimiento/view.html");
-        } catch (f) { mens("Error validacion mail", "mens"); return; }
+    } catch (f) { mens("Error validacion mail", "mens"); kendo.ui.progress($("#reactivacionGScreen"), false); return; }
+    kendo.ui.progress($("#reactivacionGScreen"), false);
 }
 
 function EnvioMailGA(documento) {
@@ -46,17 +52,19 @@ function EnvioMailGA(documento) {
                     } catch (e) {
                         mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
                      "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
-                        borraCampos(); return;
+                        borraCampos(); kendo.ui.progress($("#reactivacionGScreen"), false); return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexion servicio Vehiculo", "mens");
+                    mens("Error conexion servicio Vehiculo", "mens"); kendo.ui.progress($("#reactivacionGScreen"), false);
                     return;
                 }
             });
+            kendo.ui.progress($("#reactivacionGScreen"), false);
             return resultado;
         }
     } catch (f) {
-        mens("Error conexion servicio Vehiculo", "mens"); return;
+        mens("Error conexion servicio Vehiculo", "mens"); kendo.ui.progress($("#reactivacionGScreen"), false); return;
     }
+    kendo.ui.progress($("#reactivacionGScreen"), false);
 }

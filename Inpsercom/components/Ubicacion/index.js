@@ -5,6 +5,10 @@ app.miKia3 = kendo.observable({
         try {
             $("#NoOrdenUB").text(datos_Cliente.nombre_alias+": "+datos_Vehiculo.numeroorden);
             var cords = traeCordenadasUbica();
+            if (cords.RespuestaComando == "Error") {
+                mens(cords.errorDetail);
+                return;
+            }
             if (cords.Latitud == null) { mens("No existe datos", "mens"); return; }
             var PosVehi = { lat: parseFloat(cords.Latitud), lng: parseFloat(cords.Longitud) };
             //Calculo el % a restar al alto total de la pantalla para que el mapa se ajuste correctamente al 100%
@@ -56,7 +60,10 @@ function reload() {
 function reload2() {
     try {
         var cords = traeCordenadasUbica();
-
+        if (cords.RespestaComando == "Error") {
+            mens(cords.errorDetail);
+            return;
+        }
         var PosVehi = new google.maps.LatLng(
             cords.Latitud,
             cords.Longitud
@@ -93,7 +100,7 @@ function traeCordenadasUbica() {
     try {
         var cords;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-        var Url = "http://190.110.193.131/ServiceERM.svc/EnviarMensaje/U?" + ordenUsuario;
+        var Url = urlsherlocControl + "U?" + ordenUsuario;
         var params = {
             orden: ordenUsuario,
             output: "json"

@@ -60,6 +60,13 @@ function regresaGC() {
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
 
+function llamarcoordenadasGC() {
+    kendo.ui.progress($("#reporteGeocercasScreen"), true);
+    setTimeout(function () {
+        traeCordenadasUbicaGC();
+    }, 2000);
+}
+
 function traeCordenadasUbicaGC() {
     try {
         var cords = [];
@@ -68,7 +75,7 @@ function traeCordenadasUbicaGC() {
         var FechaRecGC = document.getElementById("FechaInicioGC").value;
         var FechaRecGC1 = document.getElementById("FechaFinGC").value;;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-        var Url = "http://190.110.193.131/ReportService.svc/ReporteGeoCercas/" + FechaRecGC + "/" + FechaRecGC1 + "?" + ordenUsuario;
+        var Url = urlsherlocReport + "ReporteGeoCercas/" + FechaRecGC + "/" + FechaRecGC1; // + "?" + ordenUsuario;
         var params = {
             orden: ordenUsuario,
             output: "json"
@@ -110,11 +117,13 @@ function traeCordenadasUbicaGC() {
                     }
                 } catch (e) {
                     mens("Error coordenadas servicio sherloc", "mens");
+                    kendo.ui.progress($("#reporteGeocercasScreen"), false);
                     return;
                 }
             },
             error: function (err) {
                 mens("Error servicio sherloc", "mens");
+                kendo.ui.progress($("#reporteGeocercasScreen"), false);
                 return;
             }
         });
@@ -148,6 +157,7 @@ function traeCordenadasUbicaGC() {
             }
         });
     } catch (d) {
-        mens("Error en servicio sherloc", "mens");return;
+        mens("Error en servicio sherloc", "mens"); kendo.ui.progress($("#reporteGeocercasScreen"), false); return;
     }
+    kendo.ui.progress($("#reporteGeocercasScreen"), false);
 }

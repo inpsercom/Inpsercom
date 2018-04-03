@@ -22,6 +22,12 @@ app.miKia6 = kendo.observable({
     afterShow: function () { }
 });
 app.localization.registerView('miKia6');
+function llamarregistro() {
+    kendo.ui.progress($("#miKia6Screen"), true);
+    setTimeout(function () {
+        registrarRN();
+    }, 2000);
+}
 function terminosC() {
     kendo.mobile.application.navigate("components/TerminosCondiciones/view.html");
 }
@@ -119,7 +125,7 @@ function registrarRN() {
             "persona_nombre": Nombres,
             "persona_apellido": Apellidos,
             "mail": email,
-            "chasis": chasis,
+            "chasis": chasis.toUpperCase(),
             "nombre_alias": alias,
             "fecha_nacimiento": FechaNacimiento,
             "telefono_celular": celular,
@@ -146,9 +152,9 @@ function registrarRN() {
            */
         });
         if (indicador == 1) {
-            mens("Verificar datos en blanco", "mens"); return;
+            mens("Verificar datos en blanco", "mens"); kendo.ui.progress($("#miKia6Screen"), false); return;
         }
-        if(document.getElementById("cbkterminos").checked == false){mens("Debe aceptar terminos y condiciones","mens");return;}
+        if (document.getElementById("cbkterminos").checked == false) { mens("Debe aceptar terminos y condiciones", "mens"); kendo.ui.progress($("#miKia6Screen"), false); return; }
         $.ajax({
             url: Url,
             type: "POST",
@@ -163,7 +169,7 @@ function registrarRN() {
                 if (data.substring(0, 1) == "0") {
                     if (data.substring(0, 1) == "0" || data.substring(0, 1) == "1") { data = data.substring(2, data.length); }
                     mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                    "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); return;
+                    "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true); kendo.ui.progress($("#miKia6Screen"), false); return;
                 }else {
                     try {
                         mens("Registro Exitoso", "success");
@@ -186,7 +192,10 @@ function registrarRN() {
                             //numeroorden: "72363",
                             secuencia_mv01: usu.Cliente[0].secuencia_mv01,
                             mail: usu.Cliente[0].mail,
-                            pas: usu.Cliente[0].password
+                            pas: usu.Cliente[0].password,
+                            mail_cajero: usu.Cliente[0].mail_cajero,
+                            codigo: usu.Cliente[0].codigo_temporal,
+                            codigo_consecionario: ""
                         };
                         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(Usuario));
                         datos_Cliente = Usuario;
@@ -213,14 +222,17 @@ function registrarRN() {
                         }
                         //kendo.mobile.application.navigate("components/miKia/view.html");
                         borraCamposRE();
+                        registrado = "false";
+                        kendo.ui.progress($("#miKia6Screen"), false);
                         kendo.mobile.application.navigate("components/logIn/view.html");
                         return;
-                    } catch (s) { mens("Error servicio cliente", "mens"); return; } //alert (s); 
+                    } catch (s) { mens("Error servicio cliente", "mens"); kendo.ui.progress($("#miKia6Screen"), false); return; } //alert (s); 
                 }
             },
-            error: function (err) { mens("Error en servicio clientes", "mens"); return; } //alert(err);
+            error: function (err) { mens("Error en servicio clientes", "mens"); kendo.ui.progress($("#miKia6Screen"), false); return; } //alert(err);
         });
-    } catch (e) { mens("Error en el servicio clientes", "mens"); return; } //aler(e);
+    } catch (e) { mens("Error en el servicio clientes", "mens"); kendo.ui.progress($("#miKia6Screen"), false); return; } //aler(e);
+    kendo.ui.progress($("#miKia6Screen"), false);
 }
 
 function ValidaMailRegistro() {
@@ -292,17 +304,18 @@ function validausuarioREG(email) {
                         resultado = JSON.parse(data.UsuarioGetResult);
                     } catch (e) {
                         mensajePrm("timeAlert", 0, "<img id='autoInpse2'  width='60' height='26' src='resources/Kia-logo.png'>",
-                      "ERROR", "<span align='justify'>" + data + "</b></span>", true, true);
+                      "ERROR", "<span align='justify'>" + data + "</b></span>", true, true); kendo.ui.progress($("#miKia6Screen"), false);
                         return;
                     }
                 },
                 error: function (err) {
-                    mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); kendo.ui.progress($("#miKia6Screen"), false); return;
                 }
             });
+            kendo.ui.progress($("#miKia6Screen"), false);
             return resultado;
         }
     } catch (f) {
-        mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); return;
+        mens("Error conexi" + String.fromCharCode(243) + "n servicio Usuario", "mens"); kendo.ui.progress($("#miKia6Screen"), false); return;
     }
 }

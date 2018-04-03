@@ -8,7 +8,6 @@ app.mntVehiculos = kendo.observable({
 
             //   $("#NumeroChasisRV").text(datos_Cliente.chasis);
             // RRP: alias
-            kendo.ui.progress($("#miKiaScreen"), true);
             $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
             borraVH();
             var email = datos_Cliente.mail;
@@ -66,7 +65,7 @@ app.mntVehiculos = kendo.observable({
                 }]
             });*/
             ind = 1;
-        } catch (e) { mens("actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
+        } catch (e) { mens("Actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
     }
 });
 app.localization.registerView('mntVehiculos');
@@ -80,12 +79,14 @@ function grid_Change(e) {
         }
         registro = selectedDataItems[0];
         datos_Cliente.chasis = registro.chasis;
-
         datos_Cliente.nombre_alias = registro.nombre_alias; //RRP
         localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
         datos_Vehiculo.chasis = registro.chasis;
         datos_Vehiculo.nombre_alias = registro.nombre_alias;
         datos_Vehiculo.numeroorden = registro.numeroorden;
+        datos_Vehiculo.placa = registro.placa;
+        datos_Vehiculo.identificacion_cliente = registro.identificacion_cliente;
+        datos_Vehiculo.identificacion_flota = registro.identificacion_flota;
         localStorage.setItem("Inp_DatosVehiculo", JSON.stringify(datos_Vehiculo));
         $("#NumeroChasisRV").text(datos_Cliente.nombre_alias);
         //datos_Vehiculo = JSON.parse(localStorage.getItem("Inp_DatosVehiculo"));
@@ -127,9 +128,17 @@ function actualizaAsignar() {
         mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return;
     }
 }
+
+function llamargrabarVH() {
+    kendo.ui.progress($("#mntVehiculosScreen"), true);
+    setTimeout(function () {
+        grabarVH();
+    }, 2000);
+}
+
 function grabarVH() {
     try {
-        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("Veh" + String.fromCharCode(237) + "culo esta vacio", "mens"); return; }
+        if (document.getElementById("VIN").value == "" || document.getElementById("VIN").value == " ") { mens("Veh" + String.fromCharCode(237) + "culo esta vacio", "mens"); kendo.ui.progress($("#mntVehiculosScreen"), false); return; }
         var Url = urlService + "ClienteSet";
         var params = {
             "secuencia_mv01": 5,
@@ -157,18 +166,19 @@ function grabarVH() {
                      "Advertencia", "<span align='justify'>" + data + "</b></span>", true, true);  
                 } else {
                     try {
-                        mens("Registro Exitoso", "mens");
+                        mens("Registro Exitosos", "mens");
                         borraVH();
                         actualizaAsignar();
                         validavehiculo(params.mail);
-                    } catch (s) { mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
+                    } catch (s) { mens("Error servicio actualizar veh" + String.fromCharCode(237) + "culo", "mens"); kendo.ui.progress($("#mntVehiculosScreen"), false); return; }
                 }
             },
             error: function (err) {
-                mens("Error conexi" + String.fromCharCode(243) + "n servicio veh" + String.fromCharCode(237) + "culo", "mens"); return;
+                mens("Error conexi" + String.fromCharCode(243) + "n servicio veh" + String.fromCharCode(237) + "culo", "mens"); kendo.ui.progress($("#mntVehiculosScreen"), false); return;
             }
         });
-    } catch (e) { mens("Error servicio grabar veh" + String.fromCharCode(237) + "culo", "mens"); return; }
+    } catch (e) { mens("Error servicio grabar veh" + String.fromCharCode(237) + "culo", "mens"); kendo.ui.progress($("#mntVehiculosScreen"), false); return; }
+    kendo.ui.progress($("#mntVehiculosScreen"), false);
 }
 
 function borraVH() {
@@ -192,15 +202,15 @@ function validavehiculo(email) {
                             data: resultado
                         });
                         grid.setDataSource(dataSource);
-                    } catch (e) { mens("Error servicio veh" + String.fromCharCode(237) + "culo", "mens"); return; }
+                    } catch (e) { mens("Error servicio veh" + String.fromCharCode(237) + "culo", "mens"); kendo.ui.progress($("#mntVehiculosScreen"), false); return; }
                 },
                 error: function (err) {
-                    mens("Error conexi" + String.fromCharCode(243) + "n servicio veh" + String.fromCharCode(237) + "culo", "mens"); return;
+                    mens("Error conexi" + String.fromCharCode(243) + "n servicio veh" + String.fromCharCode(237) + "culo", "mens"); kendo.ui.progress($("#mntVehiculosScreen"), false); return;
                 }
             });
             return resultado;
         }
-    } catch (e) { mens("Error servicio veh" + String.fromCharCode(237) + "culo", "mens"); return; }
+    } catch (e) { mens("Error servicio veh" + String.fromCharCode(237) + "culo", "mens"); kendo.ui.progress($("#mntVehiculosScreen"), false); return; }
 }
 function grid_remove(e) {
     try {
@@ -257,7 +267,7 @@ function onSI(e) {
             }
             localStorage.setItem("Inp_DatosUsuario", JSON.stringify(datos_Cliente));
         }
-    }catch(e1){ mens("error al borrar registro","mens");}
+    }catch(e1){ mens("Error al borrar registro","mens");}
 }
 
 function onNO(e) {

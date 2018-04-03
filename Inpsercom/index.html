@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
+
 
 <head>
     <title></title>
@@ -13,8 +14,13 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=geometry"></script>
     <link href="kendo/styles/kendo.common.min.css" rel="stylesheet">
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
+    <link href="kendo/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="kendo/styles/kendo.default.min.css" rel="stylesheet">
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
+    <!--<link href="kendo/styles/kendo.default.mobile.min.css" rel="stylesheet" />-->
 
     <link href="styles/overrides.css" rel="stylesheet">
+    
     <link href="styles/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
     <link href="css/material-kit.css" rel="stylesheet" />
@@ -27,10 +33,38 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
     <script src="app.js"></script>
-</head>
 
-<body id="kendoUiMobileApp">
-    <script src="components/Registro/index.js"></script>
+    <!------------------------------------------->
+   
+    <!--<link rel="stylesheet" href="pdf/pdfjs-dist-master/web/pdf_viewer.css">-->
+    <script src="pdf/pdfjs-dist-master/viewer.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="pdf/pdfjs-dist-master/viewer.css">-->
+    <script src="pdf/pdfjs-dist-master/build/pdf.js"></script>
+    <script src="pdf/pdfjs-dist-master/web/pdf_viewer.js"></script>
+    <script src="http://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script src="pdf/pdf.js"></script>
+    <script src="pdf/pdfjs-dist-master/lib/pdf.js"></script>
+    
+
+        <style>
+    .k-loading-mask .k-loading-image {
+        background-image: url( 'resources/carloading_3.gif') !important;
+    }
+
+    div.k-loading-mask {
+        z-index: 3;
+    }
+
+    #the-canvas {
+        border: 1px solid black;
+    }
+</style>
+        <!------------------------------------------->
+
+    </head>
+
+    <body id="kendoUiMobileApp">
+        <script src="components/Registro/index.js"></script>
     <script src="components/RecuperarContrasena/index.js"></script>
     <script src="components/ControlVehiculo/index.js"></script>
     <script src="components/Ubicacion/index.js"></script>
@@ -67,46 +101,53 @@
     <script src="components/TerminosCondiciones/index.js"></script>
     <script src="components/TerminosCondic2/index.js"></script>
     <script src="components/CambioContrasena/index.js"></script>
-    <div data-role="layout" data-id="main">
-        <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-                <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
-            </div>
-        </header>
-    </div>
+    <script src="components/AsistenciaKia/index.js"></script>
+    <script src="components/Repuestos/index.js"></script>
+    <script src="components/MenuPostventa/index.js"></script>
+    <script src="components/MenuCompraKia/index.js"></script>
+    <script src="components/PdfGarantia/index.js"></script>
+    <script src="components/PdfPrepago/index.js"></script>
 
-    <div data-role="layout" data-id="main-nonav">
-        <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-            </div>
-        </header>
-    </div>
+    <div data-role=" layout" data-id="main">
+            <header data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                    <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+                </div>
+            </header>
+        </div>
 
-    <div id="appDrawer" data-role="drawer" data-title="Menú"  data-before-show="beforeDrawerShow">
-        <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-            </div>
-        </header>
-        <ul id="navigation-container" data-role="listview">
-           <!-- <li><a href="components/OrdenInstalacion/view.html" data-icon="home"><span class="navigation-link-text" data-bind="text: strings.miKia2.title"></span></a></li>-->
-            <li><a href="components/RecuperarContrasena/view.html" data-icon="home"><span class="navigation-link-text" data-bind="text: strings.miKia5.title"></span></a></li>
-            <li><a href="components/home/view.html" data-icon="home"><span class="navigation-link-text" data-bind="text: strings.home.title"></span></a></li>
-        </ul>
-    </div>
-    <div id="notify" class="notify-pop-up">
-        <span class="notify-pop-up__content"></span>
-    </div>
-    <span id="notification"></span>
-    <!--  start index html save -->
-    <!--  end index html save -->
+        <div data-role="layout" data-id="main-nonav">
+            <header data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                </div>
+            </header>
+        </div>
 
-    <!-- START_CUSTOM_CODE_kendoUiMobileApp -->
-    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+        <div id="appDrawer" data-role="drawer" data-title="Menú"  data-before-show="beforeDrawerShow">
+            <header data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                </div>
+            </header>
+            <ul id="navigation-container" data-role="listview">
+               <!-- <li><a href="components/OrdenInstalacion/view.html" data-icon="home"><span class="navigation-link-text" data-bind="text: strings.miKia2.title"></span></a></li>-->
+                <li><a href="components/RecuperarContrasena/view.html" data-icon="home"><span class="navigation-link-text" data-bind="text: strings.miKia5.title"></span></a></li>
+                <li><a href="components/home/view.html" data-icon="home"><span class="navigation-link-text" data-bind="text: strings.home.title"></span></a></li>
+            </ul>
+        </div>
+        <div id="notify" class="notify-pop-up">
+            <span class="notify-pop-up__content"></span>
+        </div>
+        <span id="notification"></span>
+        <!--  start index html save -->
+        <!--  end index html save -->
 
-    <!-- END_CUSTOM_CODE_kendoUiMobileApp -->
-</body>
+        <!-- START_CUSTOM_CODE_kendoUiMobileApp -->
+        <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+
+                <!-- END_CUSTOM_CODE_kendoUiMobileApp -->
+            </body>
 
 </html>

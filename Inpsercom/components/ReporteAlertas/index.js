@@ -58,6 +58,13 @@ function regresaE() {
     kendo.mobile.application.navigate("components/MenuAlertas/view.html");
 }
 
+function llamarcoordenadasRA() {
+    kendo.ui.progress($("#reporteAlertasScreen"), true);
+    setTimeout(function () {
+        traeCordenadasUbicaRA();
+    }, 2000);
+}
+
 function traeCordenadasUbicaRA() {
     var reporte;
     try {
@@ -65,7 +72,7 @@ function traeCordenadasUbicaRA() {
         var FechaRecEX = document.getElementById("FechaInicioRA").value;
         var FechaRecEX1 = document.getElementById("FechaFinRA").value;;
         var ordenUsuario = datos_Vehiculo.numeroorden; //sessionStorage.getItem("Orden");
-        var Url = "http://190.110.193.131/ReportService.svc/ReporteExVelocidad/" + FechaRecEX + "/" + FechaRecEX1;// + "?" + ordenUsuario;
+        var Url = urlsherlocReport + "ReporteExVelocidad/" + FechaRecEX + "/" + FechaRecEX1;// + "?" + ordenUsuario;
         var params = {
             orden: ordenUsuario,
             output: "json"
@@ -91,11 +98,11 @@ function traeCordenadasUbicaRA() {
                         }
                     }
                 } catch (e) {
-                    mens("Error coordenadas servicio sherloc", "mens");return;
+                    mens("Error coordenadas servicio sherloc", "mens"); kendo.ui.progress($("#reporteAlertasScreen"), false); return;
                 }
             },
             error: function (err) {
-                mens("Error servicio sherloc", "mens");return;
+                mens("Error servicio sherloc", "mens"); kendo.ui.progress($("#reporteAlertasScreen"), false); return;
             }
         });
         /*FechaUbicacion
@@ -129,6 +136,7 @@ function traeCordenadasUbicaRA() {
             }
         });
     } catch (d) {
-        mens("Error en servicio sherloc", "mens");return;
+        mens("Error en servicio sherloc", "mens"); kendo.ui.progress($("#reporteAlertasScreen"), false); return;
     }
+    kendo.ui.progress($("#reporteAlertasScreen"), false);
 }
